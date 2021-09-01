@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Test1</string>
+    <string name="Outline">Outline</string>
+    <string name="menu">|||</string>
+    <string name="settings">...</string>
+    <string name="sub1">Submenu 1</string>
+    <string name="sub2">Submenu 2</string>
+    <string name="sub3">Submenu 3</string>
+    <string name="test">Hej Hej</string>
+</resources>
