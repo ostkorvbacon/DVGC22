@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#6200EE"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6200EE"
+        android:orientation="vertical" >
+
+
+        <Button
+            android:id="@+id/value1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/value1"
+            android:textColor="#ffffff"
+            />
+
+        <Button
+            android:id="@+id/value2"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/value2"
+            android:textColor="#ffffff"
+            />
+
+        <Button
+            android:id="@+id/value3"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/value3"
+            android:textColor="#ffffff"
+            />
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#6200EE"
+        android:orientation="vertical"
+        android:layout_gravity="end">
+
+
+
+        <Button
+            android:id="@+id/back2"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="500dp"
+            android:text="@string/back"
+            android:textColor="#ffffff"
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
