@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Test1</string>
+    <string name="Outline">Outline</string>
+    <string name="menu">|||</string>
+    <string name="settings">...</string>
+    <string name="sub1">Submenu 1</string>
+    <string name="sub2">Submenu 2</string>
+    <string name="sub3">Submenu 3</string>
+    <string name="test">Hej Hej</string>
+    <string name="node1">Node 1</string>
+    <string name="subnode1">Subnode 1</string>
+    <string name="node2">Node 2</string>
+    <string name="back">Back</string>
+    <string name="value1">New value 1</string>
+    <string name="value2">New value 2</string>
+    <string name="value3">New value 3</string>
+    <string name="log">Logout</string>
+</resources>
