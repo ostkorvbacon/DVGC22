@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DVGC22_UI"
 include ':app'
+include 'gson:2.8.6'
