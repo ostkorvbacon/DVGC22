@@ -2,21 +2,35 @@ package com.example.dvgc22_ui;
 
 import android.util.Log;
 
+
+
 /*
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-*/
+
+
+
+
+ */
+
+
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+
+
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -76,6 +90,8 @@ public class JSONExtractor implements Runnable {
 
 
 
+
+
         /*
         try {
             connection = getConnection(worldVaccineURL);
@@ -106,8 +122,10 @@ public class JSONExtractor implements Runnable {
         Log.d("Write", "Finished writing to list.");
         Log.d("Read", "Reading first entry from dowmloaded data to see if correct: \n" + objects[len-1]);
         Log.d("Read", "Reading first entry from list to see if correct: \n" + worldVaccineData.get(len-1).toString());
-        */
 
+
+
+         */
 
 
     }
