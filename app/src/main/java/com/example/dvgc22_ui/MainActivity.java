@@ -1,14 +1,14 @@
 package com.example.dvgc22_ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private List<CovidDataReport> covidData;
+    private List<CovidVaccineReportWorld> covidData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             downloadCovidDataThread.join();
-            covidData = json.getData();
+            covidData = json.getWorldVaccineData();
             Log.i("test", "Från MainActivity: " + covidData.size()); // prints number of reports
         } catch (InterruptedException e) {
             e.printStackTrace();
