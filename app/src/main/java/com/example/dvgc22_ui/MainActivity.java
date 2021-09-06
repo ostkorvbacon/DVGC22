@@ -9,6 +9,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private List<CovidVaccineReportWorld> covidData;
+    private List<CovidCasesSwedenRegional> swedenRegionalCases;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             downloadCovidDataThread.join();
-            covidData = json.getWorldVaccineData();
-            Log.i("test", "Från MainActivity: " + covidData.size()); // prints number of reports
+            swedenRegionalCases = json.getSwedenRegionalCases();
+            Log.i("test", "Från MainActivity: " + swedenRegionalCases.size()); // prints number of reports
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -2,7 +2,20 @@ package com.example.dvgc22_ui;
 
 import android.util.Log;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 import org.apache.poi.ss.usermodel.Row;
@@ -14,32 +27,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
  */
-
-
-
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellValue;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.WorkbookUtil;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-
-
-
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 
 // Class to Extract the information from the JSON file from ECDC and output it into objects
@@ -71,18 +58,25 @@ public class JSONExtractor implements Runnable {
             Sheet sheet = workbook.getSheetAt(3); // 3 for cases and deaths by county.
             for (Row row : sheet) {
                 if(row.getRowNum() != 0) {
-                    CovidCasesSwedenRegional data = new CovidCasesSwedenRegional();
-                    data.setRegionName(row.getCell(0).getStringCellValue());
-                    data.setCases((int) row.getCell(1).getNumericCellValue());
-                    data.setCasesPer100000(row.getCell(2).getNumericCellValue());
-                    data.setDeaths((int) row.getCell(3).getNumericCellValue());
+                    if (row.getCell(0) != null && row.getCell(0).getCellType() != Cell.CELL_TYPE_BLANK) {
+                        CovidCasesSwedenRegional data = new CovidCasesSwedenRegional();
+                        data.setRegionName(row.getCell(0).getRichStringCellValue().getString());
+                        data.setCases((int) row.getCell(1).getNumericCellValue());
+                        data.setCasesPer100000(row.getCell(2).getNumericCellValue());
+                        data.setDeaths((int) row.getCell(4).getNumericCellValue());
+                        swedenRegionalCases.add(data);
+                        //Log.d("Read", "cell 0: " + Double.toString(row.getCell(1).getNumericCellValue()));
+                    }
+
                 }
             }
 
             Log.d("Write", "Finished writing to list.");
-            Log.d("Read", "Reading first entry from dowmloaded data to see if correct: \n" +
+            Log.d("Read", "Reading first entry from dowmloaded data to see if correct: " +
                     sheet.getRow(1).getCell(0).getStringCellValue());
-            Log.d("Read", "Reading first entry from list to see if correct: \n" + swedenRegionalCases.get(0).getRegionName());
+            Log.d("Read", "Reading first entry from list to see if correct: \n" + swedenRegionalCases.get(0).toString());
+
+            connection.disconnect();
         } catch(IOException e){
             e.printStackTrace();
         }
@@ -216,7 +210,11 @@ public class JSONExtractor implements Runnable {
         else return Integer.parseInt(str);
     }
 
-    public List<CovidVaccineReportWorld> getWorldVaccineData(){
+    public List<CovidVaccineReportWorld> getWorldVaccine(){
         return this.worldVaccineData;
+    }
+
+    public List<CovidCasesSwedenRegional> getSwedenRegionalCases(){
+        return this.swedenRegionalCases;
     }
 }
