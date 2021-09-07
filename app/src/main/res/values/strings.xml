@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">DVGC22_UI</string>
+    <string name="app_name">Vaccine Tracker</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">User name</string>
+
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Vaccine Passport</string>
+    <string name="menu_slideshow">Covid-19 statistics</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Personal details</string>
+    <string name="sync_header">Privacy settings</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Name</string>
+    <string name="reply_title">Location</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Push notifications</string>
+    <string name="attachment_title">Notify when vaccination is available near me</string>
+    <string name="attachment_summary_on">Sends push notification automatically when vaccination is available
+    </string>
+    <string name="attachment_summary_off">Only show available vaccination times in app</string>
 </resources>
