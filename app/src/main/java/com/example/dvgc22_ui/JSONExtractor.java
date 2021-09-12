@@ -14,34 +14,24 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-/*
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 
 
- */
+
 
 
 // Class to Extract the information from the JSON file from ECDC and output it into objects
 public class JSONExtractor implements Runnable {
-    private List<CovidVaccineReportWorld> worldVaccineData;
-    private List<CovidCasesSwedenRegional> swedenRegionalCases;
+    CovidData covidData;
 
     @Override
     public void run(){
+        covidData = new CovidData();
         String jsonString = "";
         String worldVaccineURL = "https://opendata.ecdc.europa.eu/covid19/vaccine_tracker/json/";
         String swedenCasesURL = "https://www.arcgis.com/sharing/rest/content/items/b5e7488e117749c19881cce45db13f7e/data";
         HttpURLConnection connection;
-        worldVaccineData = new ArrayList<CovidVaccineReportWorld>();
-        swedenRegionalCases = new ArrayList<CovidCasesSwedenRegional>();
         // (bad) world vaccine data = https://opendata.ecdc.europa.eu/covid19/vaccine_tracker/json/ (json)
         // world cases and deaths data = https://covid19.who.int/WHO-COVID-19-global-table-data.csv (csv)
         // sweden vaccine data = https://fohm.maps.arcgis.com/sharing/rest/content/items/fc749115877443d29c2a49ea9eca77e9/data (xlsx)
@@ -49,13 +39,31 @@ public class JSONExtractor implements Runnable {
         // sweden vaccine type per region = https://www.folkhalsomyndigheten.se/contentassets/ad481fe4487f4e6a8d1bcd95a370bc1a/v35-leveranser-av-covid-vaccin-till-och-med-vecka-37.xlsx
 
         // how to read xlsx: https://www.baeldung.com/java-microsoft-excel
+        /*
+        TODO:
+            - world cases and deaths data
+                - en entry för varje land
+            - sweden vaccine data
+                - Sheet 1 (0 bases)
+                    - en entry per län + sverige, varje entry är ett län och en lista med veckorapporter
+                - Sheet 2 (0 based)
+                    - en entry per län + sverige, varje entry är ett län och en lista med åldersrapporter
+            - sweden vaccine type per region
+                - Behöver kanske hitta annan data, eftersom att länknamnet ändras regelbundet
+            - Callback
+        */
+
 
         try{
             connection = getConnection(swedenCasesURL);
+            if(connection == null){
+                return;
+            }
             InputStream is = connection.getInputStream();
             Workbook workbook = new XSSFWorkbook(is);
-
+            // get cases and deaths regional sweden
             Sheet sheet = workbook.getSheetAt(3); // 3 for cases and deaths by county.
+
             for (Row row : sheet) {
                 if(row.getRowNum() != 0) {
                     if (row.getCell(0) != null && row.getCell(0).getCellType() != Cell.CELL_TYPE_BLANK) {
@@ -64,21 +72,44 @@ public class JSONExtractor implements Runnable {
                         data.setCases((int) row.getCell(1).getNumericCellValue());
                         data.setCasesPer100000(row.getCell(2).getNumericCellValue());
                         data.setDeaths((int) row.getCell(4).getNumericCellValue());
-                        swedenRegionalCases.add(data);
+                        covidData.getSwedenRegionalCases().add(data);
+                        Log.i("Read", "Reading cases sheet 3...");
+                        System.gc();
+                        //Log.d("Read", "cell 0: " + Double.toString(row.getCell(1).getNumericCellValue()));
+                    }
+
+                }
+            }
+            // get cases and deaths regional sweden by age group
+            sheet = workbook.getSheetAt(5); // 3 for cases and deaths by county.
+
+            for (Row row : sheet) {
+                if(row.getRowNum() != 0) {
+                    if (row.getCell(0) != null && row.getCell(0).getCellType() != Cell.CELL_TYPE_BLANK) {
+                        CovidCasesSwedenAge data = new CovidCasesSwedenAge();
+                        data.setAgeGroup(row.getCell(0).getRichStringCellValue().getString());
+                        data.setCases((int) row.getCell(1).getNumericCellValue());
+                        data.setDeaths((int) row.getCell(3).getNumericCellValue());
+                        covidData.getSwedenAgeCases().add(data);
+                        Log.i("Read", "Reading cases sheet 5...");
+                        System.gc();
                         //Log.d("Read", "cell 0: " + Double.toString(row.getCell(1).getNumericCellValue()));
                     }
 
                 }
             }
 
-            Log.d("Write", "Finished writing to list.");
-            Log.d("Read", "Reading first entry from dowmloaded data to see if correct: " +
-                    sheet.getRow(1).getCell(0).getStringCellValue());
-            Log.d("Read", "Reading first entry from list to see if correct: \n" + swedenRegionalCases.get(0).toString());
 
+
+            Log.d("Write", "Finished writing to list.");
+            Log.d("Read", "Reading first entry from dowmloaded data to see if correct: " + sheet.getRow(1).getCell(0).getStringCellValue());
+            Log.d("Read", "Reading first entry from list to see if correct: \n" + covidData.getSwedenAgeCases().get(0).toString());
+            is.close();
             connection.disconnect();
+
         } catch(IOException e){
             e.printStackTrace();
+
         }
 
 
@@ -210,11 +241,10 @@ public class JSONExtractor implements Runnable {
         else return Integer.parseInt(str);
     }
 
-    public List<CovidVaccineReportWorld> getWorldVaccine(){
-        return this.worldVaccineData;
+
+    public CovidData getCovidData() {
+        return covidData;
     }
 
-    public List<CovidCasesSwedenRegional> getSwedenRegionalCases(){
-        return this.swedenRegionalCases;
-    }
+
 }
