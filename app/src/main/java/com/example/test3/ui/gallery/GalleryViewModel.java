@@ -1,5 +1,7 @@
 package com.example.test3.ui.gallery;
 
+import android.widget.Spinner;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 public class GalleryViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
-
     public GalleryViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is gallery fragment");

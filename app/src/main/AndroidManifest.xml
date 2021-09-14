@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Test3">
         <activity
+            android:name=".Profile"
+            android:exported="true" />
+        <activity
             android:name=".SettingsActivity"
-            android:parentActivityName="MainMenuActivity"
             android:exported="true"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainMenuActivity" />
         <activity
             android:name=".MainMenuActivity"
             android:exported="true"
