@@ -8,10 +8,24 @@ public class CovidData {
     private List<CovidCasesSwedenRegional> swedenRegionalCases;
     private List<CovidCasesSwedenAge> swedenAgeCases;
 
+    private List<CovidVaccineSweden> swedenVaccine;
+
     public CovidData(){
         worldVaccineData = new ArrayList<CovidVaccineReportWorld>();
         swedenRegionalCases = new ArrayList<CovidCasesSwedenRegional>();
         swedenAgeCases = new ArrayList<CovidCasesSwedenAge>();
+        swedenVaccine = new ArrayList<CovidVaccineSweden>();
+    }
+
+    public int findSwedenVaccineRegion(String region){
+        int i = 0;
+        for(CovidVaccineSweden reg : swedenVaccine){
+            if (reg.getRegion().equals(region)){
+                return i;
+            }
+            i++;
+        }
+        return -1;
     }
 
     public List<CovidVaccineReportWorld> getWorldVaccineData() {
@@ -24,5 +38,9 @@ public class CovidData {
 
     public List<CovidCasesSwedenAge> getSwedenAgeCases() {
         return swedenAgeCases;
+    }
+
+    public List<CovidVaccineSweden> getSwedenVaccine() {
+        return swedenVaccine;
     }
 }

@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.i("test", "Programmet startar.");
-        JSONExtractor json = new JSONExtractor();
+        DataExtractor json = new DataExtractor();
 
 
         Thread downloadCovidDataThread = new Thread(json);

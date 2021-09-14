@@ -2,25 +2,25 @@ package com.example.dvgc22_ui;
 
 public class CovidCasesSwedenRegional {
 
-    String regionName;
+    String region;
     int cases;
     double casesPer100000;
     int deaths;
 
     @Override
     public String toString(){
-        return "\"regionName\" : " + "\"" +  regionName + "\",\n" +
+        return "\"regionName\" : " + "\"" + region + "\",\n" +
                 "\"cases\" : " + Integer.toString(cases) + ",\n" +
                 "\"casesPer100000\" : " + Double.toString(casesPer100000) + ",\n" +
                 "\"deaths\" : " + Integer.toString(deaths);
     }
 
-    public String getRegionName() {
-        return regionName;
+    public String getRegion() {
+        return region;
     }
 
-    public void setRegionName(String regionName) {
-        this.regionName = regionName;
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public int getCases() {
