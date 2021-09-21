@@ -5,15 +5,12 @@ import java.util.List;
 
 public class CovidData {
     private List<CovidVaccineReportWorld> worldVaccineData;
-    private List<CovidCasesSwedenRegional> swedenRegionalCases;
-    private List<CovidCasesSwedenAge> swedenAgeCases;
-
+    private List<CovidCasesSweden> swedenCasesAndDeaths;
     private List<CovidVaccineSweden> swedenVaccine;
 
     public CovidData(){
         worldVaccineData = new ArrayList<CovidVaccineReportWorld>();
-        swedenRegionalCases = new ArrayList<CovidCasesSwedenRegional>();
-        swedenAgeCases = new ArrayList<CovidCasesSwedenAge>();
+        swedenCasesAndDeaths = new ArrayList<CovidCasesSweden>();
         swedenVaccine = new ArrayList<CovidVaccineSweden>();
     }
 
@@ -28,16 +25,23 @@ public class CovidData {
         return -1;
     }
 
+    public int findSwedenCasesAndDeathsRegion(String region){
+        int i = 0;
+        for(CovidCasesSweden reg : swedenCasesAndDeaths){
+            if (reg.getRegion().equals(region)){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+
+    public List<CovidCasesSweden> getSwedenCasesAndDeaths() {
+        return swedenCasesAndDeaths;
+    }
+
     public List<CovidVaccineReportWorld> getWorldVaccineData() {
         return worldVaccineData;
-    }
-
-    public List<CovidCasesSwedenRegional> getSwedenRegionalCases() {
-        return swedenRegionalCases;
-    }
-
-    public List<CovidCasesSwedenAge> getSwedenAgeCases() {
-        return swedenAgeCases;
     }
 
     public List<CovidVaccineSweden> getSwedenVaccine() {

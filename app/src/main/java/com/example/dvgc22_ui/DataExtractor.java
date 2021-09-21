@@ -18,7 +18,21 @@ import java.net.URL;
 
 
 
-
+/*
+HOW TO USE:
+    Global:
+        private CovidData covidData;
+    In MainActivity:
+        DataExtractor data = new DataExtractor();
+        Thread downloadCovidDataThread = new Thread(data);
+        downloadCovidDataThread.start();
+        try {
+            downloadCovidDataThread.join();
+            covidData = data.getCovidData();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+*/
 
 
 // Class to Extract the information from the JSON file from ECDC and output it into objects
@@ -30,16 +44,16 @@ public class DataExtractor implements Runnable {
         covidData = new CovidData();
         String jsonString = "";
         String worldVaccineURL = "https://opendata.ecdc.europa.eu/covid19/vaccine_tracker/json/";
-        String swedenCasesURL = "https://www.arcgis.com/sharing/rest/content/items/b5e7488e117749c19881cce45db13f7e/data";
-        String swedenVaccineURL = "https://fohm.maps.arcgis.com/sharing/rest/content/items/fc749115877443d29c2a49ea9eca77e9/data";
-        String swedenVaccineDistributionURL = "https://www.folkhalsomyndigheten.se/contentassets/ad481fe4487f4e6a8d1bcd95a370bc1a/v36-leveranser-av-covid-vaccin-till-och-med-vecka-38.xlsx";
+        String swedenCasesURL = "http://83.254.68.246:3003/cases";
+        String swedenVaccineURL = "http://83.254.68.246:3003/administered";
+        String swedenVaccineDistributionURL = "http://83.254.68.246:3003/delivered";
         String worldCasesURL = "https://covid19.who.int/WHO-COVID-19-global-table-data.csv";
         HttpURLConnection connection;
         // (bad) world vaccine data = https://opendata.ecdc.europa.eu/covid19/vaccine_tracker/json/ (json)
         // world cases and deaths data = https://covid19.who.int/WHO-COVID-19-global-table-data.csv (csv)
-        // sweden vaccine data = https://fohm.maps.arcgis.com/sharing/rest/content/items/fc749115877443d29c2a49ea9eca77e9/data (xlsx)
-        // sweden cases and deaths data = https://www.arcgis.com/sharing/rest/content/items/b5e7488e117749c19881cce45db13f7e/data (xlsx)
-        // sweden vaccine type per region = https://www.folkhalsomyndigheten.se/contentassets/ad481fe4487f4e6a8d1bcd95a370bc1a/v36-leveranser-av-covid-vaccin-till-och-med-vecka-38.xlsx
+        // sweden vaccine data = http://83.254.68.246:3003/administered (xlsx)
+        // sweden cases and deaths data = http://83.254.68.246:3003/cases (xlsx)
+        // sweden vaccine type per region = http://83.254.68.246:3003/delivered (xlsx)
 
         // how to read xlsx: https://www.baeldung.com/java-microsoft-excel
         /*
@@ -47,10 +61,6 @@ public class DataExtractor implements Runnable {
             - world cases and deaths data
                 - en entry för varje land
             - Callback
-            2. Total doses administered in Counties and Sweden
-                - filter: product (done counties, age groups, 1 vs 2)
-            4. Total cases and total deaths
-                - filter: counties, age groups (done but not together)
         */
 
         // get the cases and deaths data for Sweden
@@ -67,31 +77,23 @@ public class DataExtractor implements Runnable {
             for (Row row : sheet) {
                 if(row.getRowNum() != 0) {
                     if (row.getCell(0) != null && row.getCell(0).getCellType() != Cell.CELL_TYPE_BLANK) {
-                        CovidCasesSwedenRegional data = new CovidCasesSwedenRegional();
-                        data.setRegion(row.getCell(0).getRichStringCellValue().getString());
-                        data.setCases((int) row.getCell(1).getNumericCellValue());
-                        data.setCasesPer100000(row.getCell(2).getNumericCellValue());
-                        data.setDeaths((int) row.getCell(4).getNumericCellValue());
-                        covidData.getSwedenRegionalCases().add(data);
-                        Log.i("Read", "Reading cases sheet 3...");
-                        System.gc();
-                        //Log.d("Read", "cell 0: " + Double.toString(row.getCell(1).getNumericCellValue()));
-                    }
-
-                }
-            }
-            // get cases and deaths regional sweden by age group
-            sheet = workbook.getSheetAt(5); // 3 for cases and deaths by county.
-
-            for (Row row : sheet) {
-                if(row.getRowNum() != 0) {
-                    if (row.getCell(0) != null && row.getCell(0).getCellType() != Cell.CELL_TYPE_BLANK) {
-                        CovidCasesSwedenAge data = new CovidCasesSwedenAge();
-                        data.setAgeGroup(row.getCell(0).getRichStringCellValue().getString());
-                        data.setCases((int) row.getCell(1).getNumericCellValue());
-                        data.setDeaths((int) row.getCell(3).getNumericCellValue());
-                        covidData.getSwedenAgeCases().add(data);
-                        Log.i("Read", "Reading cases sheet 5...");
+                        String region = row.getCell(0).getRichStringCellValue().getString();
+                        region = region.trim();
+                        String group = row.getCell(1).getRichStringCellValue().getString();
+                        int cases = (int) row.getCell(2).getNumericCellValue();
+                        int deaths = (int) row.getCell(4).getNumericCellValue();
+                        // find region in list, if there is one
+                        int regionIndex = covidData.findSwedenCasesAndDeathsRegion(region);
+                        if(regionIndex == -1){
+                            CovidCasesSweden entry = new CovidCasesSweden();
+                            entry.setRegion(region);
+                            entry.addAgeGroupReport(group, cases, deaths);
+                            covidData.getSwedenCasesAndDeaths().add(entry);
+                        }
+                        else{
+                            covidData.getSwedenCasesAndDeaths().get(regionIndex).addAgeGroupReport(group, cases, deaths);
+                        }
+                        Log.i("Read", "Reading cases and deaths sheet 3...");
                         System.gc();
                         //Log.d("Read", "cell 0: " + Double.toString(row.getCell(1).getNumericCellValue()));
                     }
@@ -99,8 +101,12 @@ public class DataExtractor implements Runnable {
                 }
             }
             Log.d("Write", "Finished writing to Sweden cases list.");
-            Log.d("Read", "Reading first entry from dowmloaded data to see if correct: " + sheet.getRow(1).getCell(0).getStringCellValue());
-            Log.d("Read", "Reading first entry from list to see if correct: \n" + covidData.getSwedenAgeCases().get(0).toString());
+            Log.d("Read", "Reading first entry from dowmloaded data to see if correct: " + sheet.getRow(1).getCell(4).getNumericCellValue());
+            Log.d("Read", "Reading first entry from list to see if correct: \n" +
+                    covidData.getSwedenCasesAndDeaths().get(
+                    covidData.findSwedenCasesAndDeathsRegion("Sverige")
+                    ).getAgeGroupReport("Total").getDeaths()
+            );
             is.close();
             connection.disconnect();
 
@@ -109,6 +115,7 @@ public class DataExtractor implements Runnable {
 
         }
         System.gc();
+
         // get the vaccine data for sweden
         try {
             connection = getConnection(swedenVaccineURL);
@@ -181,13 +188,19 @@ public class DataExtractor implements Runnable {
                                     reg.addAgeGroupReport(
                                             row.getCell(1).getRichStringCellValue().getString(),
                                             (int) row.getCell(2).getNumericCellValue(),
-                                            row.getCell(3).getNumericCellValue()
+                                            row.getCell(3).getNumericCellValue(),
+                                            (int) row.getCell(5).getNumericCellValue(),
+                                            (int) row.getCell(6).getNumericCellValue(),
+                                            (int) row.getCell(7).getNumericCellValue()
                                     );
                                 }else{
                                     for(CovidVaccineSweden.AgeGroupReport rep : reg.getAgeGroupReports()){
                                         if (rep.getGroup().equals(row.getCell(1).getRichStringCellValue().getString())){
                                             rep.setDose2((int) row.getCell(2).getNumericCellValue());
                                             rep.setDose2Quota(row.getCell(3).getNumericCellValue());
+                                            rep.setDose2Pfizer((int) row.getCell(5).getNumericCellValue());
+                                            rep.setDose2Moderna((int) row.getCell(6).getNumericCellValue());
+                                            rep.setDose2AstraZeneca((int) row.getCell(7).getNumericCellValue());
                                         }
                                     }
                                 }
@@ -201,7 +214,10 @@ public class DataExtractor implements Runnable {
             }
             Log.d("Write", "Finished writing to Sweden vaccine list.");
             Log.d("Read", "Reading first entry from downloaded data to see if correct: " + sheet.getRow(1).getCell(2).getNumericCellValue());
-            Log.d("Read", "Reading first entry from list to see if correct: \n" + covidData.getSwedenVaccine().get(0).getAgeGroupReports().get(0).getDose1());
+            Log.d("Read", "Reading first entry from list to see if correct: \n" +
+                    covidData.getSwedenVaccine().get(0).getAgeGroupReports().get(0).getDose1() + " " +
+                    covidData.getSwedenVaccine().get(0).getAgeGroupReports().get(0).getDose1AstraZeneca()
+                    );
             is.close();
             connection.disconnect();
         } catch (IOException e) {
@@ -269,6 +285,8 @@ public class DataExtractor implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
 
         /*
         try {

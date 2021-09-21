@@ -10,13 +10,12 @@ public class CovidVaccineSweden {
     private List<AgeGroupReport> ageGroupReports = new ArrayList<AgeGroupReport>();
     private List<VaccineDistributedWeekly> distributedWeekly = new ArrayList<VaccineDistributedWeekly>();
 
-
     public void addWeeklyReport(int w, int y, int d1, double d1Quota){
         weeklyReports.add(new WeeklyReport(w, y, d1, d1Quota));
     }
 
-    public void addAgeGroupReport(String group, int d1, double d1Quota){
-        ageGroupReports.add(new AgeGroupReport(group, d1, d1Quota));
+    public void addAgeGroupReport(String group, int d1, double d1Quota, int dose1Pfizer, int dose1Moderna, int dose1AstraZeneca){
+        ageGroupReports.add(new AgeGroupReport(group, d1, d1Quota, dose1Pfizer, dose1Moderna, dose1AstraZeneca));
     }
 
     public void addDistributedWeek(int week, int year){
@@ -137,11 +136,21 @@ public class CovidVaccineSweden {
         double dose1Quota;
         int dose2;
         double dose2Quota;
+        int dose1Pfizer;
+        int dose1Moderna;
+        int dose1AstraZeneca;
+        int dose2Pfizer;
+        int dose2Moderna;
+        int dose2AstraZeneca;
 
-        public AgeGroupReport(String g, int d1, double d1Quota){
+
+        public AgeGroupReport(String g, int d1, double d1Quota, int dose1Pfizer, int dose1Moderna, int dose1AstraZeneca){
             group = g;
             dose1 = d1;
             dose1Quota = d1Quota;
+            this.dose1Pfizer = dose1Pfizer;
+            this.dose1Moderna = dose1Moderna;
+            this.dose1AstraZeneca = dose1AstraZeneca;
         }
 
         public String getGroup() {
@@ -164,6 +173,30 @@ public class CovidVaccineSweden {
             return dose2Quota;
         }
 
+        public int getDose1Pfizer() {
+            return dose1Pfizer;
+        }
+
+        public int getDose1Moderna() {
+            return dose1Moderna;
+        }
+
+        public int getDose1AstraZeneca() {
+            return dose1AstraZeneca;
+        }
+
+        public int getDose2Pfizer() {
+            return dose2Pfizer;
+        }
+
+        public int getDose2Moderna() {
+            return dose2Moderna;
+        }
+
+        public int getDose2AstraZeneca() {
+            return dose2AstraZeneca;
+        }
+
         public void setDose2(int dose2) {
             this.dose2 = dose2;
         }
@@ -171,6 +204,20 @@ public class CovidVaccineSweden {
         public void setDose2Quota(double dose2Quota) {
             this.dose2Quota = dose2Quota;
         }
+
+        public void setDose2Pfizer(int dose2Pfizer) {
+            this.dose2Pfizer = dose2Pfizer;
+        }
+
+        public void setDose2Moderna(int dose2Moderna) {
+            this.dose2Moderna = dose2Moderna;
+        }
+
+        public void setDose2AstraZeneca(int dose2AstraZeneca) {
+            this.dose2AstraZeneca = dose2AstraZeneca;
+        }
+
+
     }
 
     protected class VaccineDistributedWeekly{
