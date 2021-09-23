@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dvgc22_ui">
+    package="com.example.test3">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:largeHeap="true"
@@ -13,7 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.DVGC22_UI">
+        android:theme="@style/Theme.Test3">
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainMenuActivity" />
+        <activity
+            android:name=".MainMenuActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main_menu"
+            android:theme="@style/Theme.Test3.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

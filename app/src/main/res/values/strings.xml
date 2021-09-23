@@ -1,3 +1,73 @@
 <resources>
-    <string name="app_name">DVGC22_UI</string>
+    <string name="app_name">Vaccine Tracker</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">User name</string>
+
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="EmailText">Email</string>
+    <string name="PasswordText">Password</string>
+
+
+
+    <string name="menu_home">Home</string>
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_faq">FAQ</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Personal details</string>
+    <string name="sync_header">Privacy settings</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Name</string>
+    <string name="reply_title">Location</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Push notifications</string>
+    <string name="attachment_title">Notify when vaccination is available near me</string>
+    <string name="attachment_summary_on">Sends push notification automatically when vaccination is available
+    </string>
+    <string name="attachment_summary_off">Only show available vaccination times in app</string>
+
+    <!-- Dashboard -->
+    <string-array name="dashboard_stats">
+        <item>-</item>
+        <item>Total doses distributed</item>
+        <item>Total doses administered</item>
+        <item>Cumulative uptake (%)</item>
+        <item>Total cases and deaths</item>
+    </string-array>
+
+    <string-array name="not_chosen">
+        <item></item>
+    </string-array>
+
+    <string-array name="filter_total_dist">
+        <item>By county</item>
+        <item>By product</item>
+    </string-array>
+
+    <string-array name="filter_total_admin">
+        <item>By one dose</item>
+        <item>By two doses</item>
+        <item>By age group</item>
+        <item>By county</item>
+        <item>By product</item>
+    </string-array>
+
+    <string-array name="filter_cumulative_uptake">
+        <item>By week</item>
+        <item>By month</item>
+    </string-array>
+
+    <string-array name="filter_cases_deaths">
+        <item>By county</item>
+        <item>By age group</item>
+    </string-array>
+
+    <string name="profiletxt">Profile</string>
+
 </resources>
