@@ -1,3 +1,17 @@
+HOW TO USE:
+Global:
+    private CovidData covidData;
+In MainActivity:
+    DataExtractor data = new DataExtractor();
+    Thread downloadCovidDataThread = new Thread(data);
+    downloadCovidDataThread.start();
+    try {
+        downloadCovidDataThread.join();
+        covidData = data.getCovidData();
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+
 Data strukturen:
 CovidData - en klass som innehåller 3 listor: 
  - worldVaccineData (tom ATM) (wish, not requirement)

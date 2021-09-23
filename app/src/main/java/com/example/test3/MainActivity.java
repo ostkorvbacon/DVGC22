@@ -15,6 +15,7 @@ import com.example.test3.DataExtraction.DataExtractor;
 
 
 public class MainActivity extends AppCompatActivity {
+    private CovidData covidData;
     public boolean loginAttempt(String loginId, String password){
 
         return loginId.equals("login");
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        DataExtractor data = new DataExtractor();
+        Thread downloadCovidDataThread = new Thread(data);
+        downloadCovidDataThread.start();
 
         Button loginButton = findViewById(R.id.login_button);
         ProgressBar loadingProgressBar = findViewById(R.id.loading);
