@@ -10,9 +10,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.test3.DataExtraction.CovidData;
+import com.example.test3.DataExtraction.DataExtractor;
+
 
 public class MainActivity extends AppCompatActivity {
-
     public boolean loginAttempt(String loginId, String password){
 
         return loginId.equals("login");
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         Button loginButton = findViewById(R.id.login_button);
         ProgressBar loadingProgressBar = findViewById(R.id.loading);

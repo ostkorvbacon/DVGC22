@@ -1,4 +1,4 @@
-package com.example.dvgc22_ui;
+package com.example.test3.DataExtraction;
 
 public class CovidVaccineReportWorld {
 
