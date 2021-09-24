@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 
 public class CreateActivity extends AppCompatActivity  {
@@ -47,56 +50,52 @@ public class CreateActivity extends AppCompatActivity  {
         emaillist=getIntent().getStringArrayListExtra("oldmaillist");
         passlist=getIntent().getStringArrayListExtra("oldpasslist");
 
-        Button back= findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(backIntent);
-            }
-        });
+
         Button reg= findViewById(R.id.create);
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 EditText name =findViewById(R.id.name);
                 EditText email =findViewById(R.id.email);
                 EditText pass =findViewById(R.id.pass);
                 EditText nr =findViewById(R.id.nr);
                 EditText dob =findViewById(R.id.dob);
+                EditText city = findViewById(R.id.city);
                 EditText addr =findViewById(R.id.addr);
 
-                if (name.getText().toString().isEmpty() || email.getText().toString().isEmpty() || pass.getText().toString().isEmpty() || nr.getText().toString().isEmpty() || dob.getText().toString().isEmpty() || addr.getText().toString().isEmpty() ) {
-
+                if (name.getText().toString().isEmpty() || email.getText().toString().isEmpty() ||
+                        pass.getText().toString().isEmpty() || nr.getText().toString().isEmpty() ||
+                        dob.getText().toString().isEmpty() || addr.getText().toString().isEmpty()) {
                     Toast toast = Toast.makeText(getApplicationContext(),"All fields required",Toast.LENGTH_SHORT);
                     toast.show();
                 }
-
                 else if (!isEmailValid(email.getText().toString())) {
-
                     Toast toast = Toast.makeText(getApplicationContext(),"Use a valid e-mail address",Toast.LENGTH_SHORT);
                     toast.show();
-
                 }
                 else if (!isDateValid(dob.getText().toString())) {
-
                     Toast toast = Toast.makeText(getApplicationContext(),"Use a valid date of birth (DD/MM/YY)",Toast.LENGTH_SHORT);
                     toast.show();
-
-                }
-
-                else {
-
+                }else {//all fields match the correct formatting, register user
+                    JSONObject registerData = new JSONObject();
+                    try{
+                        registerData.put("Email", email.getText().toString());
+                        registerData.put("Password", pass.getText().toString());
+                        registerData.put("Name", name.getText().toString());
+                        registerData.put("Phone", nr.getText().toString());
+                        registerData.put("Dob", dob.getText().toString());
+                        registerData.put("City", "Karlstad");
+                        registerData.put("Addr",addr.getText().toString());
+                        registerData.put("Role", "Doctor");
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
                     Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    emaillist.add(email.getText().toString());
-                    passlist.add(pass.getText().toString());
-                    
-                    backIntent.putExtra("newemaillist",emaillist);
-                    backIntent.putExtra("newpasslist",passlist);
                     startActivity(backIntent);
                 }
-
-
             }
         });
 
