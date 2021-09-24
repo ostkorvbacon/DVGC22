@@ -143,7 +143,6 @@ public class DatabaseHandler {
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
-            Log.i("HTTP", "Body: " + body);
             try(OutputStream os = connection.getOutputStream()) {
                 OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
                 osw.write(body);
@@ -170,7 +169,6 @@ public class DatabaseHandler {
         }
         is.close();
         reader.close();
-        Log.d("Read", "Finished reading from database...");
         return sb.toString();
     }
 
@@ -185,7 +183,7 @@ public class DatabaseHandler {
                 response = readStream(establishConnection(url, requestMethod, body));
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.e("HTTP", "Error: Did not get a response from getUserList.");
+                Log.e("HTTP", "Error: Did not get a response from Server.");
             }
         }
         public String getString(){
