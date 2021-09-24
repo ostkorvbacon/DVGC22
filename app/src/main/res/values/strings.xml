@@ -70,4 +70,27 @@
 
     <string name="profiletxt">Profile</string>
 
+<<<<<<< Updated upstream
+=======
+    <string name="create">Register</string>
+    <string name="name"></string>
+    <string name="pass">Password</string>
+    <string name="nr">Mobile Number</string>
+    <string name="dob">DD/MM/YY</string>
+    <string name="address">County, street name </string>
+    <string name="user">Email</string>
+    <string name="reg">Register</string>
+    <string name="back">Back</string>
+
+    <string name="title_activity_login2">LoginActivity2</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+>>>>>>> Stashed changes
 </resources>
