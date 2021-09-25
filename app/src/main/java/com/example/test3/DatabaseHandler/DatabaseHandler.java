@@ -50,8 +50,9 @@ public class DatabaseHandler {
         // for each string in the list of usernames
         for (String s : resp.replace("{\"Emails\":[", "").replace("]}", "").split(",")){
             // extract username
-            s = s.split(":")[1].replace("\"", "").replace("}", "");
+            s = getJSONValue(s);
             list.add(new User(s));
+            Log.i("HTTP", "User: " + s);
         }
         return list;
     }
@@ -59,20 +60,10 @@ public class DatabaseHandler {
     public User getUser(String username){
         String body = "{\"Email\": \"" + username + "\"}";
         String resp = getResponse(domain+"getUser", "POST", body);
-
-        resp = resp.replace("{", "").replace("}", ""). replace("\"", "");
         String[] info = resp.split(",");
         int i = 0;
         for (String s : info){
-            info[i] = "";
-            String[] items = s.split(":");
-            int c = 0;
-            for (String item : items){
-                if(c != 0){
-                    info[i] += c!=1?":"+item:item;
-                }
-                c++;
-            }
+            info[i] = getJSONValue(s);
             i++;
         }
         return new User(info[0], info[1], info[2], info[3], info[4], info[5], info[6]);
@@ -99,8 +90,7 @@ public class DatabaseHandler {
         body += "\"Password\": \"" + password + "\"";
         body += "}";
         String resp = getResponse(domain+"tryLogin", "POST", body);
-        resp = resp.replace("{", "").replace("}", "").replace("\"", "");
-        resp = resp.split(":")[1]; //"Success!" OR "ERROR"
+        resp = getJSONValue(resp);
         if (resp.equals("Success!")){
             return true;
         }
@@ -114,6 +104,32 @@ public class DatabaseHandler {
             }
         }
         return false;
+    }
+
+    public boolean deleteUser(String username){
+        String body = "{\"Email\": \"" + username + "\"}";
+        String resp = getResponse(domain+"deleteUser", "POST", body);
+        resp = getJSONValue(resp);
+        Log.i("HTTP", "response from delete: " + resp);
+        if (resp.equals("Success!")){
+            return true;
+        }
+        return false;
+    }
+
+    private String getJSONValue(String json){
+        json = json.replace("{", "").replace("}", "").replace("\"", "");
+        String[] items = json.split(":");
+        json = "";
+        int c = 0;
+        for (String item : items){
+            if(c != 0){
+                json += c!=1?":"+item:item;
+            }
+            c++;
+        }
+
+        return json;
     }
 
     private String getResponse(String url, String requestMethod, String body){
