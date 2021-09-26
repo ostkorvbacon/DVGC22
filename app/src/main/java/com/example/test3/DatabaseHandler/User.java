@@ -3,13 +3,13 @@ package com.example.test3.DatabaseHandler;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    String username;
-    String name;
-    String phoneNr;
-    String dateOfBirth;
-    String city;
-    String address;
-    String role;
+    private String username;
+    private String name;
+    private String phoneNr;
+    private String dateOfBirth;
+    private String city;
+    private String address;
+    private String role;
 
     public User(){
 
