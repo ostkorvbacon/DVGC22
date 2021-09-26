@@ -1,5 +1,10 @@
 package com.example.test3;
+import static org.apache.poi.hssf.util.HSSFColor.*;
+
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,15 +22,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.test3.DatabaseHandler.DatabaseHandler;
+import com.example.test3.DatabaseHandler.User;
+
+import org.apache.poi.hssf.util.HSSFColor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-
 public class CreateActivity extends AppCompatActivity  {
-
-    ArrayList<String> emaillist = new ArrayList<String>();
-    ArrayList<String> passlist = new ArrayList<String>();
+    private DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
 
     public static boolean isEmailValid(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -34,9 +40,8 @@ public class CreateActivity extends AppCompatActivity  {
         return matcher.matches();
     }
 
-
+    //TODO: ändra formatteringen av dob till YY/MM/DD
     public static boolean isDateValid(String date) {
-
         Pattern pattern = Pattern.compile("\\p{Digit}\\p{Digit}/\\p{Digit}\\p{Digit}/\\p{Digit}\\p{Digit}");
         Matcher matcher = pattern.matcher(date);
         return matcher.matches();
@@ -46,61 +51,56 @@ public class CreateActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create);
 
-
-        emaillist=getIntent().getStringArrayListExtra("oldmaillist");
-        passlist=getIntent().getStringArrayListExtra("oldpasslist");
-
-
         Button reg= findViewById(R.id.create);
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String username = ((EditText)findViewById(R.id.email)).getText().toString();
+                String password = ((EditText)findViewById(R.id.pass)).getText().toString();
+                String name = ((EditText)findViewById(R.id.name)).getText().toString();
+                String nr = ((EditText)findViewById(R.id.nr)).getText().toString();
+                String dob = ((EditText)findViewById(R.id.dob)).getText().toString();
+                String city = ((EditText)findViewById(R.id.city)).getText().toString();
+                String addr = ((EditText)findViewById(R.id.addr)).getText().toString();
+                ColorStateList originalColor = ((TextView)findViewById(R.id.email_leg)).getTextColors();
+                ((TextView)findViewById(R.id.email_leg)).setTextColor(originalColor);
 
-
-
-                EditText name =findViewById(R.id.name);
-                EditText email =findViewById(R.id.email);
-                EditText pass =findViewById(R.id.pass);
-                EditText nr =findViewById(R.id.nr);
-                EditText dob =findViewById(R.id.dob);
-                EditText city = findViewById(R.id.city);
-                EditText addr =findViewById(R.id.addr);
-
-                if (name.getText().toString().isEmpty() || email.getText().toString().isEmpty() ||
-                        pass.getText().toString().isEmpty() || nr.getText().toString().isEmpty() ||
-                        dob.getText().toString().isEmpty() || addr.getText().toString().isEmpty()) {
-                    Toast toast = Toast.makeText(getApplicationContext(),"All fields required",Toast.LENGTH_SHORT);
+                if ( username.isEmpty() || password.isEmpty() || name.isEmpty() || nr.isEmpty() ||
+                        dob.isEmpty() || city.isEmpty() || addr.isEmpty()) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "All fields required",Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                else if (!isEmailValid(email.getText().toString())) {
-                    Toast toast = Toast.makeText(getApplicationContext(),"Use a valid e-mail address",Toast.LENGTH_SHORT);
+                else if (!isEmailValid(username)) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Use a valid e-mail address",Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                else if (!isDateValid(dob.getText().toString())) {
-                    Toast toast = Toast.makeText(getApplicationContext(),"Use a valid date of birth (DD/MM/YY)",Toast.LENGTH_SHORT);
+                /*else if (!isDateValid(dob)) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Use a valid date of birth (YY/MM/DD)",Toast.LENGTH_SHORT);
                     toast.show();
-                }else {//all fields match the correct formatting, register user
-                    JSONObject registerData = new JSONObject();
-                    try{
-                        registerData.put("Email", email.getText().toString());
-                        registerData.put("Password", pass.getText().toString());
-                        registerData.put("Name", name.getText().toString());
-                        registerData.put("Phone", nr.getText().toString());
-                        registerData.put("Dob", dob.getText().toString());
-                        registerData.put("City", "Karlstad");
-                        registerData.put("Addr",addr.getText().toString());
-                        registerData.put("Role", "Doctor");
-                    }catch (JSONException e){
-                        e.printStackTrace();
+                }*/else {//all fields match the correct formatting, register user
+                    if(!handler.userExists(username)) {
+                        User newUser = handler.newUser(username,
+                                password,
+                                name,
+                                nr,
+                                dob,
+                                city,
+                                addr,
+                                "User");//default tills vi kommit fram till hur vi assignar doctor roll
+                        Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(backIntent);
                     }
-                    Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(backIntent);
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Username already exists.",Toast.LENGTH_LONG);
+                        toast.show();
+                        ((TextView)findViewById(R.id.email_leg)).setTextColor(Color.RED);
+                    }
                 }
             }
         });
-
-
-
-
     }
 }

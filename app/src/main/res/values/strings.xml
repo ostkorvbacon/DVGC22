@@ -73,7 +73,7 @@
     <string name="name"></string>
     <string name="pass">Password</string>
     <string name="nr">Mobile Number</string>
-    <string name="dob">DD/MM/YY</string>
+    <string name="dob">YY/MM/DD</string>
     <string name="address">County, street name </string>
     <string name="user">Email</string>
     <string name="reg">Register</string>

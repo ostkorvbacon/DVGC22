@@ -1,17 +1,21 @@
 package com.example.test3.ui.gallery;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,6 +30,58 @@ public class GalleryFragment extends Fragment{
 
     private GalleryViewModel galleryViewModel;
     private FragmentGalleryBinding binding;
+    TextView filter;
+    boolean[] selectedFilters;
+    ArrayList<Integer> filterList = new ArrayList<>();
+    String[] filterArray;
+    String chosenStat;
+
+    public void filter_dialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Filters");
+        builder.setCancelable(false);
+        builder.setMultiChoiceItems(filterArray, selectedFilters, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                if(b){
+                    filterList.add(i);
+                    Collections.sort(filterList);
+                }else{//when checkbox unselected
+                    for(int k = 0; k < filterList.size(); k++) {
+                        if(filterList.get(k) == i){
+                            filterList.remove(k);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                StringBuilder stringBuilder = new StringBuilder();
+                if(filterList.size() != 0) {
+                    for (int k = 0; k < filterList.size(); k++) {
+                        stringBuilder.append(filterArray[filterList.get(k)]);
+                        if (k != filterList.size() - 1) {
+                            stringBuilder.append(", ");
+                        }
+                    }
+                    filter.setText(stringBuilder.toString());
+                }else {
+                    Toast toast = Toast.makeText(getContext(),
+                            "Must choose at least one filter.",
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                    filterList.add(0);
+                    selectedFilters[0] = true;
+                    stringBuilder.append(filterArray[0]);
+                    filter.setText(stringBuilder.toString());
+                }
+            }
+        });
+        builder.show();
+    };
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,10 +91,8 @@ public class GalleryFragment extends Fragment{
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView filtertxt = root.findViewById(R.id.filter_text);
+        filter = root.findViewById(R.id.filter_text);
         final Spinner dashboardOptions = root.findViewById(R.id.dashboard_options);
-        final Spinner dashboardFilter = root.findViewById(R.id.dashboard_filter);
-
         ArrayAdapter<CharSequence> optionsAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.dashboard_stats, android.R.layout.simple_spinner_item);
         optionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -47,60 +101,52 @@ public class GalleryFragment extends Fragment{
         dashboardOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String chosenStat = adapterView.getItemAtPosition(i).toString();
-                ArrayAdapter<CharSequence> filterAdapter;
-                if(!chosenStat.equals("-")){
-                    dashboardFilter.setVisibility(View.VISIBLE);
-                    filtertxt.setVisibility(View.VISIBLE);
-                }
+                chosenStat = adapterView.getItemAtPosition(i).toString();
 
                 switch(chosenStat){
                     case "Total doses distributed":
-                        filterAdapter = ArrayAdapter.createFromResource(getContext(),
-                                R.array.filter_total_dist, android.R.layout.simple_spinner_item);
-                        dashboardFilter.setAdapter(filterAdapter);
+                        filterArray = getResources().getStringArray(R.array.filter_total_dist);
+                        selectedFilters = new boolean[filterArray.length];
                         break;
                     case "Total doses administered":
-                        filterAdapter = ArrayAdapter.createFromResource(getContext(),
-                                R.array.filter_total_admin, android.R.layout.simple_spinner_item);
-                        dashboardFilter.setAdapter(filterAdapter);
+                        filterArray = getResources().getStringArray(R.array.filter_total_admin);
+                        selectedFilters = new boolean[filterArray.length];
                         break;
                     case "Cumulative uptake (%)":
-                        filterAdapter = ArrayAdapter.createFromResource(getContext(),
-                                R.array.filter_cumulative_uptake, android.R.layout.simple_spinner_item);
-                        dashboardFilter.setAdapter(filterAdapter);
+                        filterArray = getResources().getStringArray(R.array.filter_cumulative_uptake);
+                        selectedFilters = new boolean[filterArray.length];
                         break;
                     case "Total cases and deaths":
-                        filterAdapter = ArrayAdapter.createFromResource(getContext(),
-                                R.array.filter_cases_deaths, android.R.layout.simple_spinner_item);
-                        dashboardFilter.setAdapter(filterAdapter);
+                        filterArray = getResources().getStringArray(R.array.filter_cases_deaths);
+                        selectedFilters = new boolean[filterArray.length];
                         break;
                     case "-":
-                        dashboardFilter.setVisibility(View.INVISIBLE);
-                        filtertxt.setVisibility(View.INVISIBLE);
+                        filter.setVisibility(View.INVISIBLE);
+                        ((TextView)root.findViewById(R.id.filter_legend)).setVisibility(View.INVISIBLE);
                         break;
                 }
-
-
+                if(!chosenStat.equals("-")){
+                    ((TextView)root.findViewById(R.id.filter_legend)).setVisibility(View.VISIBLE);
+                    filter.setVisibility(View.VISIBLE);
+                    filterList.clear();
+                    filterList.add(0);
+                    selectedFilters[0] = true;
+                    filter_dialog();
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
 
-
-        dashboardFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        filter.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //display different statistics here
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View view) {
+                //chosenCategoryAndFilter = filter_dialog();
+                //logic for determining which data to show
+                filter_dialog();
             }
         });
-
         return root;
     }
 

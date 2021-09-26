@@ -198,6 +198,5 @@ public class DatabaseHandler {
             this.requestMethod = requestMethod;
             this.body = body;
         }
-
     }
 }
