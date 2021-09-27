@@ -66,6 +66,9 @@ android {
         //Graphview
         implementation 'com.jjoe64:graphview:4.2.2'
 
+        //QRCode
+        implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+
     }
 }
 
