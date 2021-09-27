@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        /*
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
         if(handler.testAPIFunctions()){
             Log.i("APITest", "Api test succeeded!");
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             Log.i("APITest", "Api test failed!");
         }
-
+        */
         Button loginButton = findViewById(R.id.login_button);
         Button createButton = findViewById(R.id.create_button);
         ProgressBar loadingProgressBar = findViewById(R.id.loading);
@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(view.VISIBLE);
                 String username = ((EditText)findViewById(R.id.loginId)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password)).getText().toString();
-                Log.i("LOGIN", "userName = " + username);
-                Log.i("LOGIN", "password = " + password);
+                
                 if(handler.login(username, password)){
                     User loggedInUser = new User();
                     loggedInUser = handler.getUser(username);
