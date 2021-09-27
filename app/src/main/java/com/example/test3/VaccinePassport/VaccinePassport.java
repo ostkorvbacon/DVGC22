@@ -17,6 +17,11 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class VaccinePassport{
     private String username;
     private ImageView iV;
@@ -39,7 +44,7 @@ public class VaccinePassport{
                 v = element;
             }
         }
-        if(v != null) {
+        if(v != null && hasBeenTwoWeeksAfterDose2(v.getDate())) {
             iV.setVisibility(View.VISIBLE);
             tv.setVisibility(View.VISIBLE);
             String date = v.getDate();
@@ -64,5 +69,20 @@ public class VaccinePassport{
             iV.setVisibility(View.INVISIBLE);
             tv.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private boolean hasBeenTwoWeeksAfterDose2(String date){
+        int noOfDays = 14; //i.e two weeks
+        Calendar calendar = Calendar.getInstance();
+        String[] sepDate = date.split("/");
+        calendar.setTime(new Date(Integer.parseInt(sepDate[0])-1900, Integer.parseInt(sepDate[1])-1, Integer.parseInt(sepDate[2])));
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        Date valid_after = calendar.getTime();
+        if (new Date().after(valid_after)) {
+            return true;
+        }
+
+
+        return false;
     }
 }
