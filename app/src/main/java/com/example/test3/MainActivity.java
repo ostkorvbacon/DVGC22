@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(view.VISIBLE);
                 String username = ((EditText)findViewById(R.id.loginId)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password)).getText().toString();
-
+                Log.i("LOGIN", "userName = " + username);
+                Log.i("LOGIN", "password = " + password);
                 if(handler.login(username, password)){
                     User loggedInUser = new User();
                     loggedInUser = handler.getUser(username);
