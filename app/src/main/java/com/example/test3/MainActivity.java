@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
         if(!handler.testAPIFunctions()){
             Log.i("APITest", "Api test failed!");
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(view.VISIBLE);
                 String username = ((EditText)findViewById(R.id.loginId)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password)).getText().toString();
-
+                
                 if(handler.login(username, password)){
                     User loggedInUser = new User();
                     loggedInUser = handler.getUser(username);

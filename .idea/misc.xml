@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/activity_main.xml" value="0.15286080273270708" />
+        <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/app_bar_main_menu.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/content_main_menu.xml" value="0.14739583333333334" />
-        <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_gallery.xml" value="0.14739583333333334" />
+        <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_create.xml" value="0.22708333333333333" />
+        <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_gallery.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_home.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_slideshow.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/nav_header_main_menu.xml" value="0.14739583333333334" />
@@ -54,5 +56,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.14739583333333334" />
+      </ProjectState>
+    </option>
   </component>
 </project>
