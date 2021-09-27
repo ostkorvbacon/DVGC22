@@ -2,6 +2,8 @@ package com.example.test3.DatabaseHandler;
 
 import android.util.Log;
 
+import org.apache.poi.ss.formula.functions.T;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +13,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -166,59 +171,25 @@ public class DatabaseHandler {
 
     public List<Vaccination> getUserVaccinations(String username){
         List<Vaccination> list = new ArrayList<>();
-        LinkedHashMap<String, String> data = new LinkedHashMap<>();
-        data.put("Email", username);
-        String body = constructJsonObject(data);
+        LinkedHashMap<String, String> input = new LinkedHashMap<>();
+        input.put("Email", username);
+        String body = constructJsonObject(input);
         String resp = getResponse(domain+"getUserVaccinations", "POST", body);
-
-        resp = resp.replace("{\"vaccinations\":[", "").replace("]}", "");
-        resp = resp.replace("{", "");
-        if(!resp.equals("")) {
-            String[] vaccinations = resp.split("\\}");
-            for (String vaccination : vaccinations) {
-                if (!vaccination.equals("")) {
-                    int i = 0;
-                    String[] vaccineInfo = new String[6];
-                    for (String item : vaccination.split(",")) {
-                        if(!item.equals("")) {
-                            // extract info
-                            vaccineInfo[i] = getJSONValue(item);
-                            i++;
-                        }
-                    }
-                    list.add(new Vaccination(Integer.parseInt(vaccineInfo[0]), vaccineInfo[1], vaccineInfo[2], Integer.parseInt(vaccineInfo[3]), vaccineInfo[4], Integer.parseInt(vaccineInfo[5])));
-                }
-            }
+        List<List<String>> output = extractJsonArrayValues("vaccinations", resp);
+        for(List<String> innerList : output){
+            list.add(new Vaccination(Integer.parseInt(innerList.get(0)), innerList.get(1), innerList.get(2), Integer.parseInt(innerList.get(3)), innerList.get(4), Integer.parseInt(innerList.get(5))));
         }
-
         return list;
     }
 
     public List<Vaccination> getVaccinations(){
         List<Vaccination> list = new ArrayList<>();
         String resp = getResponse(domain+"getVaccinations", "GET", "");
-        resp = resp.replace("{\"vaccinations\":[", "").replace("]}", "");
-        resp = resp.replace("{", "");
-        if(!resp.equals("")) {
-            String[] vaccinations = resp.split("\\}");
-            for (String vaccination : vaccinations) {
-                if (!vaccination.equals("")) {
-                    int i = 0;
-                    String[] vaccineInfo = new String[6];
-                    for (String item : vaccination.split(",")) {
-                        if(!item.equals("")) {
-                            // extract info
-                            vaccineInfo[i] = getJSONValue(item);
-                            i++;
-                        }
-                    }
-                    list.add(new Vaccination(Integer.parseInt(vaccineInfo[0]), vaccineInfo[1], vaccineInfo[2], Integer.parseInt(vaccineInfo[3]), vaccineInfo[4], Integer.parseInt(vaccineInfo[5])));
-                }
-            }
+        List<List<String>> data = extractJsonArrayValues("vaccinations", resp);
+        for(List<String> innerList : data){
+            list.add(new Vaccination(Integer.parseInt(innerList.get(0)), innerList.get(1), innerList.get(2), Integer.parseInt(innerList.get(3)), innerList.get(4), Integer.parseInt(innerList.get(5))));
         }
-
         return list;
-
     }
 
     public int getCliniqueID(String name){
@@ -256,26 +227,9 @@ public class DatabaseHandler {
     public List<Clinique> getCliniques(){
         List<Clinique> list = new ArrayList<Clinique>();
         String resp = getResponse(domain+"getCliniques", "GET", "");
-        resp = resp.replace("{\"Cliniques\":[", "").replace("]}", "");
-        resp = resp.replace("{", "");
-        if(!resp.equals("")) {
-            String[] cliniques = resp.split("\\}");
-            int c = 0;
-            for (String clinique : cliniques) {
-                if (!clinique.equals("")) {
-                    int i = 0;
-                    String[] cliniqueInfo = new String[5];
-                    for (String item : clinique.split(",")) {
-                        if(!item.equals("")) {
-                            // extract info
-                            cliniqueInfo[i] = getJSONValue(item);
-                            i++;
-                        }
-                    }
-                    list.add(new Clinique(Integer.parseInt(cliniqueInfo[0]), cliniqueInfo[1], cliniqueInfo[2], cliniqueInfo[3], cliniqueInfo[4]));
-                }
-                c++;
-            }
+        List<List<String>> data = extractJsonArrayValues("cliniques", resp);
+        for(List<String> innerList : data){
+            list.add(new Clinique(Integer.parseInt(innerList.get(0)), innerList.get(1), innerList.get(2), innerList.get(3), innerList.get(4)));
         }
         return list;
     }
@@ -307,8 +261,108 @@ public class DatabaseHandler {
         return false;
     }
 
+    public int getBookingID(String username){
+        for(Booking b : getBookings()){
+            if (b.getUsername().equals(username)){
+                return b.getId();
+            }
+        }
+        return -1;
+    }
+
+    public boolean bookingExists(int bookingID){
+        for (Booking b : getBookings()){
+            if (b.getId() == bookingID){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Booking getBooking(String username){
+        for(Booking b : getBookings()){
+            if (b.getUsername().equals(username)){
+                return b;
+            }
+        }
+        return null;
+    }
+
+    public Booking newBooking(String username, String cliniqueName, Timestamp dateTime){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Email", username);
+        data.put("CliniqueId", Integer.toString(getCliniqueID(cliniqueName)));
+        data.put("Date", dateTime.toString());
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"newBooking", "POST", body);
+        return getBooking(username);
+    }
+
+    public List<Booking> getUserBookings(String username){
+        List<Booking> list = new ArrayList<Booking>();
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Email", username);
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"getUserBookings", "POST", body);
+        List<List<String>> output = extractJsonArrayValues("bookings", resp);
+        for(List<String> innerList : output){
+            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
+        }
+        return list;
+    }
+
+    public List<Booking> getBookings(){
+        List<Booking> list = new ArrayList<Booking>();
+        String resp = getResponse(domain+"getBookings", "GET", "");
+        List<List<String>> output = extractJsonArrayValues("bookings", resp);
+        for(List<String> innerList : output){
+            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
+        }
+        return list;
+    }
+
+    public List<Booking> getBookingsToday(){
+        List<Booking> list = new ArrayList<Booking>();
+        String resp = getResponse(domain+"getBookingsToday", "POST", "");
+        List<List<String>> output = extractJsonArrayValues("bookings", resp);
+        for(List<String> innerList : output){
+            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
+        }
+        return list;
+    }
+
+    public List<Booking> getBookingsToday(String cliniqueName){
+        List<Booking> list = new ArrayList<Booking>();
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("CliniqueId", Integer.toString(getCliniqueID(cliniqueName)));
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"getBookingsToday", "POST", body);
+        List<List<String>> output = extractJsonArrayValues("bookings", resp);
+        for(List<String> innerList : output){
+            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
+        }
+        return list;
+    }
+
+    public void deleteBookings(String username){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Email", username);
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"deleteBooking", "POST", body);
+    }
+
+    public Vaccination doVaccination(String username, int dose, String type){
+        Booking b = getBooking(username);
+        String[] dateinfo = b.getDate().toString().split(" ")[0].split("-");
+        String date = dateinfo[0] + "/" + dateinfo[1] + "/" + dateinfo[2];
+        Vaccination v = newVaccination(username, date, dose, type, getClinique(b.getCliniqueID()).getName());
+        deleteBookings(username);
+        return v;
+    }
+
     // tests all the api functions to see if they work as intended!
     public boolean testAPIFunctions(){
+        Log.i("APITest", "Starting API test...");
         String username = "testing12345@hotmail.com";
         String password = "test123";
         String name = "Test Testsson";
@@ -318,8 +372,28 @@ public class DatabaseHandler {
         String address = "Testgatan 12";
         String role = "Doctor";
 
+        String cliniqueName = "Test Klinik 123";
+        String kPhone = "0723423422";
+        String kCity = "Karlstad";
+        String kAddr = "Stora Gatan 123";
+
+        Timestamp date = Timestamp.valueOf("2021-09-27 10:30:00.0");
+        String[] dateinfo = date.toString().split(" ")[0].split("-");
+        String dateNoTime = dateinfo[0] + "/" + dateinfo[1] + "/" + dateinfo[2];
+
+        // test users
+        Log.i("APITest", "testing users...");
+        if(vaccinationExists(username, dateNoTime, cliniqueName)){
+            deleteVaccination(getVaccination(username, dateNoTime, cliniqueName).getId());
+        }
+        if(bookingExists(getBookingID(username))){
+            deleteBookings(username);
+        }
         if(userExists(username)){
             deleteUser(username);
+        }
+        if(cliniqueExists(cliniqueName)){
+            deleteClinique(cliniqueName);
         }
         if(!userExists(username)) {
             User test = new User(username, name, phone, doB, city, address, role);
@@ -364,11 +438,17 @@ public class DatabaseHandler {
             }
         }
 
-        String cliniqueName = "Test Klinik 123";
-        String kPhone = "0723423422";
-        String kCity = "Karlstad";
-        String kAddr = "Stora Gatan 123";
-
+        // test cliniques and vaccinations
+        Log.i("APITest", "testing cliniques and vaccinations...");
+        if(vaccinationExists(username, dateNoTime, cliniqueName)){
+            deleteVaccination(getVaccination(username, dateNoTime, cliniqueName).getId());
+        }
+        if(bookingExists(getBookingID(username))){
+            deleteBookings(username);
+        }
+        if(userExists(username)){
+            deleteUser(username);
+        }
         if(cliniqueExists(cliniqueName)){
             deleteClinique(cliniqueName);
         }
@@ -423,12 +503,10 @@ public class DatabaseHandler {
                 Log.i("APITest", "delete vaccination does not work correctly!");
                 return false;
             }
-            Log.i("APITest", "deleted vaccination");
             if(!cliniqueExists(c.getName())){
                 Log.i("APITest", "clinique exists, with existing clinique, does not work correctly!");
                 return false;
             }
-            Log.i("APITest", "clinique exists");
             if(cliniqueExists(c.getName() + "fel")){
                 Log.i("APITest", "clinique exists, with incorrect clinique name, does not work correctly!");
                 return false;
@@ -440,7 +518,100 @@ public class DatabaseHandler {
             }
         }
 
+        // test bookings
+        Log.i("APITest", "testing bookings...");
+        if(vaccinationExists(username, dateNoTime, cliniqueName)){
+            deleteVaccination(getVaccination(username, dateNoTime, cliniqueName).getId());
+        }
+        if(bookingExists(getBookingID(username))){
+            deleteBookings(username);
+        }
+        if(userExists(username)){
+            deleteUser(username);
+        }
+        if(cliniqueExists(cliniqueName)){
+            deleteClinique(cliniqueName);
+        }
+        if(!bookingExists(getBookingID(username))){
+            User user = newUser(username, password, name, phone, doB, city, address, role);
+            Clinique c = newClinique(cliniqueName, kPhone, kCity, kAddr);
+            Booking b = newBooking(user.getUsername(), c.getName(), date);
+            Booking test = new Booking(b.getId(), user.getUsername(), c.getId(), date);
+            if(!(test.toString().equals(b.toString()))){
+                Log.i("APITest", "Create booking does not work correctly!");
+                Log.e("APITest", test.toString());
+                Log.e("APITest", b.toString());
+                return false;
+            }
+            if(!b.toString().equals(getBooking(user.getUsername()).toString())){
+                Log.i("APITest", "Get booking does not work correctly!");
+                Log.e("APITest", getBooking(user.getUsername()).toString());
+                Log.e("APITest", b.toString());
+                return false;
+            }
+            if(!bookingExists(b.getId())){
+                Log.i("APITest", "Booking exists does not work correctly!");
+                return false;
+            }
+            Vaccination v = doVaccination(user.getUsername(), 1, "Pfizer");
+            if(!vaccinationExists(user.getUsername(), dateNoTime, c.getName())){
+                Log.i("APITest", "DoVaccination does not generate new vaccination");
+                return false;
+            }
+            if(bookingExists(b.getId())){
+                Log.i("APITest", "DoVaccination does not remove booking");
+                return false;
+            }
+        }
+
+        if(vaccinationExists(username, dateNoTime, cliniqueName)){
+            deleteVaccination(getVaccination(username, dateNoTime, cliniqueName).getId());
+        }
+        if(bookingExists(getBookingID(username))){
+            deleteBookings(username);
+        }
+        if(userExists(username)){
+            deleteUser(username);
+        }
+        if(cliniqueExists(cliniqueName)){
+            deleteClinique(cliniqueName);
+        }
+
+        Log.i("APITest", "Api test passed!");
+
         return true;
+    }
+
+    private Timestamp getTimestampFromString(String s){
+        try {
+            return new Timestamp(DateUtil.provideDateFormat().parse(s).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.e("HTTP", "Could not parse string to timestamp");
+        }
+        return null;
+    }
+
+    private List<List<String>> extractJsonArrayValues(String arrayName, String json){
+        List<List<String>> data = new ArrayList<>();
+        json = json.replace("{\"" + arrayName + "\":[", "").replace("]}", "");
+        json = json.replace("{", "");
+        if(!json.equals("")) {
+            String[] items = json.split("\\}");
+            for (String item : items) {
+                if (!item.equals("")) {
+                    List<String> innerList = new ArrayList<>();
+                    for (String field : item.split(",")) {
+                        if(!field.equals("")) {
+                            // extract info
+                            innerList.add(getJSONValue(field));
+                        }
+                    }
+                    data.add(innerList);
+                }
+            }
+        }
+        return data;
     }
 
     private String constructJsonObject(LinkedHashMap<String, String> data){

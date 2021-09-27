@@ -23,11 +23,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
-        if(handler.testAPIFunctions()){
-            Log.i("APITest", "Api test succeeded!");
-        }
-        else{
+        if(!handler.testAPIFunctions()){
             Log.i("APITest", "Api test failed!");
         }
 
