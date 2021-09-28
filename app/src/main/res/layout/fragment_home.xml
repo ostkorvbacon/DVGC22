@@ -29,7 +29,6 @@
         android:layout_height="41dp"
         android:layout_marginStart="16dp"
         android:ems="10"
-        android:hint="First name"
         android:inputType="none"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView1337" />
@@ -54,8 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="First dose"
         android:selectable="false"
+        android:text="First dose"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -64,15 +63,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Second dose"
         android:selectable="false"
+        android:text="Second dose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/first_dose_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -83,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <EditText
-        android:id="@+id/editTextDate2"
+        android:id="@+id/second_dose_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -92,7 +91,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toEndOf="@+id/checkBox2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/first_dose_date" />
+
+
+    <TextView
+        android:id="@+id/appointment_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Upcoming vaccination appointment"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
 
     <TextView
         android:id="@+id/textView12"
@@ -107,22 +121,8 @@
         app:layout_constraintStart_toEndOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName8" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Upcoming vaccination appointment"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
-
     <EditText
-        android:id="@+id/editTextDate3"
+        android:id="@+id/appointment_date"
         android:layout_width="172dp"
         android:layout_height="44dp"
         android:ems="10"
@@ -131,10 +131,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintTop_toBottomOf="@+id/appointment_date_label" />
 
     <EditText
-        android:id="@+id/editTextTime"
+        android:id="@+id/appointment_time"
         android:layout_width="133dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -143,8 +143,18 @@
         android:inputType="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.024"
-        app:layout_constraintStart_toEndOf="@+id/editTextDate3"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintStart_toEndOf="@+id/appointment_date"
+        app:layout_constraintTop_toBottomOf="@+id/appointment_date_label" />
+
+    <TextView
+        android:id="@+id/appointment_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="8dp"
+        android:text="Time"
+        app:layout_constraintStart_toEndOf="@+id/appointment_date_label"
+        app:layout_constraintTop_toBottomOf="@+id/appointment_title" />
 
     <Button
         android:id="@+id/button2"
@@ -154,7 +164,7 @@
         android:layout_marginTop="8dp"
         android:text="Book appointment"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate3" />
+        app:layout_constraintTop_toBottomOf="@+id/appointment_date" />
 
     <TextView
         android:id="@+id/textView15"
@@ -182,14 +192,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/cancel_button"
         android:layout_width="51dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="344dp"
+        android:layout_marginBottom="343dp"
         android:src="@drawable/ic_cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextTime" />
+        app:layout_constraintStart_toEndOf="@+id/appointment_time" />
 
     <TextView
         android:id="@+id/textView1337"
@@ -202,24 +212,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/appointment_date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/appointment_title" />
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="8dp"
-        android:text="Time"
-        app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

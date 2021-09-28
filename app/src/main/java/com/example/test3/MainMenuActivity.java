@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.ImageView;
+//import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
+
 
 import com.example.test3.ui.profile.ProfileFragment;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,8 +36,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         binding = ActivityMainMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.appBarMainMenu.toolbar);
+        //changed
+        Toolbar tool = findViewById(R.id.toolbar);
+        setSupportActionBar(tool);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -47,7 +51,6 @@ public class MainMenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
 
     }
 

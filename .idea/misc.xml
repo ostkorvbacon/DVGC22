@@ -23,7 +23,7 @@
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/app_bar_main_menu.xml" value="0.3288409703504043" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/content_main_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_create.xml" value="0.25052083333333336" />
-        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_gallery.xml" value="0.33" />
+        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_gallery.xml" value="0.327718223583461" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_profile.xml" value="0.28020833333333334" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_slideshow.xml" value="0.33" />
@@ -31,6 +31,10 @@
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/settings_activity.xml" value="0.29270833333333335" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/menu/activity_main_menu_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/menu/main_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3082051282051282" />
+        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3082051282051282" />
+        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/mipmap-anydpi-v26/ic_vaccine_app_logo.xml" value="0.30885416666666665" />
+        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/mipmap-anydpi-v26/ic_vaccine_app_logo_round.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/test3/app/src/main/res/drawable/ic_menu_camera.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/test3/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/test3/app/src/main/res/drawable/side_nav_bar.xml" value="0.3333333333333333" />

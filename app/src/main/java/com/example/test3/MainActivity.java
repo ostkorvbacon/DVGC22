@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             Log.i("APITest", "Api test failed!");
-        }
-        */
+        }*/
+
         Button loginButton = findViewById(R.id.login_button);
         Button createButton = findViewById(R.id.create_button);
         ProgressBar loadingProgressBar = findViewById(R.id.loading);
