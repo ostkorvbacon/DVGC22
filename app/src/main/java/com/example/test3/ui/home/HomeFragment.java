@@ -24,21 +24,81 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import com.example.test3.DatabaseHandler.Booking;
 import com.example.test3.DatabaseHandler.DatabaseHandler;
 import com.example.test3.DatabaseHandler.User;
 
 
-
-
+import com.example.test3.DatabaseHandler.Vaccination;
 import com.example.test3.R;
 import com.example.test3.VaccinePassport.VaccinePassport;
 import com.example.test3.databinding.FragmentHomeBinding;
+
+import java.sql.Timestamp;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private DatabaseHandler database = new DatabaseHandler("http://83.254.68.246:3003/");
+    ImageView qrCode;
+    TextView txtView;
+    CheckBox firstDose;
+    CheckBox secondDose;
+    EditText firstDoseDate;
+    EditText secondDoseDate;
+    EditText personalName;
+    TextView dateLabel;
+    TextView timeLabel;
+    TextView bookTitle;
+    EditText appointDate;
+    EditText appointTime;
+    ImageButton cancelButton;
+    Button bookButton;
+    //temp
+    int count;
+    public void setViewsId(View root){
+        //bookings related
+        personalName = root.findViewById(R.id.editTextTextPersonName8);
+        dateLabel = root.findViewById(R.id.appointment_date_label);
+        timeLabel = root.findViewById(R.id.appointment_time_label);
+        bookTitle = root.findViewById(R.id.appointment_title);
+        appointDate = root.findViewById(R.id.appointment_date);
+        appointTime = root.findViewById(R.id.appointment_time);
+        cancelButton = root.findViewById(R.id.cancel_button);
+        bookButton = root.findViewById(R.id.book_button);
+        //QR related
+        qrCode = root.findViewById(R.id.imageView);
+        txtView = root.findViewById(R.id.textView15);
+        //vaccinations
+        firstDose = root.findViewById(R.id.checkBox);
+        secondDose = root.findViewById(R.id.checkBox2);
+        firstDoseDate = root.findViewById(R.id.first_dose_date);
+        secondDoseDate = root.findViewById(R.id.second_dose_date);
+    }
+
+    public void toggleVisibilityBooking(User loggedInUser){
+        if(database.bookingExists(database.getBookingID(loggedInUser.getUsername()))){
+            dateLabel.setVisibility(View.VISIBLE);
+            timeLabel.setVisibility(View.VISIBLE);
+            appointDate.setVisibility(View.VISIBLE);
+            appointTime.setVisibility(View.VISIBLE);
+            cancelButton.setVisibility(View.VISIBLE);
+            bookButton.setVisibility(View.INVISIBLE);
+            String booking = database.getBooking(loggedInUser.getUsername()).getDate().toString();
+            String[] bookingDetails = booking.split("\\s");
+            String[] strippedTime = bookingDetails[1].split(":00.0");
+            String bookingDate = bookingDetails[0];
+            appointDate.setText(bookingDate);
+            appointTime.setText(strippedTime[0]);
+        }else{
+            dateLabel.setVisibility(View.GONE);
+            timeLabel.setVisibility(View.GONE);
+            appointDate.setVisibility(View.GONE);
+            appointTime.setVisibility(View.GONE);
+            cancelButton.setVisibility(View.GONE);
+        }
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,47 +107,61 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        Intent intent = this.getActivity().getIntent();
-        User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
-
-        EditText personalName = root.findViewById(R.id.editTextTextPersonName8);
-        TextView dateLabel = root.findViewById(R.id.appointment_date_label);
-        TextView timeLabel = root.findViewById(R.id.appointment_time_label);
-        EditText appointDate = root.findViewById(R.id.appointment_date);
-        EditText appointTime = root.findViewById(R.id.appointment_time);
-        ImageButton cancelAppoint = root.findViewById(R.id.cancel_button);
-
-        CheckBox firstDose = root.findViewById(R.id.checkBox);
-        CheckBox secondDose = root.findViewById(R.id.checkBox2);
-        EditText firstDoseDate = root.findViewById(R.id.first_dose_date);
-        EditText secondDoseDate = root.findViewById(R.id.second_dose_date);
+        setViewsId(root);
         firstDose.setEnabled(false);
         secondDose.setEnabled(false);
-        Log.i("VACC","getting vacc");
-        //Vaccination vacc = database.newVaccination(user.getUsername(),"20/10/10", 1, "Pfizer", "test");
-        
+        Intent intent = this.getActivity().getIntent();
+        User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
+
         personalName.setText(loggedInUser.getName());
-        /*
-        for(Vaccination v: database.getUserVaccinations(user.getUsername())){
+
+        for(Vaccination v: database.getUserVaccinations(loggedInUser.getUsername())){
             int dose = v.getDose();
 
             if(dose == 1){
                 firstDose.setChecked(true);
                 firstDoseDate.setText(v.getDate());
+                database.deleteVaccination(v.getId());
             }else if(dose == 2){
                 secondDose.setChecked(true);
                 secondDoseDate.setText(v.getDate());
+
+                bookTitle.setVisibility(View.INVISIBLE);
+                bookButton.setVisibility(View.GONE);
+                database.deleteVaccination(v.getId());
             }
-        }*/
-        
-        //do QR
-        ImageView imageView = root.findViewById(R.id.imageView);
-        TextView txtView = root.findViewById(R.id.textView15);
-        VaccinePassport passport = new VaccinePassport(loggedInUser.getUsername(), imageView, txtView);
+
+        }
+        //database.newBooking(loggedInUser.getUsername(), "test", Timestamp.valueOf("2021-10-30 10:30:00.0"));
+
+        //checks if user has upcoming vaccination appointment and then displays it in UI
+        toggleVisibilityBooking(loggedInUser);
+
+        //generates QR-code if user is "fully" (2 doses as of now) vaccinated
+        VaccinePassport passport = new VaccinePassport(loggedInUser.getUsername(), qrCode, txtView);
         passport.getQRCode();
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = loggedInUser.getUsername();
+                Booking cancelBooking = database.getBooking(username);
+                database.deleteBookings(username);
+                toggleVisibilityBooking(loggedInUser);
+            }
+        });
+        bookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent bookingsPage = new Intent(root.getContext(), );
+                //bookingsPage.putExtra("loggedIn", loggedInUser);
+                //startActivity(bookingsPage);
+            }
+        });
+
         return root;
     }
+
 
     @Override
     public void onDestroyView() {

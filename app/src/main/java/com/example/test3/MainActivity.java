@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     User loggedInUser = new User();
                     loggedInUser = handler.getUser(username);
                     Intent loginIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
-                    loginIntent.putExtra("LoggedInUser", loggedInUser);
+                    loginIntent.putExtra("loggedInUser", loggedInUser);
                     startActivity(loginIntent);
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(),"Login failed.",Toast.LENGTH_LONG);
