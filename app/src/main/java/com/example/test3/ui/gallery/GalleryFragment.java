@@ -1,6 +1,7 @@
 package com.example.test3.ui.gallery;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,14 +21,21 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.test3.DataExtraction.CovidCasesSweden;
+import com.example.test3.DataExtraction.CovidData;
+import com.example.test3.DataExtraction.DataExtractor;
+import com.example.test3.MainActivity;
 import com.example.test3.R;
 import com.example.test3.databinding.FragmentGalleryBinding;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class GalleryFragment extends Fragment{
 
@@ -41,22 +49,20 @@ public class GalleryFragment extends Fragment{
     String chosenStat;
 
     public void determineDataRepresentation(String chosenFilters){
-        double x, y;
+        CovidData covidData = MainActivity.covidData;
+
+        double x1, x2, y;
         View root = binding.getRoot();
         GraphView graph = (GraphView) root.findViewById(R.id.graph);
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScalableY(true);
+
         switch(chosenStat){
 
             case "Total doses distributed":
                 switch(chosenFilters){
                     case "By county":
-                        LineGraphSeries<DataPoint> seriesC = new LineGraphSeries<>(new DataPoint[] {
-                                new DataPoint(0, 1),
-                                new DataPoint(1, 5),
-                                new DataPoint(2, 3),
-                                new DataPoint(3, 2),
-                                new DataPoint(4, 6)
-                        });
-                        graph.addSeries(seriesC);
+
                         break;
                     case "By product":
 
@@ -157,6 +163,45 @@ public class GalleryFragment extends Fragment{
 
                         break;
                     case "By age group":
+                        graph.getViewport().setXAxisBoundsManual(true);
+                        graph.getViewport().setMinX(0);
+
+                        String[] ageGroup = {"Age_0_9", "Age_10_19", "Age_20_29", "Age_30_39", "Age_40_49","Age_50_59",  "Age_60_69", "Age_70_79", "Age_80_89", "Age_90_plus"};
+                        int index = covidData.findSwedenCasesAndDeathsRegion("Sverige");
+
+                        graph.removeAllSeries();
+                        int length = ageGroup.length;
+                        x1 = 1;
+                        x2 = 0;
+                        graph.getViewport().setMaxX(length*2);
+                        BarGraphSeries<DataPoint> seriesBAG = new BarGraphSeries<DataPoint>();
+                        BarGraphSeries<DataPoint> seriesBAG2 = new BarGraphSeries<DataPoint>();
+
+                        for(int i = 1; i < length+1; i ++){
+                            CovidCasesSweden.AgeGroupReport listBAG = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport(ageGroup[i-1]);
+
+                            y = listBAG.getCases();
+                            x1 = x2 +1;
+                            seriesBAG.appendData(new DataPoint(x1, y), true, length*2);
+
+                            x2 = x1 +1 ;
+                            y = listBAG.getDeaths();
+                            seriesBAG2.appendData(new DataPoint(x2, y), true, length*2);
+                        }
+                        graph.addSeries(seriesBAG);
+                        graph.addSeries(seriesBAG2);
+
+                        seriesBAG.setColor(Color.BLUE);
+                        seriesBAG.setDrawValuesOnTop(true);
+                        seriesBAG.setValuesOnTopColor(Color.BLUE);
+                        seriesBAG.setValuesOnTopSize(25);
+                        seriesBAG.setSpacing(25);
+
+                        seriesBAG2.setColor(Color.RED);
+                        seriesBAG2.setDrawValuesOnTop(true);
+                        seriesBAG2.setValuesOnTopColor(Color.RED);
+                        seriesBAG2.setValuesOnTopSize(25);
+                        seriesBAG2.setSpacing(25);
 
                         break;
                     case "By county, By age group":
@@ -269,6 +314,7 @@ public class GalleryFragment extends Fragment{
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
