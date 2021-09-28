@@ -22,6 +22,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.test3.R;
 import com.example.test3.databinding.FragmentGalleryBinding;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,18 +34,29 @@ public class GalleryFragment extends Fragment{
     private GalleryViewModel galleryViewModel;
     private FragmentGalleryBinding binding;
     TextView filter;
+    GraphView graph;
     boolean[] selectedFilters;
     ArrayList<Integer> filterList = new ArrayList<>();
     String[] filterArray;
     String chosenStat;
 
     public void determineDataRepresentation(String chosenFilters){
+        double x, y;
+        View root = binding.getRoot();
+        GraphView graph = (GraphView) root.findViewById(R.id.graph);
         switch(chosenStat){
 
             case "Total doses distributed":
                 switch(chosenFilters){
                     case "By county":
-
+                        LineGraphSeries<DataPoint> seriesC = new LineGraphSeries<>(new DataPoint[] {
+                                new DataPoint(0, 1),
+                                new DataPoint(1, 5),
+                                new DataPoint(2, 3),
+                                new DataPoint(3, 2),
+                                new DataPoint(4, 6)
+                        });
+                        graph.addSeries(seriesC);
                         break;
                     case "By product":
 

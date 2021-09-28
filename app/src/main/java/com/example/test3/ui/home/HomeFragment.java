@@ -6,10 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import android.widget.EditText;
+import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,10 +23,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+
 import com.example.test3.DatabaseHandler.DatabaseHandler;
 import com.example.test3.DatabaseHandler.User;
-import com.example.test3.DatabaseHandler.Vaccination;
+
+
+
+
 import com.example.test3.R;
+import com.example.test3.VaccinePassport.VaccinePassport;
 import com.example.test3.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -37,9 +47,9 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         Intent intent = this.getActivity().getIntent();
-        User user = (User)intent.getSerializableExtra("LoggedInUser");
-        //Log.e("USER", user.toString());
+        User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
 
         EditText personalName = root.findViewById(R.id.editTextTextPersonName8);
         TextView dateLabel = root.findViewById(R.id.appointment_date_label);
@@ -57,7 +67,7 @@ public class HomeFragment extends Fragment {
         Log.i("VACC","getting vacc");
         //Vaccination vacc = database.newVaccination(user.getUsername(),"20/10/10", 1, "Pfizer", "test");
         
-        personalName.setText(user.getName());
+        personalName.setText(loggedInUser.getName());
         /*
         for(Vaccination v: database.getUserVaccinations(user.getUsername())){
             int dose = v.getDose();
@@ -70,7 +80,12 @@ public class HomeFragment extends Fragment {
                 secondDoseDate.setText(v.getDate());
             }
         }*/
-
+        
+        //do QR
+        ImageView imageView = root.findViewById(R.id.imageView);
+        TextView txtView = root.findViewById(R.id.textView15);
+        VaccinePassport passport = new VaccinePassport(loggedInUser.getUsername(), imageView, txtView);
+        passport.getQRCode();
         return root;
     }
 

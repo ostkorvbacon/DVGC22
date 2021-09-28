@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         /*
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
         if(handler.testAPIFunctions()){
