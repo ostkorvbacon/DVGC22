@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test3.DataExtraction.CovidData;
@@ -45,14 +47,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loadingProgressBar.setVisibility(view.VISIBLE);
-                String username = "bert@hotmail.com";//((EditText)findViewById(R.id.loginId)).getText().toString();
-                String password = "bert12345";//((EditText)findViewById(R.id.password)).getText().toString();
+                String username = ((EditText)findViewById(R.id.loginId)).getText().toString();
+                String password = ((EditText)findViewById(R.id.password)).getText().toString();
                 
                 if(handler.login(username, password)){
                     User loggedInUser = new User();
                     loggedInUser = handler.getUser(username);
                     Intent loginIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
                     loginIntent.putExtra("LoggedInUser", loggedInUser);
+                    Log.i("test",loggedInUser.getUsername());
                     startActivity(loginIntent);
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(),"Login failed.",Toast.LENGTH_LONG);
