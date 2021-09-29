@@ -62,6 +62,36 @@ public class MainMenuActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        checkIfTimeForSecondDose();
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        switch(item.getItemId()){
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    private void checkIfTimeForSecondDose(){
         Intent intent = this.getIntent();
         User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
@@ -90,35 +120,9 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         }
 
-
-
-
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item){
-        switch(item.getItemId()){
-            case R.id.action_settings:
-                Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(settingsIntent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
     private void vacNotification(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Du kan nu boka din andra vaccination! Vill du vidare till bokningar eller boka senare");
@@ -127,13 +131,12 @@ public class MainMenuActivity extends AppCompatActivity {
         builder.setPositiveButton("Till boknngar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Gå till bokningssidan
+                //ToDo: Open booking page when implemented.
             }
         });
         builder.setNegativeButton("Senare", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
         });
 
