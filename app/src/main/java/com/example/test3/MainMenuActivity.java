@@ -41,9 +41,6 @@ public class MainMenuActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainMenuBinding binding;
 
-    Intent intent = this.getIntent();
-    User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,14 +64,17 @@ public class MainMenuActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        /*if(loggedInUser.getRole().equals("Doctor")){
+        Intent intent = this.getIntent();
+        User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
+
+        if(loggedInUser.getRole().equals("Doctor")){
             Menu navMenu = navigationView.getMenu();
             navMenu.findItem(R.id.admin_tools).setVisible(true);
         }
         else{
             Menu navMenu = navigationView.getMenu();
             navMenu.findItem(R.id.admin_tools).setVisible(false);
-        }*/
+        }
 
 
         //checkIfTimeForSecondDose();
@@ -109,6 +109,8 @@ public class MainMenuActivity extends AppCompatActivity {
     private void checkIfTimeForSecondDose(){
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
         Calendar cal = Calendar.getInstance();
+        Intent intent = this.getIntent();
+        User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
         /*Date date2 = new Date();
         date2.getTime();
         handler.newBooking(loggedInUser.getUsername(), "test",new Timestamp(date2.getTime()));*/
