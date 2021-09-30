@@ -41,9 +41,14 @@ public class MainMenuActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainMenuBinding binding;
 
+    Intent intent = this.getIntent();
+    User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         binding = ActivityMainMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -55,14 +60,24 @@ public class MainMenuActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_admin_appointments, R.id.nav_admin_schedule, R.id.nav_admin_stats)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        checkIfTimeForSecondDose();
+        /*if(loggedInUser.getRole().equals("Doctor")){
+            Menu navMenu = navigationView.getMenu();
+            navMenu.findItem(R.id.admin_tools).setVisible(true);
+        }
+        else{
+            Menu navMenu = navigationView.getMenu();
+            navMenu.findItem(R.id.admin_tools).setVisible(false);
+        }*/
+
+
+        //checkIfTimeForSecondDose();
 
 
     }
@@ -90,10 +105,8 @@ public class MainMenuActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     private void checkIfTimeForSecondDose(){
-        Intent intent = this.getIntent();
-        User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
         Calendar cal = Calendar.getInstance();
         /*Date date2 = new Date();
