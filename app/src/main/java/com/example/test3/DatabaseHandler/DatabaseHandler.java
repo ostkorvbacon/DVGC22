@@ -123,6 +123,15 @@ public class DatabaseHandler {
         return false;
     }
 
+    public boolean isUserAdmin(String username){
+        if(userExists(username)){
+            if(!getUser(username).getRole().toLowerCase().equals("user")){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Clinique newClinique(String name, String phone, String city, String address){
         LinkedHashMap<String, String> data = new LinkedHashMap<>();
         data.put("CliniqueName", name);
