@@ -13,6 +13,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,6 +119,15 @@ public class DatabaseHandler {
         resp = getJSONValue(resp);
         if (resp.equals("Success!")){
             return true;
+        }
+        return false;
+    }
+
+    public boolean isUserAdmin(String username){
+        if(userExists(username)){
+            if(!getUser(username).getRole().toLowerCase().equals("user")){
+                return true;
+            }
         }
         return false;
     }
@@ -406,6 +416,32 @@ public class DatabaseHandler {
         return null;
     }
 
+    public void setMinimumAgeForVaccination(int age){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "MinVaccAge");
+        data.put("Value", Integer.toString(age));
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"updateSetting", "POST", body);
+    }
+
+    public int getMinimumAgeForVaccination(){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "MinVaccAge");
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"getSetting", "POST", body);
+        return Integer.parseInt(getJsonValues(resp).get(1));
+    }
+
+    public boolean isQualifiedForBooking(String username){
+        User user = getUser(username);
+        int age = Integer.parseInt(user.getDateOfBirth().split("/")[0]);
+        int year = new Date().getYear() + 1900;
+        if(age >= getMinimumAgeForVaccination()){
+            return true;
+        }
+        return false;
+    }
+
 
 
     // tests all the api functions to see if they work as intended!
@@ -415,7 +451,7 @@ public class DatabaseHandler {
         String password = "test123";
         String name = "Test Testsson";
         String phone = "0723435634";
-        String doB = "2021/12/08";
+        String doB = "1997/12/08";
         String city = "Karlstad";
         String address = "Testgatan 12";
         String role = "Doctor";
@@ -627,6 +663,23 @@ public class DatabaseHandler {
                 return false;
             }
         }
+
+        // test minimum age for vaccination
+        clearTestData(username, dateNoTime, cliniqueName);
+        Log.i("APITest", "testing minimum age for vaccination...");
+        int originalValue = getMinimumAgeForVaccination();
+        setMinimumAgeForVaccination(20);
+        if(getMinimumAgeForVaccination() != 20){
+            Log.i("APITest", "setMinimumAgeForVaccination does not work correctly");
+            return false;
+        }
+        User user = newUser(username, password, name, phone, doB, city, address, role);
+        isQualifiedForBooking(username);
+        if(!isQualifiedForBooking(username)){
+            Log.i("APITest", "isQualifiedForBooking does not work correctly");
+            return false;
+        }
+        setMinimumAgeForVaccination(originalValue);
 
         // clear the test data from the database
         clearTestData(username, dateNoTime, cliniqueName);
