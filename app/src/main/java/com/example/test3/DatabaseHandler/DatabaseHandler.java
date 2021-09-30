@@ -406,6 +406,22 @@ public class DatabaseHandler {
         return null;
     }
 
+    public void setMinimumAgeForVaccination(int age){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "MinVaccAge");
+        data.put("Value", Integer.toString(age));
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"updateSetting", "POST", body);
+    }
+
+    public int getMinimumAgeForVaccination(){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "MinVaccAge");
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"getSetting", "POST", body);
+        return Integer.parseInt(getJsonValues(resp).get(1));
+    }
+
 
 
     // tests all the api functions to see if they work as intended!
@@ -627,6 +643,15 @@ public class DatabaseHandler {
                 return false;
             }
         }
+
+        // test minimum age for vaccination
+        int originalValue = getMinimumAgeForVaccination();
+        setMinimumAgeForVaccination(65);
+        if(getMinimumAgeForVaccination() != 65){
+            Log.i("APITest", "setMinimumAgeForVaccination does not work correctly");
+            return false;
+        }
+        setMinimumAgeForVaccination(originalValue);
 
         // clear the test data from the database
         clearTestData(username, dateNoTime, cliniqueName);
