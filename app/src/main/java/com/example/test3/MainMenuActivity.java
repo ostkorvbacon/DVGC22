@@ -64,6 +64,8 @@ public class MainMenuActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
+        //Hide/Show admin part side menu
         Intent intent = this.getIntent();
         User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
 
@@ -75,7 +77,7 @@ public class MainMenuActivity extends AppCompatActivity {
             Menu navMenu = navigationView.getMenu();
             navMenu.findItem(R.id.admin_tools).setVisible(false);
         }
-
+        //Hide/Show admin part side menu
 
         //checkIfTimeForSecondDose();
 
