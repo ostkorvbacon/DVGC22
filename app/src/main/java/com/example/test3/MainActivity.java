@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test3.DataExtraction.CovidData;
@@ -23,18 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        /*
-        DataExtractor data = new DataExtractor();
-        Thread downloadCovidDataThread = new Thread(data);
-        downloadCovidDataThread.start();
-        try {
-            downloadCovidDataThread.join();
-            covidData = data.getCovidData();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

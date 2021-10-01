@@ -2,8 +2,6 @@ package com.example.test3.DatabaseHandler;
 
 import android.util.Log;
 
-import org.apache.poi.ss.formula.functions.T;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,13 +10,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +96,7 @@ public class DatabaseHandler {
         String body = constructJsonObject(data);
         String resp = getResponse(domain+"tryLogin", "POST", body);
         resp = getJSONValue(resp);
-        if (resp.equals("Success!")){
+        if (!resp.equals("ERROR: Login Failed")){
             return true;
         }
         return false;
@@ -124,6 +119,15 @@ public class DatabaseHandler {
         resp = getJSONValue(resp);
         if (resp.equals("Success!")){
             return true;
+        }
+        return false;
+    }
+
+    public boolean isUserAdmin(String username){
+        if(userExists(username)){
+            if(!getUser(username).getRole().toLowerCase().equals("user")){
+                return true;
+            }
         }
         return false;
     }
@@ -175,7 +179,7 @@ public class DatabaseHandler {
         input.put("Email", username);
         String body = constructJsonObject(input);
         String resp = getResponse(domain+"getUserVaccinations", "POST", body);
-        List<List<String>> output = extractJsonArrayValues("vaccinations", resp);
+        List<List<String>> output = getJsonArrayValues("vaccinations", resp);
         for(List<String> innerList : output){
             list.add(new Vaccination(Integer.parseInt(innerList.get(0)), innerList.get(1), innerList.get(2), Integer.parseInt(innerList.get(3)), innerList.get(4), Integer.parseInt(innerList.get(5))));
         }
@@ -185,7 +189,7 @@ public class DatabaseHandler {
     public List<Vaccination> getVaccinations(){
         List<Vaccination> list = new ArrayList<>();
         String resp = getResponse(domain+"getVaccinations", "GET", "");
-        List<List<String>> data = extractJsonArrayValues("vaccinations", resp);
+        List<List<String>> data = getJsonArrayValues("vaccinations", resp);
         for(List<String> innerList : data){
             list.add(new Vaccination(Integer.parseInt(innerList.get(0)), innerList.get(1), innerList.get(2), Integer.parseInt(innerList.get(3)), innerList.get(4), Integer.parseInt(innerList.get(5))));
         }
@@ -227,7 +231,7 @@ public class DatabaseHandler {
     public List<Clinique> getCliniques(){
         List<Clinique> list = new ArrayList<Clinique>();
         String resp = getResponse(domain+"getCliniques", "GET", "");
-        List<List<String>> data = extractJsonArrayValues("cliniques", resp);
+        List<List<String>> data = getJsonArrayValues("cliniques", resp);
         for(List<String> innerList : data){
             list.add(new Clinique(Integer.parseInt(innerList.get(0)), innerList.get(1), innerList.get(2), innerList.get(3), innerList.get(4)));
         }
@@ -304,7 +308,7 @@ public class DatabaseHandler {
         data.put("Email", username);
         String body = constructJsonObject(data);
         String resp = getResponse(domain+"getUserBookings", "POST", body);
-        List<List<String>> output = extractJsonArrayValues("bookings", resp);
+        List<List<String>> output = getJsonArrayValues("bookings", resp);
         for(List<String> innerList : output){
             list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
         }
@@ -314,7 +318,7 @@ public class DatabaseHandler {
     public List<Booking> getBookings(){
         List<Booking> list = new ArrayList<Booking>();
         String resp = getResponse(domain+"getBookings", "GET", "");
-        List<List<String>> output = extractJsonArrayValues("bookings", resp);
+        List<List<String>> output = getJsonArrayValues("bookings", resp);
         for(List<String> innerList : output){
             list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
         }
@@ -324,7 +328,7 @@ public class DatabaseHandler {
     public List<Booking> getBookingsToday(){
         List<Booking> list = new ArrayList<Booking>();
         String resp = getResponse(domain+"getBookingsToday", "POST", "");
-        List<List<String>> output = extractJsonArrayValues("bookings", resp);
+        List<List<String>> output = getJsonArrayValues("bookings", resp);
         for(List<String> innerList : output){
             list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
         }
@@ -337,7 +341,7 @@ public class DatabaseHandler {
         data.put("CliniqueId", Integer.toString(getCliniqueID(cliniqueName)));
         String body = constructJsonObject(data);
         String resp = getResponse(domain+"getBookingsToday", "POST", body);
-        List<List<String>> output = extractJsonArrayValues("bookings", resp);
+        List<List<String>> output = getJsonArrayValues("bookings", resp);
         for(List<String> innerList : output){
             list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
         }
@@ -356,9 +360,89 @@ public class DatabaseHandler {
         String[] dateinfo = b.getDate().toString().split(" ")[0].split("-");
         String date = dateinfo[0] + "/" + dateinfo[1] + "/" + dateinfo[2];
         Vaccination v = newVaccination(username, date, dose, type, getClinique(b.getCliniqueID()).getName());
-        deleteBookings(username);
+        if (bookingExists(getBookingID(username))) {
+            deleteBookings(username);
+        }
+        if (questionnaireExists(username)) {
+            deleteQuestionnaire(username);
+        }
         return v;
     }
+
+    public Questionnaire getQuestionnaire(String username){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Email", username);
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"getQuestionnaire", "POST", body);
+        List<String> info = getJsonValues(resp);
+        if(!resp.equals("")) {
+            return new Questionnaire(info.get(0), convertFromQuestAns(info.get(1)), info.get(2).equals("1"));
+        }
+        return null;
+    }
+
+    public void deleteQuestionnaire(String username){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Email", username);
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"deleteQuestionnaire", "POST", body);
+    }
+
+    public boolean questionnaireExists(String username){
+        if(getQuestionnaire(username) != null){
+            return true;
+        }
+        return false;
+    }
+
+    public void updateQuestionnaire(String username, boolean approved){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Email", username);
+        data.put("Approved", approved?"1":"0");
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"updateQuestionnaire", "POST", body);
+    }
+
+    public Questionnaire newQuestionnaire(String username, boolean[] questionAnswers){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Email", username);
+        data.put("Answers", convertToQuestAns(questionAnswers));
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"newQuestionnaire", "POST", body);
+        List<String> info = getJsonValues(resp);
+        if(resp.contains("Success")) {
+            return getQuestionnaire(username);
+        }
+        return null;
+    }
+
+    public void setMinimumAgeForVaccination(int age){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "MinVaccAge");
+        data.put("Value", Integer.toString(age));
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"updateSetting", "POST", body);
+    }
+
+    public int getMinimumAgeForVaccination(){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "MinVaccAge");
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"getSetting", "POST", body);
+        return Integer.parseInt(getJsonValues(resp).get(1));
+    }
+
+    public boolean isQualifiedForBooking(String username){
+        User user = getUser(username);
+        int age = Integer.parseInt(user.getDateOfBirth().split("/")[0]);
+        int year = new Date().getYear() + 1900;
+        if(age >= getMinimumAgeForVaccination()){
+            return true;
+        }
+        return false;
+    }
+
+
 
     // tests all the api functions to see if they work as intended!
     public boolean testAPIFunctions(){
@@ -367,7 +451,7 @@ public class DatabaseHandler {
         String password = "test123";
         String name = "Test Testsson";
         String phone = "0723435634";
-        String doB = "2021/12/08";
+        String doB = "1997/12/08";
         String city = "Karlstad";
         String address = "Testgatan 12";
         String role = "Doctor";
@@ -377,24 +461,15 @@ public class DatabaseHandler {
         String kCity = "Karlstad";
         String kAddr = "Stora Gatan 123";
 
+        boolean[] questAns = {true, true, false, true, false};
+
         Timestamp date = Timestamp.valueOf("2021-09-27 10:30:00.0");
         String[] dateinfo = date.toString().split(" ")[0].split("-");
         String dateNoTime = dateinfo[0] + "/" + dateinfo[1] + "/" + dateinfo[2];
 
         // test users
         Log.i("APITest", "testing users...");
-        if(vaccinationExists(username, dateNoTime, cliniqueName)){
-            deleteVaccination(getVaccination(username, dateNoTime, cliniqueName).getId());
-        }
-        if(bookingExists(getBookingID(username))){
-            deleteBookings(username);
-        }
-        if(userExists(username)){
-            deleteUser(username);
-        }
-        if(cliniqueExists(cliniqueName)){
-            deleteClinique(cliniqueName);
-        }
+        clearTestData(username, dateNoTime, cliniqueName);
         if(!userExists(username)) {
             User test = new User(username, name, phone, doB, city, address, role);
             User user = newUser(username, password, name, phone, doB, city, address, role);
@@ -440,18 +515,7 @@ public class DatabaseHandler {
 
         // test cliniques and vaccinations
         Log.i("APITest", "testing cliniques and vaccinations...");
-        if(vaccinationExists(username, dateNoTime, cliniqueName)){
-            deleteVaccination(getVaccination(username, dateNoTime, cliniqueName).getId());
-        }
-        if(bookingExists(getBookingID(username))){
-            deleteBookings(username);
-        }
-        if(userExists(username)){
-            deleteUser(username);
-        }
-        if(cliniqueExists(cliniqueName)){
-            deleteClinique(cliniqueName);
-        }
+        clearTestData(username, dateNoTime, cliniqueName);
         if (!cliniqueExists(cliniqueName)){
             User user = newUser(username, password, name, phone, doB, city, address, role);
             Clinique c = newClinique(cliniqueName, kPhone, kCity, kAddr);
@@ -520,18 +584,7 @@ public class DatabaseHandler {
 
         // test bookings
         Log.i("APITest", "testing bookings...");
-        if(vaccinationExists(username, dateNoTime, cliniqueName)){
-            deleteVaccination(getVaccination(username, dateNoTime, cliniqueName).getId());
-        }
-        if(bookingExists(getBookingID(username))){
-            deleteBookings(username);
-        }
-        if(userExists(username)){
-            deleteUser(username);
-        }
-        if(cliniqueExists(cliniqueName)){
-            deleteClinique(cliniqueName);
-        }
+        clearTestData(username, dateNoTime, cliniqueName);
         if(!bookingExists(getBookingID(username))){
             User user = newUser(username, password, name, phone, doB, city, address, role);
             Clinique c = newClinique(cliniqueName, kPhone, kCity, kAddr);
@@ -564,6 +617,83 @@ public class DatabaseHandler {
             }
         }
 
+        // Test questionnaires
+        // make sure there is nothing left from earlier tests that have failed before the end
+        Log.i("APITest", "testing questionnaires...");
+        clearTestData(username, dateNoTime, cliniqueName);
+        if(!questionnaireExists(username)){
+            User user = newUser(username, password, name, phone, doB, city, address, role);
+            Clinique c = newClinique(cliniqueName, kPhone, kCity, kAddr);
+            Booking b = newBooking(user.getUsername(), c.getName(), date);
+            Questionnaire q = newQuestionnaire(username, questAns);
+            Questionnaire test = new Questionnaire(username, questAns);
+            if(!(test.toString().equals(q.toString()))){
+                Log.i("APITest", "Create questionnaire does not work correctly!");
+                Log.e("APITest", test.toString());
+                Log.e("APITest", q.toString());
+                return false;
+            }
+            if(!q.toString().equals(getQuestionnaire(user.getUsername()).toString())){
+                Log.i("APITest", "Get questionnaire does not work correctly!");
+                Log.e("APITest", getBooking(user.getUsername()).toString());
+                Log.e("APITest", q.toString());
+                return false;
+            }
+            if(!questionnaireExists(username)){
+                Log.i("APITest", "Questionnaire exists does not work correctly!");
+                return false;
+            }
+            updateQuestionnaire(username, true);
+            if(!getQuestionnaire(username).isApproved()){
+                Log.i("APITest", "Questionnaire update does not work correctly!");
+                return false;
+            }
+            updateQuestionnaire(username, false);
+            if(getQuestionnaire(username).isApproved()){
+                Log.i("APITest", "Questionnaire update does not work correctly!");
+                return false;
+            }
+            Vaccination v = doVaccination(user.getUsername(), 1, "Pfizer");
+            if(!vaccinationExists(user.getUsername(), dateNoTime, c.getName())){
+                Log.i("APITest", "DoVaccination does not generate new vaccination");
+                return false;
+            }
+            if(questionnaireExists(q.getUsername())){
+                Log.i("APITest", "DoVaccination does not delete questionnaire");
+                return false;
+            }
+        }
+
+        // test minimum age for vaccination
+        clearTestData(username, dateNoTime, cliniqueName);
+        Log.i("APITest", "testing minimum age for vaccination...");
+        int originalValue = getMinimumAgeForVaccination();
+        setMinimumAgeForVaccination(20);
+        if(getMinimumAgeForVaccination() != 20){
+            Log.i("APITest", "setMinimumAgeForVaccination does not work correctly");
+            return false;
+        }
+        User user = newUser(username, password, name, phone, doB, city, address, role);
+        isQualifiedForBooking(username);
+        if(!isQualifiedForBooking(username)){
+            Log.i("APITest", "isQualifiedForBooking does not work correctly");
+            return false;
+        }
+        setMinimumAgeForVaccination(originalValue);
+
+        // clear the test data from the database
+        clearTestData(username, dateNoTime, cliniqueName);
+
+        Log.i("APITest", "Api test passed!");
+
+        return true;
+    }
+
+    private void clearTestData(String username, String dateNoTime, String cliniqueName){
+        if(questionnaireExists(username)){
+            deleteQuestionnaire(username);
+            getQuestionnaire(username);
+        }
         if(vaccinationExists(username, dateNoTime, cliniqueName)){
             deleteVaccination(getVaccination(username, dateNoTime, cliniqueName).getId());
         }
@@ -576,10 +706,24 @@ public class DatabaseHandler {
         if(cliniqueExists(cliniqueName)){
             deleteClinique(cliniqueName);
         }
+    }
 
-        Log.i("APITest", "Api test passed!");
+    private String convertToQuestAns(boolean[] qList){
+        String ret = "";
+        for(boolean q : qList){
+            ret += q?"1/":"0/";
+        }
+        return ret;
+    }
 
-        return true;
+    private boolean[] convertFromQuestAns(String s){
+        boolean[] qList = new boolean[s.split("/").length];
+        int i = 0;
+        for (String ans : s.split("/")){
+            qList[i] = ans.equals("1");
+            i++;
+        }
+        return qList;
     }
 
     private Timestamp getTimestampFromString(String s){
@@ -592,7 +736,7 @@ public class DatabaseHandler {
         return null;
     }
 
-    private List<List<String>> extractJsonArrayValues(String arrayName, String json){
+    private List<List<String>> getJsonArrayValues(String arrayName, String json){
         List<List<String>> data = new ArrayList<>();
         json = json.replace("{\"" + arrayName + "\":[", "").replace("]}", "");
         json = json.replace("{", "");
@@ -600,18 +744,22 @@ public class DatabaseHandler {
             String[] items = json.split("\\}");
             for (String item : items) {
                 if (!item.equals("")) {
-                    List<String> innerList = new ArrayList<>();
-                    for (String field : item.split(",")) {
-                        if(!field.equals("")) {
-                            // extract info
-                            innerList.add(getJSONValue(field));
-                        }
-                    }
-                    data.add(innerList);
+                    data.add(getJsonValues(item));
                 }
             }
         }
         return data;
+    }
+
+    private List<String> getJsonValues(String jsonObject){
+        List<String> list = new ArrayList<>();
+        for (String field : jsonObject.split(",")) {
+            if(!field.equals("")) {
+                // extract info
+                list.add(getJSONValue(field));
+            }
+        }
+        return list;
     }
 
     private String constructJsonObject(LinkedHashMap<String, String> data){

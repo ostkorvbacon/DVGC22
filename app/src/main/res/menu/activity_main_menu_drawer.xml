@@ -25,5 +25,23 @@
             android:icon="@drawable/ic_faq"
             android:title="@string/menu_faq" />
 
+        <item android:title="Admin tools"
+            android:id="@+id/admin_tools">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_admin_appointments"
+                        android:title="@string/menu_admin_appointments" />
+                    <item
+                        android:id="@+id/nav_admin_schedule"
+                        android:title="@string/menu_admin_schedule" />
+                    <item
+                        android:id="@+id/nav_admin_stats"
+                        android:title="@string/menu_admin_stats" />
+
+                </group>
+            </menu>
+        </item>
+
     </group>
 </menu>
