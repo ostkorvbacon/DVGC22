@@ -47,9 +47,6 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         binding = ActivityMainMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //changed
@@ -70,7 +67,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
         Intent intent = this.getIntent();
-        User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
+        User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
 
         if(loggedInUser.getRole().equals("Doctor")){
             Menu navMenu = navigationView.getMenu();
@@ -134,10 +131,8 @@ public class MainMenuActivity extends AppCompatActivity {
                     Log.i("Failed parse date","pff");
                 }
 
-
             }
         }
-
     }
 
 

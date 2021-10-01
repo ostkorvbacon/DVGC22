@@ -72,7 +72,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-            android:text="Du kan rapportera in misstänkta biverkningar av vaccinet till Läkemedelsverket. De har i uppdrag att följa och övervaka effekten av läkemedel, inklusive vacciner. Även vårdpersonal ska rapportera in misstänkta biverkningar av vaccinet.
+            android:text="Du kan rapportera in misstänkta biverkningar av vaccinet till Läkemedelsverket. De har i uppdrag att följa och övervaka effekten av läkemedel, inklusive vacciner.
+            \nÄven vårdpersonal ska rapportera in misstänkta biverkningar av vaccinet.
             \nAlla misstänkta biverkningar sammanställs och utreds för att se om de har något samband med vaccinet."
             app:layout_constraintStart_toEndOf="@+id/a6"
             app:layout_constraintTop_toBottomOf="@+id/q5" />
@@ -172,13 +173,15 @@
 
         <TextView
             android:id="@+id/textView25"
-            app:layout_constraintStart_toEndOf="@+id/a8"
-            app:layout_constraintTop_toBottomOf="@+id/q7"
             android:layout_width="356dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-            android:text="Du som tidigare har fått en allvarlig allergisk reaktion som gjorde att du fick vård på en akutmottagning eller behövde läggas in på sjukhus, kan rådgöra med en läkare innan vaccinationen. Detsamma gäller om du fått en sådan kraftig reaktion efter en vaccination." />
+            android:layout_marginEnd="16dp"
+            android:text="Du som tidigare har fått en allvarlig allergisk reaktion som gjorde att du fick vård på en akutmottagning eller behövde läggas in på sjukhus, kan rådgöra med en läkare innan vaccinationen. Detsamma gäller om du fått en sådan kraftig reaktion efter en vaccination."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/a8"
+            app:layout_constraintTop_toBottomOf="@+id/q7" />
 
         <TextView
             android:id="@+id/q4"
@@ -217,14 +220,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-            android:text="Nej, du kan inte välja vaccin. Här är sådant som påverkar vilket vaccin du får:
+            android:layout_marginEnd="16dp"
+            android:text="Nej, du kan inte välja vaccin. Här är sådant som \npåverkar vilket vaccin du får:
                 \n\n - Hur många doser regionerna får av de olika vaccinen \n    och när de kommer.
                 \n - Om du är allergisk mot något ämne som finns i ett \n    särskilt vaccin.
                 \n\nAlla vaccin som används i Sverige är godkända för personer från 12 år. "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/a4"
             app:layout_constraintTop_toBottomOf="@+id/q4" />
 
-            <TextView
+        <TextView
                 android:id="@+id/a3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -237,15 +243,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/q3" />
 
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="356dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
-                android:text="Nej, du ska inte vaccinera dig om du har en pågående infektion med feber eller symtom på covid-19. Samma sak gäller om du blir sjuk inför dos två. Ta inte dos två förrän du är helt frisk och inte har några symtom på infektion, exempelvis feber."
-                app:layout_constraintStart_toEndOf="@+id/a3"
-                app:layout_constraintTop_toBottomOf="@+id/q3" />
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="356dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:text="Nej, du ska inte vaccinera dig om du har en pågående infektion med feber eller symtom på covid-19. Samma sak gäller om du blir sjuk inför dos två. Ta inte dos två förrän du är helt frisk och inte har några symtom på infektion, exempelvis feber."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/a3"
+            app:layout_constraintTop_toBottomOf="@+id/q3" />
 
         <TextView
             android:id="@+id/a4"
@@ -265,6 +274,7 @@
             android:layout_width="356dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
             android:text="Ja, du rekommenderas att vaccinera dig även om du har haft covid-19. Man vet inte säkert hur länge skyddet mot sjukdomen finns kvar efter att du har varit sjuk i covid-19. Därför behöver du vaccinera dig."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.333"

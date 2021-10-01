@@ -26,10 +26,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.test3.DatabaseHandler.Booking;
 import com.example.test3.DatabaseHandler.DatabaseHandler;
+import com.example.test3.DatabaseHandler.Questionnaire;
 import com.example.test3.DatabaseHandler.User;
 
 
 import com.example.test3.DatabaseHandler.Vaccination;
+import com.example.test3.QuestionnaireActivity;
 import com.example.test3.R;
 import com.example.test3.VaccinePassport.VaccinePassport;
 import com.example.test3.databinding.FragmentHomeBinding;
@@ -114,10 +116,11 @@ public class HomeFragment extends Fragment {
         User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
 
         personalName.setText(loggedInUser.getName());
-        database.newBooking(loggedInUser.getUsername(), "test", Timestamp.valueOf("2021-9-15 10:30:00.0"));
 
+        //database.newBooking(loggedInUser.getUsername(), "test", Timestamp.valueOf("2021-9-15 10:30:00.0"));
         //newVaccination(username, date, dose, type, getClinique(b.getCliniqueID()).getName())
         //database.newVaccination(loggedInUser.getUsername(), "2021/9/15", 2, "Pfizer", "test");
+        //database.deleteVaccination(v.getId());
 
         for(Vaccination v: database.getUserVaccinations(loggedInUser.getUsername())){
             int dose = v.getDose();
@@ -125,11 +128,9 @@ public class HomeFragment extends Fragment {
             if(dose == 1){
                 firstDose.setChecked(true);
                 firstDoseDate.setText(v.getDate());
-                //database.deleteVaccination(v.getId());
             }else if(dose == 2){
                 secondDose.setChecked(true);
                 secondDoseDate.setText(v.getDate());
-                //database.deleteVaccination(v.getId());
 
                 bookTitle.setVisibility(View.INVISIBLE);
                 bookButton.setVisibility(View.GONE);
@@ -156,9 +157,9 @@ public class HomeFragment extends Fragment {
         bookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent bookingsPage = new Intent(root.getContext(), );
-                //bookingsPage.putExtra("loggedIn", loggedInUser);
-                //startActivity(bookingsPage);
+                Intent questionnaire = new Intent(root.getContext(), QuestionnaireActivity.class);
+                questionnaire.putExtra("loggedInUser", loggedInUser);
+                startActivity(questionnaire);
             }
         });
         return root;
