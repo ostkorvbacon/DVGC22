@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
             appointDate.setVisibility(View.VISIBLE);
             appointTime.setVisibility(View.VISIBLE);
             cancelButton.setVisibility(View.VISIBLE);
-            bookButton.setVisibility(View.INVISIBLE);
+            bookButton.setVisibility(View.GONE);
             String booking = database.getBooking(loggedInUser.getUsername()).getDate().toString();
             String[] bookingDetails = booking.split("\\s");
             String[] strippedTime = bookingDetails[1].split(":00.0");
@@ -114,6 +114,10 @@ public class HomeFragment extends Fragment {
         User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
 
         personalName.setText(loggedInUser.getName());
+        database.newBooking(loggedInUser.getUsername(), "test", Timestamp.valueOf("2021-9-15 10:30:00.0"));
+
+        //newVaccination(username, date, dose, type, getClinique(b.getCliniqueID()).getName())
+        //database.newVaccination(loggedInUser.getUsername(), "2021/9/15", 2, "Pfizer", "test");
 
         for(Vaccination v: database.getUserVaccinations(loggedInUser.getUsername())){
             int dose = v.getDose();
@@ -121,19 +125,18 @@ public class HomeFragment extends Fragment {
             if(dose == 1){
                 firstDose.setChecked(true);
                 firstDoseDate.setText(v.getDate());
-                database.deleteVaccination(v.getId());
+                //database.deleteVaccination(v.getId());
             }else if(dose == 2){
                 secondDose.setChecked(true);
                 secondDoseDate.setText(v.getDate());
+                //database.deleteVaccination(v.getId());
 
                 bookTitle.setVisibility(View.INVISIBLE);
                 bookButton.setVisibility(View.GONE);
-                database.deleteVaccination(v.getId());
+                txtView.setVisibility(View.VISIBLE);
+                qrCode.setVisibility(View.VISIBLE);
             }
-
         }
-        //database.newBooking(loggedInUser.getUsername(), "test", Timestamp.valueOf("2021-10-30 10:30:00.0"));
-
         //checks if user has upcoming vaccination appointment and then displays it in UI
         toggleVisibilityBooking(loggedInUser);
 
@@ -158,10 +161,8 @@ public class HomeFragment extends Fragment {
                 //startActivity(bookingsPage);
             }
         });
-
         return root;
     }
-
 
     @Override
     public void onDestroyView() {

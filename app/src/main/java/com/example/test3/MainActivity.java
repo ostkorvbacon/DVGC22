@@ -19,11 +19,12 @@ import com.example.test3.DatabaseHandler.User;
 
 public class MainActivity extends AppCompatActivity {
     private DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
-    public static CovidData covidData = null;
+    //public static CovidData covidData = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        /*
         DataExtractor data = new DataExtractor();
         Thread downloadCovidDataThread = new Thread(data);
         downloadCovidDataThread.start();
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             covidData = data.getCovidData();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -64,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loadingProgressBar.setVisibility(view.VISIBLE);
-                String username = "bert@hotmail.com";//((EditText)findViewById(R.id.loginId)).getText().toString();
-                String password = "bert12345";//((EditText)findViewById(R.id.password)).getText().toString();
+                String username = ((EditText)findViewById(R.id.loginId)).getText().toString();
+                String password = ((EditText)findViewById(R.id.password)).getText().toString();
                 
                 if(handler.login(username, password)){
                     User loggedInUser = new User();
