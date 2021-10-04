@@ -1,5 +1,6 @@
 package com.example.test3.ui.gallery;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ import com.example.test3.MainActivity;
 import com.example.test3.R;
 import com.example.test3.databinding.FragmentGalleryBinding;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -42,26 +46,18 @@ public class GalleryFragment extends Fragment{
     private GalleryViewModel galleryViewModel;
     private FragmentGalleryBinding binding;
     TextView filter;
-    GraphView graph;
     boolean[] selectedFilters;
     ArrayList<Integer> filterList = new ArrayList<>();
     String[] filterArray;
     String chosenStat;
+    Context mContext;
+
 
     public void determineDataRepresentation(String chosenFilters){
         CovidData covidData = MainActivity.covidData;
-
-        double x1, x2, y;
         View root = binding.getRoot();
-        GraphView graph = (GraphView) root.findViewById(R.id.graph);
-        graph.getViewport().setScalable(true);
-        graph.getViewport().setScalableY(true);
-
-        BarGraphSeries<DataPoint> series1 = new BarGraphSeries<DataPoint>();
-        BarGraphSeries<DataPoint> series2 = new BarGraphSeries<DataPoint>();
-        int index = 0;
-        int length = 0;
-        int i;
+        ListView listView = (ListView) root.findViewById(R.id.list_view);
+        int index, length, i;
 
 
         switch(chosenStat){
@@ -167,87 +163,20 @@ public class GalleryFragment extends Fragment{
             case "Total cases and deaths":
                 switch(chosenFilters){
                     case "By county":
-                        /*
-                        String[] countyGroup = {"Sverige", "Blekinge", "Dalarna", "Gotland",
-                                "Gävleborg", "Halland", "Jämtland Härjedalen", "Jönköping",
-                                "Kalmar", "Kronoberg", "Norrbotten", "Skåne", "Stockholm",
-                                "Sörmland", "Uppsala", "Värmland", "Västerbotten", "Västernorrland",
-                                "Västmanland", "Västra Götaland", "Örebro", "Östergötland" };
-                        graph.getViewport().setXAxisBoundsManual(true);
-                        graph.getViewport().setMinX(0);
-                        graph.removeAllSeries();
-                        length = countyGroup.length;
-                        x1 = 1;
-                        x2 = 0;
-                        graph.getViewport().setMaxX(length*2);
-                        index = 0;
-                        for(i = 1; i < length+1; i ++){
-                            index = covidData.findSwedenCasesAndDeathsRegion(countyGroup[i-1]);
-                            CovidCasesSweden.AgeGroupReport list1 = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport("Total");
 
-                            y = list1.getCases();
-                            x1 = x2 +1;
-                            series1.appendData(new DataPoint(x1, y), true, length*2);
-
-                            x2 = x1 +1 ;
-                            y = list1.getDeaths();
-                            series2.appendData(new DataPoint(x2, y), true, length*2);
-                        }
-                        graph.addSeries(series1);
-                        graph.addSeries(series2);
-
-                        series1.setColor(Color.BLUE);
-                        series1.setDrawValuesOnTop(true);
-                        series1.setValuesOnTopColor(Color.BLUE);
-                        series1.setValuesOnTopSize(25);
-                        series1.setSpacing(25);
-
-                        series2.setColor(Color.RED);
-                        series2.setDrawValuesOnTop(true);
-                        series2.setValuesOnTopColor(Color.RED);
-                        series2.setValuesOnTopSize(25);
-                        series2.setSpacing(25);
-                        */
                         break;
                     case "By age group":
-                        graph.getViewport().setXAxisBoundsManual(true);
-                        graph.getViewport().setMinX(0);
-
+                        Log.i("BAG", "start");
                         String[] ageGroup = {"Age_0_9", "Age_10_19", "Age_20_29", "Age_30_39", "Age_40_49","Age_50_59",  "Age_60_69", "Age_70_79", "Age_80_89", "Age_90_plus"};
                         index = covidData.findSwedenCasesAndDeathsRegion("Sverige");
+                        List<CovidCasesSweden.AgeGroupReport> list1 = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReports();
 
-                        graph.removeAllSeries();
-                        length = ageGroup.length;
-                        x1 = 1;
-                        x2 = 0;
-                        graph.getViewport().setMaxX(length*2);
-
-
-                        for(i = 1; i < length+1; i ++){
-                            CovidCasesSweden.AgeGroupReport list1 = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport(ageGroup[i-1]);
-
-                            y = list1.getCases();
-                            x1 = x2 +1;
-                            series1.appendData(new DataPoint(x1, y), true, length*2);
-
-                            x2 = x1 +1 ;
-                            y = list1.getDeaths();
-                            series2.appendData(new DataPoint(x2, y), true, length*2);
-                        }
-                        graph.addSeries(series1);
-                        graph.addSeries(series2);
-
-                        series1.setColor(Color.BLUE);
-                        series1.setDrawValuesOnTop(true);
-                        series1.setValuesOnTopColor(Color.BLUE);
-                        series1.setValuesOnTopSize(25);
-                        series1.setSpacing(25);
-
-                        series2.setColor(Color.RED);
-                        series2.setDrawValuesOnTop(true);
-                        series2.setValuesOnTopColor(Color.RED);
-                        series2.setValuesOnTopSize(25);
-                        series2.setSpacing(25);
+                        CustomArrayAdapter adapter = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view,
+                                list1);
+                        listView.setAdapter(adapter);
+                        Log.i("BAG", "end");
 
                         break;
                     case "By county, By age group":
@@ -381,3 +310,51 @@ public class GalleryFragment extends Fragment{
         binding = null;
     }
 }
+/*
+
+String[] countyGroup = {"Sverige", "Blekinge", "Dalarna", "Gotland",
+                                "Gävleborg", "Halland", "Jämtland Härjedalen", "Jönköping",
+                                "Kalmar", "Kronoberg", "Norrbotten", "Skåne", "Stockholm",
+                                "Sörmland", "Uppsala", "Värmland", "Västerbotten", "Västernorrland",
+                                "Västmanland", "Västra Götaland", "Örebro", "Östergötland" };
+
+graph.getViewport().setXAxisBoundsManual(true);
+                        graph.getViewport().setMinX(0);
+
+                        String[] ageGroup = {"Age_0_9", "Age_10_19", "Age_20_29", "Age_30_39", "Age_40_49","Age_50_59",  "Age_60_69", "Age_70_79", "Age_80_89", "Age_90_plus"};
+                        index = covidData.findSwedenCasesAndDeathsRegion("Sverige");
+
+                        graph.removeAllSeries();
+                        length = ageGroup.length;
+                        x1 = 1;
+                        x2 = 0;
+                        graph.getViewport().setMaxX(length*2);
+
+
+                        for(i = 1; i < length+1; i ++){
+                            CovidCasesSweden.AgeGroupReport list1 = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport(ageGroup[i-1]);
+
+                            y = list1.getCases();
+                            x1 = x2 +1;
+                            series1.appendData(new DataPoint(x1, y), true, length*2);
+
+                            x2 = x1 +1 ;
+                            y = list1.getDeaths();
+                            series2.appendData(new DataPoint(x2, y), true, length*2);
+                        }
+                        graph.addSeries(series1);
+                        graph.addSeries(series2);
+
+                        series1.setColor(Color.BLUE);
+                        series1.setDrawValuesOnTop(true);
+                        series1.setValuesOnTopColor(Color.BLUE);
+                        series1.setValuesOnTopSize(25);
+                        series1.setSpacing(25);
+
+                        series2.setColor(Color.RED);
+                        series2.setDrawValuesOnTop(true);
+                        series2.setValuesOnTopColor(Color.RED);
+                        series2.setValuesOnTopSize(25);
+                        series2.setSpacing(25);
+
+ */

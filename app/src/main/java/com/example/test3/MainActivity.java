@@ -31,6 +31,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DataExtractor data = new DataExtractor();
+        Thread downloadCovidDataThread = new Thread(data);
+        downloadCovidDataThread.start();
+        try {
+            downloadCovidDataThread.join();
+            covidData = data.getCovidData();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         /*
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
         if(handler.testAPIFunctions()){
