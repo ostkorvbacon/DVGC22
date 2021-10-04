@@ -1,6 +1,7 @@
 package com.example.test3.ui.gallery;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +42,12 @@ public class CustomArrayAdapter extends ArrayAdapter<CovidCasesSweden.AgeGroupRe
         TextView tvCases = (TextView) convertView.findViewById(R.id.textView2);
         TextView tvDeaths = (TextView) convertView.findViewById(R.id.textView3);
 
-        tvGroup.setText(group);
-        tvCases.setText(cases);
-        tvDeaths.setText(deaths);
+        tvGroup.setText(group + ":");
+
+        tvCases.setText("Cases: " + String.valueOf(cases));
+
+        tvDeaths.setText("Deaths: " + String.valueOf(deaths));
+
 
         return convertView;
 
