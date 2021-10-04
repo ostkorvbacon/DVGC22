@@ -57,6 +57,13 @@ public class GalleryFragment extends Fragment{
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);
 
+        BarGraphSeries<DataPoint> series1 = new BarGraphSeries<DataPoint>();
+        BarGraphSeries<DataPoint> series2 = new BarGraphSeries<DataPoint>();
+        int index = 0;
+        int length = 0;
+        int i;
+
+
         switch(chosenStat){
 
             case "Total doses distributed":
@@ -160,48 +167,87 @@ public class GalleryFragment extends Fragment{
             case "Total cases and deaths":
                 switch(chosenFilters){
                     case "By county":
+                        /*
+                        String[] countyGroup = {"Sverige", "Blekinge", "Dalarna", "Gotland",
+                                "Gävleborg", "Halland", "Jämtland Härjedalen", "Jönköping",
+                                "Kalmar", "Kronoberg", "Norrbotten", "Skåne", "Stockholm",
+                                "Sörmland", "Uppsala", "Värmland", "Västerbotten", "Västernorrland",
+                                "Västmanland", "Västra Götaland", "Örebro", "Östergötland" };
+                        graph.getViewport().setXAxisBoundsManual(true);
+                        graph.getViewport().setMinX(0);
+                        graph.removeAllSeries();
+                        length = countyGroup.length;
+                        x1 = 1;
+                        x2 = 0;
+                        graph.getViewport().setMaxX(length*2);
+                        index = 0;
+                        for(i = 1; i < length+1; i ++){
+                            index = covidData.findSwedenCasesAndDeathsRegion(countyGroup[i-1]);
+                            CovidCasesSweden.AgeGroupReport list1 = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport("Total");
 
+                            y = list1.getCases();
+                            x1 = x2 +1;
+                            series1.appendData(new DataPoint(x1, y), true, length*2);
+
+                            x2 = x1 +1 ;
+                            y = list1.getDeaths();
+                            series2.appendData(new DataPoint(x2, y), true, length*2);
+                        }
+                        graph.addSeries(series1);
+                        graph.addSeries(series2);
+
+                        series1.setColor(Color.BLUE);
+                        series1.setDrawValuesOnTop(true);
+                        series1.setValuesOnTopColor(Color.BLUE);
+                        series1.setValuesOnTopSize(25);
+                        series1.setSpacing(25);
+
+                        series2.setColor(Color.RED);
+                        series2.setDrawValuesOnTop(true);
+                        series2.setValuesOnTopColor(Color.RED);
+                        series2.setValuesOnTopSize(25);
+                        series2.setSpacing(25);
+                        */
                         break;
                     case "By age group":
                         graph.getViewport().setXAxisBoundsManual(true);
                         graph.getViewport().setMinX(0);
 
                         String[] ageGroup = {"Age_0_9", "Age_10_19", "Age_20_29", "Age_30_39", "Age_40_49","Age_50_59",  "Age_60_69", "Age_70_79", "Age_80_89", "Age_90_plus"};
-                        int index = covidData.findSwedenCasesAndDeathsRegion("Sverige");
+                        index = covidData.findSwedenCasesAndDeathsRegion("Sverige");
 
                         graph.removeAllSeries();
-                        int length = ageGroup.length;
+                        length = ageGroup.length;
                         x1 = 1;
                         x2 = 0;
                         graph.getViewport().setMaxX(length*2);
-                        BarGraphSeries<DataPoint> seriesBAG = new BarGraphSeries<DataPoint>();
-                        BarGraphSeries<DataPoint> seriesBAG2 = new BarGraphSeries<DataPoint>();
 
-                        for(int i = 1; i < length+1; i ++){
-                            CovidCasesSweden.AgeGroupReport listBAG = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport(ageGroup[i-1]);
 
-                            y = listBAG.getCases();
+                        for(i = 1; i < length+1; i ++){
+                            CovidCasesSweden.AgeGroupReport list1 = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport(ageGroup[i-1]);
+
+                            y = list1.getCases();
                             x1 = x2 +1;
-                            seriesBAG.appendData(new DataPoint(x1, y), true, length*2);
+                            series1.appendData(new DataPoint(x1, y), true, length*2);
 
                             x2 = x1 +1 ;
-                            y = listBAG.getDeaths();
-                            seriesBAG2.appendData(new DataPoint(x2, y), true, length*2);
+                            y = list1.getDeaths();
+                            series2.appendData(new DataPoint(x2, y), true, length*2);
                         }
-                        graph.addSeries(seriesBAG);
-                        graph.addSeries(seriesBAG2);
+                        graph.addSeries(series1);
+                        graph.addSeries(series2);
 
-                        seriesBAG.setColor(Color.BLUE);
-                        seriesBAG.setDrawValuesOnTop(true);
-                        seriesBAG.setValuesOnTopColor(Color.BLUE);
-                        seriesBAG.setValuesOnTopSize(25);
-                        seriesBAG.setSpacing(25);
+                        series1.setColor(Color.BLUE);
+                        series1.setDrawValuesOnTop(true);
+                        series1.setValuesOnTopColor(Color.BLUE);
+                        series1.setValuesOnTopSize(25);
+                        series1.setSpacing(25);
 
-                        seriesBAG2.setColor(Color.RED);
-                        seriesBAG2.setDrawValuesOnTop(true);
-                        seriesBAG2.setValuesOnTopColor(Color.RED);
-                        seriesBAG2.setValuesOnTopSize(25);
-                        seriesBAG2.setSpacing(25);
+                        series2.setColor(Color.RED);
+                        series2.setDrawValuesOnTop(true);
+                        series2.setValuesOnTopColor(Color.RED);
+                        series2.setValuesOnTopSize(25);
+                        series2.setSpacing(25);
 
                         break;
                     case "By county, By age group":
