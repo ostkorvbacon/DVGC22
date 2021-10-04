@@ -118,14 +118,14 @@ public class AdminAppointmentsFragment extends Fragment {
                     case 0:
                         for (Booking b: handler.getBookingsToday()) {
                             adapter.add(b.getUsername());
-                            adapter.notifyDataSetChanged();
                         }
+                        adapter.notifyDataSetChanged();
                         break;
                     case 1:
                         for (Booking b: handler.getBookings()) {
                             adapter.add(b.getUsername());
-                            adapter.notifyDataSetChanged();
                         }
+                        adapter.notifyDataSetChanged();
                         break;
                 }
 
@@ -165,6 +165,14 @@ public class AdminAppointmentsFragment extends Fragment {
             public void onClick(View view) {
                 Log.i("test", "Click");
                 nameText.setText("Okej");
+            }
+        });
+
+        vaccinateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User user = handler.getUser(userSelectSpinner.toString());
+                Log.i("User",user.getUsername());
             }
         });
         // Inflate the layout for this fragment
