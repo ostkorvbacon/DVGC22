@@ -17,11 +17,16 @@ import android.widget.TextView;
 import com.example.test3.DatabaseHandler.Booking;
 import com.example.test3.DatabaseHandler.DatabaseHandler;
 import com.example.test3.DatabaseHandler.User;
+import com.example.test3.DatabaseHandler.Vaccination;
 import com.example.test3.R;
 import com.example.test3.databinding.FragmentAdminAppointmentsBinding;
 import com.example.test3.databinding.FragmentGalleryBinding;
 import com.example.test3.ui.gallery.GalleryViewModel;
+import com.google.type.Date;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +45,10 @@ public class AdminAppointmentsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    private ArrayAdapter<String> adapter;
+    private DatabaseHandler handler;
 
     private FragmentAdminAppointmentsBinding binding;
     private Spinner userSelectSpinner;
@@ -89,19 +98,19 @@ public class AdminAppointmentsFragment extends Fragment {
         binding = FragmentAdminAppointmentsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         questionaireButton = view.findViewById(R.id.questionaire_button);
+        vaccinateButton = view.findViewById(R.id.vaccinate_button);
         nameText = view.findViewById(R.id.name_text);
         userSelectSpinner = view.findViewById(R.id.user_select_spinner);
         filterSpinner = view.findViewById(R.id.filter_spinner);
         ageText = view.findViewById(R.id.dob_text);
         Log.i("test", "Click");
 
-        DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
+        handler = new DatabaseHandler("http://83.254.68.246:3003/");
         //List<String> userList = new ArrayList<String>();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        adapter = new ArrayAdapter<String>(
                 this.getContext(), android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userSelectSpinner.setAdapter(adapter);
-
 
         List<String> filter = new ArrayList<String>();
         filter.add("Today");
@@ -113,21 +122,7 @@ public class AdminAppointmentsFragment extends Fragment {
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                adapter.clear();
-                switch (i){
-                    case 0:
-                        for (Booking b: handler.getBookingsToday()) {
-                            adapter.add(b.getUsername());
-                        }
-                        adapter.notifyDataSetChanged();
-                        break;
-                    case 1:
-                        for (Booking b: handler.getBookings()) {
-                            adapter.add(b.getUsername());
-                        }
-                        adapter.notifyDataSetChanged();
-                        break;
-                }
+                updateUserSpinner(i);
 
             }
 
@@ -136,14 +131,6 @@ public class AdminAppointmentsFragment extends Fragment {
 
             }
         });
-
-        /*if(adapter.isEmpty()){
-            userSelectSpinner.setEnabled(false);
-        }
-        else{
-            userSelectSpinner.setEnabled(true);
-        }*/
-
 
 
         userSelectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -171,15 +158,43 @@ public class AdminAppointmentsFragment extends Fragment {
         vaccinateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = handler.getUser(userSelectSpinner.toString());
-                Log.i("User",user.getUsername());
+                User user = handler.getUser(userSelectSpinner.getSelectedItem().toString());
+                List<Vaccination> vacc = new ArrayList<Vaccination>();
+                vacc = handler.getUserVaccinations(user.getUsername());
+                if(vacc.isEmpty()){
+                    handler.doVaccination(user.getUsername(),1,"Moderna");
+                    Log.i(user.getUsername(),"Ingen dos");
+                }
+                else{
+                    handler.doVaccination(user.getUsername(),2,"Moderna");
+                    Log.i(user.getUsername(),"En dos");
+                }
+                updateUserSpinner(filterSpinner.getSelectedItemPosition());
             }
         });
         // Inflate the layout for this fragment
         return view;
     }
 
-    void updateUserSpinner(){
+    void updateUserSpinner(int selection){
+        adapter.clear();
+        switch(selection){
+            case 0:
+                for (Booking b: handler.getBookingsToday()) {
+                    adapter.add(b.getUsername());
+                }
+                adapter.notifyDataSetChanged();
+                userSelectSpinner.setEnabled(!adapter.isEmpty());
+                break;
+            case 1:
+                for (Booking b: handler.getBookings()) {
+                    adapter.add(b.getUsername());
+                }
+                adapter.notifyDataSetChanged();
+                userSelectSpinner.setEnabled(!adapter.isEmpty());
+                break;
+
+        }
 
     }
 }
