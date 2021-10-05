@@ -185,6 +185,10 @@ public class AdminAppointmentsFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 userSelectSpinner.setEnabled(!adapter.isEmpty());
+                if(adapter.isEmpty()){
+                    nameText.setText("name");
+                    ageText.setText("Date of birth");
+                }
                 break;
             case 1:
                 for (Booking b: handler.getBookings()) {
@@ -192,9 +196,15 @@ public class AdminAppointmentsFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 userSelectSpinner.setEnabled(!adapter.isEmpty());
+                if(adapter.isEmpty()){
+                    nameText.setText("Name");
+                    ageText.setText("Date of birth");
+                }
                 break;
 
         }
-
+        if(!adapter.isEmpty()){
+            userSelectSpinner.setSelection(0,true);
+        }
     }
 }
