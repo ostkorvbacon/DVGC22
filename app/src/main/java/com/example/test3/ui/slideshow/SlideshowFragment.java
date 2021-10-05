@@ -1,5 +1,6 @@
 package com.example.test3.ui.slideshow;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.test3.DatabaseHandler.User;
 import com.example.test3.R;
 import com.example.test3.databinding.FragmentSlideshowBinding;
 
@@ -27,6 +29,10 @@ public class SlideshowFragment extends Fragment {
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        Intent intent = this.getActivity().getIntent();
+        User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
+
 
 
         return root;

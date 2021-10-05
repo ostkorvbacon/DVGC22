@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.ImageView;
+//import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
+
 
 import com.example.test3.DatabaseHandler.DatabaseHandler;
 import com.example.test3.DatabaseHandler.User;
@@ -44,13 +47,11 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         binding = ActivityMainMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.appBarMainMenu.toolbar);
+        //changed
+        Toolbar tool = findViewById(R.id.toolbar);
+        setSupportActionBar(tool);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -67,7 +68,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //Hide/Show admin part side menu
         Intent intent = this.getIntent();
-        User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
+        User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
 
         if(loggedInUser.getRole().equals("Doctor")){
             Menu navMenu = navigationView.getMenu();
@@ -80,7 +81,6 @@ public class MainMenuActivity extends AppCompatActivity {
         //Hide/Show admin part side menu
 
         //checkIfTimeForSecondDose();
-
 
     }
 
@@ -112,7 +112,7 @@ public class MainMenuActivity extends AppCompatActivity {
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
         Calendar cal = Calendar.getInstance();
         Intent intent = this.getIntent();
-        User loggedInUser = (User)intent.getSerializableExtra("LoggedInUser");
+        User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
         /*Date date2 = new Date();
         date2.getTime();
         handler.newBooking(loggedInUser.getUsername(), "test",new Timestamp(date2.getTime()));*/
@@ -133,10 +133,8 @@ public class MainMenuActivity extends AppCompatActivity {
                     Log.i("Failed parse date","pff");
                 }
 
-
             }
         }
-
     }
 
 

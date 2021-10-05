@@ -23,10 +23,22 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
     public static CovidData covidData = null;
 
+    //set to true for insta login
+    public boolean instaLogin = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /*
+        DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
+        if(handler.testAPIFunctions()){
+            Log.i("APITest", "Api test succeeded!");
+        }
+        else{
+            Log.i("APITest", "Api test failed!");
+        }*/
 
         Button loginButton = findViewById(R.id.login_button);
         Button createButton = findViewById(R.id.create_button);
@@ -48,13 +60,11 @@ public class MainActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(view.VISIBLE);
                 String username = ((EditText)findViewById(R.id.loginId)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password)).getText().toString();
-                
+
                 if(handler.login(username, password)){
-                    User loggedInUser = new User();
-                    loggedInUser = handler.getUser(username);
+                    User loggedInUser = handler.getUser(username);
                     Intent loginIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
-                    loginIntent.putExtra("LoggedInUser", loggedInUser);
-                    Log.i("test",loggedInUser.getUsername());
+                    loginIntent.putExtra("loggedInUser", loggedInUser);
                     startActivity(loginIntent);
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(),"Login failed.",Toast.LENGTH_LONG);
@@ -63,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(view.GONE);
             }
         });
+        if(instaLogin) {
+            Intent loginIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
+            User karin = handler.getUser("karin123@gmail.com");
+            loginIntent.putExtra("loggedInUser", karin);
+            startActivity(loginIntent);
+            return;
+        }
     }
 }
 
