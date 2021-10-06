@@ -2,10 +2,10 @@ package com.example.test3.ui.gallery;
 
 public class dispData {
     private String group;
-    private int cases;
-    private int deaths;
+    private String cases;
+    private String deaths;
 
-    public dispData(String group, int cases, int deaths) {
+    public dispData(String group, String cases, String deaths) {
         this.group = group;
         this.cases = cases;
         this.deaths = deaths;
@@ -19,22 +19,21 @@ public class dispData {
         this.group = group;
     }
 
-    public int getCases() {
+    public String getCases() {
         return cases;
     }
 
-    public void setCases(int cases) {
+    public void setCases(String cases) {
         this.cases = cases;
     }
 
-    public int getDeaths() {
+    public String getDeaths() {
         return deaths;
     }
 
-    public void setDeaths(int deaths) {
+    public void setDeaths(String deaths) {
         this.deaths = deaths;
     }
 }
-
 
 

@@ -114,8 +114,8 @@ public class GalleryFragment extends Fragment{
                             while(covidData.getSwedenVaccine().get(0).distributedWeeklyHasWeek(w, y))
                             {
                                 index = covidData.getSwedenVaccine().get(0).distributedWeeklyFindWeek(w, y);
-                                sum = listDBC.get(index).getPfizer() + listDBC.get(index).getAstraZeneca() + listDBC.get(index).getModerna()
-                                listDBC2.add(new dispData("Year: " + y + " Week: " + w,5 , sum));
+                                sum = listDBC.get(index).getPfizer() + listDBC.get(index).getAstraZeneca() + listDBC.get(index).getModerna();
+                                listDBC2.add(new dispData(countyGroup3[i], "Year: " + y + " Week: " + w, String.valueOf(sum)));
 
                                 if(w == 53)
                                 {
@@ -127,16 +127,17 @@ public class GalleryFragment extends Fragment{
 
                             }
 
-                            CustomArrayAdapter adapterBP = new CustomArrayAdapter(
-                                    getContext(),
-                                    R.layout.custom_list_view,
-                                    listDBC2);
-                            listView.setAdapter(adapterBP);
+                            listDBC2.add(new dispData(countyGroup3[i], "Total: ", String.valueOf(sumTot)));
+
 
 
                         }
 
-
+                        CustomArrayAdapter adapterBP = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view,
+                                listDBC2);
+                        listView.setAdapter(adapterBP);
 
                         Log.i("DBC", "end");
                         Log.i("DBC", "--");
@@ -177,7 +178,7 @@ public class GalleryFragment extends Fragment{
                         {
                             index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
                             List<CovidVaccineSweden.AgeGroupReport> listABC2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
-                            listABC3.add(new dispData(countyGroup2[i], listABC2.get(9).getDose1(), listABC2.get(9).getDose2()));
+                            listABC3.add(new dispData(countyGroup2[i], String.valueOf(listABC2.get(9).getDose1()), String.valueOf(listABC2.get(9).getDose2())));
                         }
                         CustomArrayAdapter adapterABC = new CustomArrayAdapter(
                                 getContext(),
@@ -193,9 +194,15 @@ public class GalleryFragment extends Fragment{
                         index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
                         ArrayList<dispData> listBP3 = new ArrayList<>();
                         List<CovidVaccineSweden.AgeGroupReport> listBP2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
-                        listBP3.add(new dispData(vacineGroup[0], listBP2.get(9).getDose1Pfizer(), listBP2.get(9).getDose2Pfizer()));
-                        listBP3.add(new dispData(vacineGroup[1], listBP2.get(9).getDose1Moderna(), listBP2.get(9).getDose2Moderna()));
-                        listBP3.add(new dispData(vacineGroup[2], listBP2.get(9).getDose1AstraZeneca(), listBP2.get(9).getDose2AstraZeneca()));
+                        listBP3.add(new dispData(vacineGroup[0],
+                                String.valueOf(listBP2.get(9).getDose1Pfizer()),
+                                String.valueOf(listBP2.get(9).getDose2Pfizer())));
+                        listBP3.add(new dispData(vacineGroup[1],
+                                String.valueOf(listBP2.get(9).getDose1Moderna()),
+                                String.valueOf(listBP2.get(9).getDose2Moderna())));
+                        listBP3.add(new dispData(vacineGroup[2],
+                                String.valueOf(listBP2.get(9).getDose1AstraZeneca()),
+                                String.valueOf(listBP2.get(9).getDose2AstraZeneca())));
 
                         CustomArrayAdapter adapterBP = new CustomArrayAdapter(
                                 getContext(),
@@ -230,11 +237,17 @@ public class GalleryFragment extends Fragment{
                                 index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
                                 List<CovidVaccineSweden.AgeGroupReport> listBCBP2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
                                 if(k == 0)
-                                    listBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k], listBCBP2.get(9).getDose1Pfizer(), listBCBP2.get(9).getDose2Pfizer()));
+                                    listBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k],
+                                            String.valueOf(listBCBP2.get(9).getDose1Pfizer()),
+                                            String.valueOf(listBCBP2.get(9).getDose2Pfizer())));
                                 if(k == 1)
-                                    listBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k], listBCBP2.get(9).getDose1Moderna(), listBCBP2.get(9).getDose2Moderna()));
+                                    listBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k],
+                                            String.valueOf(listBCBP2.get(9).getDose1Moderna()),
+                                            String.valueOf(listBCBP2.get(9).getDose2Moderna())));
                                 if(k == 2)
-                                    listBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k], listBCBP2.get(9).getDose1AstraZeneca(), listBCBP2.get(9).getDose2AstraZeneca()));
+                                    listBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k],
+                                            String.valueOf(listBCBP2.get(9).getDose1AstraZeneca()),
+                                            String.valueOf(listBCBP2.get(9).getDose2AstraZeneca())));
                             }
                         }
                         CustomArrayAdapter adapterBCBP = new CustomArrayAdapter(
@@ -310,7 +323,7 @@ public class GalleryFragment extends Fragment{
                         {
                             index = covidData.findSwedenCasesAndDeathsRegion(countyGroup[i]);
                             CovidCasesSweden.AgeGroupReport listBC2 = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport("Total");
-                            listBC.add(new dispData(countyGroup[i], listBC2.getCases(), listBC2.getDeaths()));
+                            listBC.add(new dispData(countyGroup[i], String.valueOf(listBC2.getCases()), String.valueOf(listBC2.getDeaths())));
 
                         }
 
@@ -332,7 +345,7 @@ public class GalleryFragment extends Fragment{
                         {
                             index = covidData.findSwedenCasesAndDeathsRegion("Sverige");
                             CovidCasesSweden.AgeGroupReport listBAG2 = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport(ageGroup[i]);
-                            listBAG.add(new dispData(ageGroup[i], listBAG2.getCases(), listBAG2.getDeaths()));
+                            listBAG.add(new dispData(ageGroup[i], String.valueOf(listBAG2.getCases()), String.valueOf(listBAG2.getDeaths())));
 
                         }
 
@@ -355,7 +368,7 @@ public class GalleryFragment extends Fragment{
                             for (i = 0; i < length; i++) {
                                 index = covidData.findSwedenCasesAndDeathsRegion(countyGroup[k]);
                                 CovidCasesSweden.AgeGroupReport listBCBAG2 = covidData.getSwedenCasesAndDeaths().get(index).getAgeGroupReport(ageGroup[i]);
-                                listBCBAG.add(new dispData(countyGroup[k] + ": " + ageGroup[i], listBCBAG2.getCases(), listBCBAG2.getDeaths()));
+                                listBCBAG.add(new dispData(countyGroup[k] + ": " + ageGroup[i], String.valueOf(listBCBAG2.getCases()), String.valueOf(listBCBAG2.getDeaths())));
 
                             }
                         }

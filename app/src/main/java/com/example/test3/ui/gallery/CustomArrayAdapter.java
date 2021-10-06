@@ -32,8 +32,8 @@ public class CustomArrayAdapter extends ArrayAdapter<dispData> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         String group = getItem(position).getGroup();
-        int cases = getItem(position).getCases();
-        int deaths = getItem(position).getDeaths();
+        String cases = getItem(position).getCases();
+        String deaths = getItem(position).getDeaths();
 
         dispData dispData = new dispData(group, cases, deaths);
         LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -46,17 +46,23 @@ public class CustomArrayAdapter extends ArrayAdapter<dispData> {
         if(in2 == "BC" || in2 == "BAG" || in2 == "BCBAG")
         {
             tvGroup.setText(group + ":");
-            tvCases.setText("Cases: " + String.valueOf(cases));
-            tvDeaths.setText("Deaths: " + String.valueOf(deaths));
+            tvCases.setText("Cases: " + cases);
+            tvDeaths.setText("Deaths: " + deaths);
         }
         else if(in2 == "ABC" || in2 == "BP" || in2 == "BCBP")
         {
             tvGroup.setText(group + ":");
-            tvCases.setText("First Dose: " + String.valueOf(cases));
-            tvDeaths.setText("Second Dose: " + String.valueOf(deaths));
+            tvCases.setText("First Dose: " + cases);
+            tvDeaths.setText("Second Dose: " + deaths);
+        }
+        else if(in2 == "DBC" || in2 == "AAA" || in2 == "AAA")
+        {
+            tvGroup.setText(group + "");
+            tvCases.setText("" + cases);
+            tvDeaths.setText("Delivered: " + deaths);
         }
 
-        return convertView;
+            return convertView;
 
     }
 }
