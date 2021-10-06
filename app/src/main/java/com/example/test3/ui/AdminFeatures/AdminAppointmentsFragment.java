@@ -3,6 +3,9 @@ package com.example.test3.ui.AdminFeatures;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +52,9 @@ public class AdminAppointmentsFragment extends Fragment {
 
     private ArrayAdapter<String> adapter;
     private DatabaseHandler handler;
+    private AdminAppointmentsViewModel viewModel;
+
+    private User user;
 
     private FragmentAdminAppointmentsBinding binding;
     private Spinner userSelectSpinner;
@@ -97,9 +103,14 @@ public class AdminAppointmentsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAdminAppointmentsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        viewModel = new ViewModelProvider(requireActivity()).get(AdminAppointmentsViewModel.class);
+
         questionaireButton = view.findViewById(R.id.questionaire_button);
         vaccinateButton = view.findViewById(R.id.vaccinate_button);
+        vaccinateButton.setEnabled(false);
+
         nameText = view.findViewById(R.id.name_text);
+        questionaireStatus = view.findViewById(R.id.questionaire_status_text);
         userSelectSpinner = view.findViewById(R.id.user_select_spinner);
         filterSpinner = view.findViewById(R.id.filter_spinner);
         ageText = view.findViewById(R.id.dob_text);
@@ -130,15 +141,14 @@ public class AdminAppointmentsFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+
         });
 
 
         userSelectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                User user = handler.getUser(userSelectSpinner.getSelectedItem().toString());
-                nameText.setText(user.getName());
-                ageText.setText(user.getDateOfBirth());
+                updateUser();
             }
 
             @Override
@@ -150,8 +160,13 @@ public class AdminAppointmentsFragment extends Fragment {
         questionaireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("test", "Click");
-                nameText.setText("Okej");
+                viewModel.setCurrentUser(user);
+                AdminQuestionaireAssesmentFragment fragment = new AdminQuestionaireAssesmentFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(container.getId(), fragment);
+                ft.addToBackStack(this.getClass().getName());
+                ft.commit();
             }
         });
 
@@ -205,6 +220,26 @@ public class AdminAppointmentsFragment extends Fragment {
         }
         if(!adapter.isEmpty()){
             userSelectSpinner.setSelection(0,true);
+            updateUser();
+        }
+    }
+
+    void updateUser(){
+        user = handler.getUser(userSelectSpinner.getSelectedItem().toString());
+        nameText.setText(user.getName());
+        ageText.setText(user.getDateOfBirth());
+        if(handler.getQuestionnaire(user.getUsername()) != null){
+            vaccinateButton.setEnabled(handler.getQuestionnaire(user.getUsername()).isApproved());
+            if(handler.getQuestionnaire(user.getUsername()).isApproved()){
+                questionaireStatus.setText("Questionaire status: Approved");
+            }
+            else{
+                questionaireStatus.setText("Questionaire status: Pending");
+            }
+        }
+        else{
+            vaccinateButton.setEnabled(false);
+            questionaireStatus.setText("Questionaire status: Pending");
         }
     }
 }

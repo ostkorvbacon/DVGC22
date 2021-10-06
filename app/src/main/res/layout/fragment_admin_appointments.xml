@@ -75,7 +75,7 @@
             android:id="@+id/questionaire_status_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Questionaire status: pending"
+            android:text="Questionaire status: Pending"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.475"

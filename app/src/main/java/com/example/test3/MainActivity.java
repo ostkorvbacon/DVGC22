@@ -18,18 +18,22 @@ import com.example.test3.DataExtraction.DataExtractor;
 import com.example.test3.DatabaseHandler.DatabaseHandler;
 import com.example.test3.DatabaseHandler.User;
 
+import java.sql.Timestamp;
+
 
 public class MainActivity extends AppCompatActivity {
     private DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
     public static CovidData covidData = null;
 
     //set to true for insta login
-    public boolean instaLogin = true;
+    public boolean instaLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //handler.newBooking("Atest@gmail.com","test",new Timestamp(System.currentTimeMillis()));
 
         /*
         DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");

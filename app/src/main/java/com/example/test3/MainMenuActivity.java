@@ -66,6 +66,8 @@ public class MainMenuActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+
+
         //Hide/Show admin part side menu
         Intent intent = this.getIntent();
         User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
@@ -82,6 +84,12 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //checkIfTimeForSecondDose();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
     }
 
     @Override
