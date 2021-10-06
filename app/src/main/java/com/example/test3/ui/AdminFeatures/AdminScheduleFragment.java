@@ -1,5 +1,7 @@
 package com.example.test3.ui.AdminFeatures;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +9,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.test3.DatabaseHandler.DatabaseHandler;
+import com.example.test3.MainActivity;
+import com.example.test3.MainMenuActivity;
 import com.example.test3.R;
 
 /**
@@ -16,16 +25,14 @@ import com.example.test3.R;
  * create an instance of this fragment.
  */
 public class AdminScheduleFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    private DatabaseHandler database = new DatabaseHandler("http://83.254.68.246:3003/");
+    private TextView current_age_group;
+    private Button apply_changes;
     public AdminScheduleFragment() {
         // Required empty public constructor
     }
@@ -60,7 +67,28 @@ public class AdminScheduleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_schedule, container, false);
+        View root =  inflater.inflate(R.layout.fragment_admin_schedule, container, false);
+        current_age_group = root.findViewById(R.id.current_age_group);
+        apply_changes = root.findViewById(R.id.apply_admin_settings);
+
+        String cur_age_group = Integer.toString(database.getMinimumAgeForVaccination());
+        current_age_group.setText(current_age_group.getText() + cur_age_group);
+
+        apply_changes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int new_age_group = Integer.valueOf(current_age_group.getText().toString());
+                database.setMinimumAgeForVaccination(new_age_group);
+
+                //closes keyboard and focus on edittext
+                if (getActivity() == null) return;
+                if (getActivity().getCurrentFocus() == null) return;
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                current_age_group.clearFocus();
+            }
+        });
+
+        return root;
     }
 }

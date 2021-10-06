@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     public static CovidData covidData = null;
 
     //set to true for insta login
-    public boolean instaLogin = false;
+    public boolean instaLogin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
         if(instaLogin) {
             Intent loginIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
-            User karin = handler.getUser("karin123@gmail.com");
+            User karin = handler.getUser("admin@gmail.com");
             loginIntent.putExtra("loggedInUser", karin);
             startActivity(loginIntent);
             return;

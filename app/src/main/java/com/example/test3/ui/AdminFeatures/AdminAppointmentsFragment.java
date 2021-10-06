@@ -134,14 +134,12 @@ public class AdminAppointmentsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 updateUserSpinner(i);
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-
         });
 
 
