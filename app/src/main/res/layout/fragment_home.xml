@@ -217,7 +217,6 @@
         android:id="@+id/button_qr_scanner_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/QR_code_scanner_button"
         app:layout_constraintEnd_toEndOf="parent"

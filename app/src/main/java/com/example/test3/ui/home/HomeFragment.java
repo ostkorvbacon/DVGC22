@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -66,6 +69,7 @@ public class HomeFragment extends Fragment {
     EditText appointTime;
     ImageButton cancelButton;
     Button bookButton;
+    Button qrScannerButton;
     //temp
     int count;
     public void setViewsId(View root){
@@ -86,6 +90,7 @@ public class HomeFragment extends Fragment {
         secondDose = root.findViewById(R.id.checkBox2);
         firstDoseDate = root.findViewById(R.id.first_dose_date);
         secondDoseDate = root.findViewById(R.id.second_dose_date);
+        qrScannerButton = root.findViewById(R.id.button_qr_scanner_home);
     }
 
     public void toggleVisibilityBooking(User loggedInUser){
@@ -130,7 +135,7 @@ public class HomeFragment extends Fragment {
         //newVaccination(username, date, dose, type, getClinique(b.getCliniqueID()).getName())
         //database.newVaccination(loggedInUser.getUsername(), "2021/9/15", 2, "Pfizer", "test");
         //database.deleteVaccination(v.getId());
-
+        boolean isFullyVaccinated = false;
         for(Vaccination v: database.getUserVaccinations(loggedInUser.getUsername())){
             int dose = v.getDose();
 
@@ -138,6 +143,7 @@ public class HomeFragment extends Fragment {
                 firstDose.setChecked(true);
                 firstDoseDate.setText(v.getDate());
             }else if(dose == 2){
+                isFullyVaccinated = true;
                 secondDose.setChecked(true);
                 secondDoseDate.setText(v.getDate());
 
@@ -146,6 +152,12 @@ public class HomeFragment extends Fragment {
                 txtView.setVisibility(View.VISIBLE);
                 qrCode.setVisibility(View.VISIBLE);
             }
+        }
+        if (!isFullyVaccinated){
+            ConstraintLayout.LayoutParams buttonLayout = (ConstraintLayout.LayoutParams) qrScannerButton.getLayoutParams();
+            buttonLayout.horizontalBias = 0;
+            buttonLayout.setMarginStart(42);
+            buttonLayout.topToBottom = bookButton.getId();
         }
         //checks if user has upcoming vaccination appointment and then displays it in UI
         toggleVisibilityBooking(loggedInUser);
@@ -163,7 +175,7 @@ public class HomeFragment extends Fragment {
                     public void onActivityResult(Boolean result) {
                         if(result) {
                             Intent cameraIntent = new Intent(binding.getRoot().getContext(), CameraActivity.class);
-                            cameraIntent.putExtra("ParentActivity", "mainActivity");
+                            cameraIntent.putExtra("ParentActivity", "mainMenuActivity");
                             startActivity(cameraIntent);
                         } else {
                             Toast.makeText(binding.getRoot().getContext(), getString(R.string.Camera_permission_denied), Toast.LENGTH_SHORT).show();
@@ -172,8 +184,7 @@ public class HomeFragment extends Fragment {
                 });
 
         //QR scanner button listener
-        Button scanPassport = root.findViewById(R.id.button_qr_scanner_home);
-        scanPassport.setOnClickListener(new View.OnClickListener() {
+        qrScannerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPermissionResult.launch(Manifest.permission.CAMERA);

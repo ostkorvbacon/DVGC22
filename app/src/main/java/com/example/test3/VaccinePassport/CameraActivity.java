@@ -66,12 +66,10 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
             // set any flags or extras that you need.
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             // if you are re-using the parent Activity you may not need to set any extras
-            i.putExtra("someExtra", "whateverYouNeed");
         } else {
             i = new Intent(this, MainMenuActivity.class);
             // same comments as above
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            i.putExtra("someExtra", "whateverYouNeed");
         }
 
         return i;

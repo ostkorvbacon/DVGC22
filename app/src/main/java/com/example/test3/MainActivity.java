@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private final int PERMISSION_REQUEST_CAMERA = 1;
 
     //set to true for insta login
-    public boolean instaLogin = true;
+    public boolean instaLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,23 +69,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loadingProgressBar.setVisibility(view.VISIBLE);
-                String username = ((EditText)findViewById(R.id.loginId)).getText().toString();
-                String password = ((EditText)findViewById(R.id.password)).getText().toString();
+                String username = ((EditText) findViewById(R.id.loginId)).getText().toString();
+                String password = ((EditText) findViewById(R.id.password)).getText().toString();
 
-                if(handler.login(username, password)){
+                if (handler.login(username, password)) {
                     User loggedInUser = handler.getUser(username);
                     Intent loginIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
                     loginIntent.putExtra("loggedInUser", loggedInUser);
                     startActivity(loginIntent);
-                }else{
-                    Toast toast = Toast.makeText(getApplicationContext(),"Login failed.",Toast.LENGTH_LONG);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Login failed.", Toast.LENGTH_LONG);
                     toast.show();
                 }
                 loadingProgressBar.setVisibility(view.GONE);
             }
         });
 
-        if(instaLogin) {
+        if (instaLogin) {
             Intent loginIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
             User karin = handler.getUser("admin@gmail.com");
             loginIntent.putExtra("loggedInUser", karin);
@@ -130,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
+        }
+
+
     }
-
-
-
 }
 
