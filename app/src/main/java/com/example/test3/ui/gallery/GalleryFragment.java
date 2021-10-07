@@ -60,53 +60,42 @@ public class GalleryFragment extends Fragment{
         CovidData covidData = MainActivity.covidData;
         View root = binding.getRoot();
         ListView listView = (ListView) root.findViewById(R.id.list_view);
-        int index, length, length2, i, k, w, y;
+        int index, index2, length, length2, i, k, w, y;
+        int sum = 0, sumTot = 0;
         String[] countyGroup2 = {"Sverige", "Stockholm", "Uppsala",
                 "Södermanland", "Östergötland", "Jönköping", "Kronoberg",
                 "Kalmar", "Gotland", "Blekinge", "Skåne", "Halland",
                 "Västra Götaland", "Värmland", "Örebro", "Västmanland",
                 "Dalarna", "Gävleborg", "Västernorrland", "Jämtland",
                 "Västerbotten" ,"Norrbotten"};
-
         String[] countyGroup = {"Sverige", "Blekinge", "Dalarna", "Gotland",
                 "Gävleborg", "Halland", "Jämtland Härjedalen", "Jönköping",
                 "Kalmar", "Kronoberg", "Norrbotten", "Skåne", "Stockholm",
                 "Sörmland", "Uppsala", "Värmland", "Västerbotten", "Västernorrland",
                 "Västmanland", "Västra Götaland", "Örebro", "Östergötland" };
-
-
         String[] ageGroup = {"Age_0_9", "Age_10_19", "Age_20_29",
                 "Age_30_39", "Age_40_49","Age_50_59",  "Age_60_69",
                 "Age_70_79", "Age_80_89", "Age_90_plus"};
-
         String[] vacineGroup = {"Pfizer", "Moderna", "AstraZeneca"};
-
-
         String[] countyGroup3 = { "Sverige", "Blekinge", "Dalarna", "Gotland",
                 "Gävleborg", "Halland", "Jämtland", "Jönköping", "Kalmar", "Kronoberg",
                 "Norrbotten", "Skåne", "Stockholm", "Södermanland", "Uppsala", "Värmland",
                 "Västerbotten", "Västernorrland", "Västmanland", "Västra Götaland", "Örebro",
                 "Östergötland"};
-
         switch(chosenStat){
-
             case "Total doses distributed":
                 switch(chosenFilters){
                     case "By county":
                         Log.i("DBC", "start");
                         in = "DBC";
-                        int index2;
-                        int sum = 0, sumTot = 0;
                         index = covidData.getSwedenVaccine().get(0).distributedWeeklyFindWeek(20, 2021);
                         length = countyGroup3.length;
                         List<CovidVaccineSweden.VaccineDistributedWeekly> listDBC;
                         ArrayList<dispData> listDBC2 = new ArrayList<>();
-
                         for(i = 0; i < length; i++)
                         {
                             index2 = covidData.findSwedenVaccineRegion(countyGroup3[i]);
                             listDBC = covidData.getSwedenVaccine().get(index2).getDistributedWeekly();
-
                             w = 52;
                             y= 2020;
                             sum = 0;
@@ -116,7 +105,6 @@ public class GalleryFragment extends Fragment{
                                 index = covidData.getSwedenVaccine().get(0).distributedWeeklyFindWeek(w, y);
                                 sum = listDBC.get(index).getPfizer() + listDBC.get(index).getAstraZeneca() + listDBC.get(index).getModerna();
                                 listDBC2.add(new dispData(countyGroup3[i], "Year: " + y + " Week: " + w, String.valueOf(sum)));
-
                                 if(w == 53)
                                 {
                                     w = 1;
@@ -124,30 +112,94 @@ public class GalleryFragment extends Fragment{
                                 }
                                 w = w + 1;
                                 sumTot = sumTot + listDBC.get(index).getPfizer() + listDBC.get(index).getAstraZeneca() + listDBC.get(index).getModerna();
-
                             }
-
                             listDBC2.add(new dispData(countyGroup3[i], "Total: ", String.valueOf(sumTot)));
-
-
-
                         }
-
-                        CustomArrayAdapter adapterBP = new CustomArrayAdapter(
+                        CustomArrayAdapter adapterDBC = new CustomArrayAdapter(
                                 getContext(),
                                 R.layout.custom_list_view,
                                 listDBC2);
-                        listView.setAdapter(adapterBP);
-
+                        listView.setAdapter(adapterDBC);
                         Log.i("DBC", "end");
                         Log.i("DBC", "--");
-
                         break;
                     case "By product":
-
+                        Log.i("DBP", "start");
+                        in = "DBP";
+                        index = covidData.getSwedenVaccine().get(0).distributedWeeklyFindWeek(20, 2021);
+                        length = countyGroup3.length;
+                        List<CovidVaccineSweden.VaccineDistributedWeekly> listDBP;
+                        ArrayList<dispData> listDBP2 = new ArrayList<>();
+                        index2 = covidData.findSwedenVaccineRegion(countyGroup3[0]);
+                        listDBP = covidData.getSwedenVaccine().get(index2).getDistributedWeekly();
+                        w = 52;
+                        y= 2020;
+                        sum = 0;
+                        sumTot = 0;
+                        while(covidData.getSwedenVaccine().get(0).distributedWeeklyHasWeek(w, y))
+                        {
+                            index = covidData.getSwedenVaccine().get(0).distributedWeeklyFindWeek(w, y);
+                            sum = listDBP.get(index).getPfizer() + listDBP.get(index).getAstraZeneca() + listDBP.get(index).getModerna();
+                            listDBP2.add(new dispData( "Year: " + y + "\nWeek: " + w,
+                            "Total: " + String.valueOf(sum) +
+                                "\nPfizer: " + String.valueOf(listDBP.get(index).getPfizer()),
+                            "Moderna: " + String.valueOf(listDBP.get(index).getModerna()) +
+                                "\nAstraZeneca: " + String.valueOf(listDBP.get(index).getAstraZeneca())
+                            ));
+                            if(w == 53)
+                            {
+                                w = 1;
+                                y = y + 1;
+                            }
+                            w = w + 1;
+                        }
+                        CustomArrayAdapter adapterDBP = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view2,
+                                listDBP2);
+                        listView.setAdapter(adapterDBP);
+                        Log.i("DBP", "end");
+                        Log.i("DBP", "--");
                         break;
                     case "By county, By product":
-
+                        Log.i("DBCBP", "start");
+                        in = "DBCBP";
+                        index = covidData.getSwedenVaccine().get(0).distributedWeeklyFindWeek(20, 2021);
+                        length = countyGroup3.length;
+                        List<CovidVaccineSweden.VaccineDistributedWeekly> listDBCBP;
+                        ArrayList<dispData> listDBCBP2 = new ArrayList<>();
+                        for(i = 0; i < length; i++)
+                        {
+                            index2 = covidData.findSwedenVaccineRegion(countyGroup3[i]);
+                            listDBCBP = covidData.getSwedenVaccine().get(index2).getDistributedWeekly();
+                            w = 52;
+                            y= 2020;
+                            sum = 0;
+                            sumTot = 0;
+                            while(covidData.getSwedenVaccine().get(0).distributedWeeklyHasWeek(w, y))
+                            {
+                                index = covidData.getSwedenVaccine().get(0).distributedWeeklyFindWeek(w, y);
+                                sum = listDBCBP.get(index).getPfizer() + listDBCBP.get(index).getAstraZeneca() + listDBCBP.get(index).getModerna();
+                                listDBCBP2.add(new dispData(countyGroup3[i] + "\nYear: " + y + "\nWeek: " + w,
+                                        "Total: " + String.valueOf(sum) +
+                                                "\nPfizer: " + String.valueOf(listDBCBP.get(index).getPfizer()),
+                                        "Moderna: " + String.valueOf(listDBCBP.get(index).getModerna()) +
+                                                "\nAstraZeneca: " + String.valueOf(listDBCBP.get(index).getAstraZeneca())));
+                                if(w == 53)
+                                {
+                                    w = 1;
+                                    y = y + 1;
+                                }
+                                w = w + 1;
+                            }
+                        }
+                        CustomArrayAdapter adapterDBCBP = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view2,
+                                listDBCBP2);
+                        listView.setAdapter(adapterDBCBP);
+                        Log.i("DBC", "end");
+                        Log.i("DBC", "--");
                         break;
                 }
                 break;
@@ -222,6 +274,9 @@ public class GalleryFragment extends Fragment{
                     case "By one dose, By two doses, By age group, By product":
                         break;
                     case "By one dose, By age group, By county, By product":
+
+                        break;
+                    case "By one dose, By two doses, By age group, By county, By product":
                         Log.i("BCBP", "start");
                         in = "BCBP";
 
@@ -257,9 +312,6 @@ public class GalleryFragment extends Fragment{
                         listView.setAdapter(adapterBCBP);
                         Log.i("BCBP", "end");
                         break;
-                    case "By one dose, By two doses, By age group, By county, By product":
-                        break;
-
                     case "By two doses":
                         break;
                     case "By two doses, By age group":
