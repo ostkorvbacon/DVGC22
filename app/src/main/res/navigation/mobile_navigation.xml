@@ -47,4 +47,5 @@
         android:label="@string/menu_admin_stats"
         tools:layout="@layout/fragment_admin_stats" />
 
+
 </navigation>
