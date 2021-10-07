@@ -51,7 +51,7 @@ public class VaccinePassport{
             String name = u.getName();
             String type = v.getType();
             try {
-                BitMatrix bitMatrix = writer.encode(name + " was fully vaccinated at " + date + " with " + type + ".", BarcodeFormat.QR_CODE, 512, 512);
+                BitMatrix bitMatrix = writer.encode(name + "," + date + "," + type, BarcodeFormat.QR_CODE, 512, 512);
                 int width = bitMatrix.getWidth();
                 int height = bitMatrix.getHeight();
                 Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);

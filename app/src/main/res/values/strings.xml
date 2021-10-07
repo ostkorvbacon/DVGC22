@@ -92,4 +92,14 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="QR_code_scanner_button">Scan Digital Passport</string>
+    <string name="QR_code_scanner_button_desc">Starts the QR code scanner.</string>
+    <string name="Camera_permission_denied">Camera permission was denied.</string>
+    <string name="QR_code_scanner_name">Name</string>
+    <string name="QR_code_scanner_date">Date of second dose</string>
+    <string name="QR_code_scanner_type">Type of vaccine</string>
+    <string name="camera_permission_rationale_label">Camera Permission</string>
+    <string name="camera_permission_rationale_text">The camera will be used to scan digital passports in the form of QR codes. No other information is stored from the camera.</string>
+
 </resources>

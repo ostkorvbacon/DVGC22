@@ -161,7 +161,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:layout_marginBottom="224dp"
         android:text="Vaccine passport QR code"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -176,10 +175,19 @@
         android:id="@+id/imageView"
         android:layout_width="216dp"
         android:layout_height="198dp"
-        android:layout_marginTop="8dp"
         android:src="@drawable/ic_qr_detailed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <Button
+        android:id="@+id/button_qr_scanner_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/QR_code_scanner_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageButton
         android:id="@+id/imageButton2"
