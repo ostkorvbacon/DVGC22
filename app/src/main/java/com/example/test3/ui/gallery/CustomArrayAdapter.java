@@ -49,7 +49,8 @@ public class CustomArrayAdapter extends ArrayAdapter<dispData> {
             tvCases.setText("Cases: " + cases);
             tvDeaths.setText("Deaths: " + deaths);
         }
-        else if(in2 == "ABC" || in2 == "BP" || in2 == "BCBP")
+        else if(in2 == "ABC" || in2 == "BP" || in2 == "BCBP" || in2 == "BOP" || in2 == "OBT"
+                || in2 == "ABA" || in2 == "BABCBP" || in2 == "BABP" || in2 == "BABC")
         {
             tvGroup.setText(group + ":");
             tvCases.setText("First Dose: " + cases);
@@ -66,8 +67,20 @@ public class CustomArrayAdapter extends ArrayAdapter<dispData> {
             tvGroup.setText(group);
             tvCases.setText(cases);
             tvDeaths.setText(deaths);
+        }
+        else if(in2 == "OBP" || in2 == "OB")
+        {
+            tvGroup.setText(group);
+            tvCases.setText(cases);
 
         }
+        else if(in2 == "AOBC" || in2 == "OB" || in2 == "OABA" || in2 == "OBABCBP")
+        {
+            tvGroup.setText(group + ":");
+            tvCases.setText("First Dose: " + cases);
+
+        }
+
 
             return convertView;
 
