@@ -904,8 +904,8 @@ public class GalleryFragment extends Fragment{
                             index = covidData.getSwedenVaccine().get(0).weeklyReportsFindWeek(w, y);
 
                             listBW2.add(new dispData( "Year: " + y + "\nWeek: " + w,
-                                    String.format("%.3f", listBW.get(index).getDose1Quota()) + "%",
-                                    String.format("%.3f", listBW.get(index).getDose2Quota()) + "%"
+                                    String.format("%.2f", listBW.get(index).getDose1Quota()*100) + "%",
+                                    String.format("%.2f", listBW.get(index).getDose2Quota()*100) + "%"
                             ));
                             if(w == 53)
                             {
@@ -938,8 +938,8 @@ public class GalleryFragment extends Fragment{
 
 
                             listBM2.add(new dispData( "Year: " + y + "\nMonth: " + m,
-                                    String.format("%.3f", listBM.get(index).getDose1Quota()) + "%",
-                                    String.format("%.3f", listBM.get(index).getDose2Quota()) + "%"
+                                    String.format("%.2f", listBM.get(index).getDose1Quota()*100) + "%",
+                                    String.format("%.2f", listBM.get(index).getDose2Quota()*100) + "%"
                             ));
                             if(w == 53)
                             {
@@ -979,8 +979,8 @@ public class GalleryFragment extends Fragment{
 
 
                             listBWBM2.add(new dispData( "Year: " + y + "\nMonth: " + m + "\nWeek: " + w,
-                                    String.format("%.3f", listBWBM.get(index).getDose1Quota()) + "%",
-                                    String.format("%.3f", listBWBM.get(index).getDose2Quota()) + "%"
+                                    String.format("%.2f", listBWBM.get(index).getDose1Quota()*100) + "%",
+                                    String.format("%.2f", listBWBM.get(index).getDose2Quota()*100) + "%"
                             ));
                             if(w == 53)
                             {
