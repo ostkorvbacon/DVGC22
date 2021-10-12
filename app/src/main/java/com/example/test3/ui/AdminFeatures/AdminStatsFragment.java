@@ -19,6 +19,7 @@ import com.example.test3.R;
 import com.example.test3.databinding.FragmentAdminAppointmentsBinding;
 import com.example.test3.databinding.FragmentAdminStatsBinding;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,7 +140,7 @@ public class AdminStatsFragment extends Fragment {
 
 
 
-        vaccineText.setText("Available Vaccines\n\n" + "Pzifer: " + String.valueOf(pzifer) + "\nModerna: " + String.valueOf(moderna) + "\nAstra Zeneca: " + String.valueOf(astraZeneca) + "\n");
+        vaccineText.setText("Available Vaccines\n\n" + "Pzifer: " + NumberFormat.getIntegerInstance().format(pzifer) + "\nModerna: " + NumberFormat.getIntegerInstance().format(moderna) + "\nAstra Zeneca: " + NumberFormat.getIntegerInstance().format(astraZeneca) + "\n");
 
         // Inflate the layout for this fragment
         return view;
