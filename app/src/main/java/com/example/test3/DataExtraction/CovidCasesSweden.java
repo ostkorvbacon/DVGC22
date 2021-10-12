@@ -33,7 +33,7 @@ public class CovidCasesSweden {
         return ageGroupReports;
     }
 
-    public class AgeGroupReport {
+    public static class AgeGroupReport {
         private String ageGroup;
         private int cases;
         private int deaths;
