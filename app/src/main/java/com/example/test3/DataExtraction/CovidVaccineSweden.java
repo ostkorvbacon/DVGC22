@@ -82,7 +82,7 @@ public class CovidVaccineSweden {
         return distributedWeekly;
     }
 
-    protected class WeeklyReport{
+    public class WeeklyReport{
         int week;
         int year;
         int dose1;
