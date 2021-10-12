@@ -63,6 +63,7 @@ public class DataExtractor implements Runnable {
             - Callback
         */
 
+        /*
         // get the cases and deaths data for Sweden
         try{
             connection = getConnection(swedenCasesURL);
@@ -115,6 +116,7 @@ public class DataExtractor implements Runnable {
 
         }
         System.gc();
+        */
 
         // get the vaccine data for sweden
         try {
@@ -124,7 +126,7 @@ public class DataExtractor implements Runnable {
             }
             InputStream is = connection.getInputStream();
             Workbook workbook = new XSSFWorkbook(is);
-            // get cases and deaths regional sweden
+            // get weekly administrated
             Sheet sheet = workbook.getSheetAt(1); // 1 for weekly reports
 
             for (Row row : sheet) {

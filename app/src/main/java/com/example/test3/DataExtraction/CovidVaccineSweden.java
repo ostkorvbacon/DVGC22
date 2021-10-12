@@ -130,7 +130,7 @@ public class CovidVaccineSweden {
         }
     }
 
-    protected class AgeGroupReport {
+    public class AgeGroupReport {
         String group;
         int dose1;
         double dose1Quota;
@@ -220,7 +220,7 @@ public class CovidVaccineSweden {
 
     }
 
-    protected class VaccineDistributedWeekly{
+    public class VaccineDistributedWeekly{
         int pfizer;
         int moderna;
         int astraZeneca;
