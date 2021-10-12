@@ -110,7 +110,7 @@ public class GalleryFragment extends Fragment{
                                     w = 1;
                                     y = y + 1;
                                 }
-                                w = w + 1;
+                                else { w = w + 1; }
                                 sumTot = sumTot + listDBC.get(index).getPfizer() + listDBC.get(index).getAstraZeneca() + listDBC.get(index).getModerna();
                             }
                             listDBC2.add(new dispData(countyGroup3[i], "Total: ", String.valueOf(sumTot)));
@@ -151,7 +151,7 @@ public class GalleryFragment extends Fragment{
                                 w = 1;
                                 y = y + 1;
                             }
-                            w = w + 1;
+                            else { w = w + 1; }
                         }
                         CustomArrayAdapter adapterDBP = new CustomArrayAdapter(
                                 getContext(),
@@ -185,12 +185,10 @@ public class GalleryFragment extends Fragment{
                                                 "\nPfizer: " + String.valueOf(listDBCBP.get(index).getPfizer()),
                                         "Moderna: " + String.valueOf(listDBCBP.get(index).getModerna()) +
                                                 "\nAstraZeneca: " + String.valueOf(listDBCBP.get(index).getAstraZeneca())));
-                                if(w == 53)
-                                {
+                                if(w == 53) {
                                     w = 1;
-                                    y = y + 1;
-                                }
-                                w = w + 1;
+                                    y = y + 1; }
+                                else { w = w + 1; }
                             }
                         }
                         CustomArrayAdapter adapterDBCBP = new CustomArrayAdapter(
@@ -312,6 +310,7 @@ public class GalleryFragment extends Fragment{
                         Log.i("OBP", "end");
                         break;
                     case "By one dose, By two doses, By age group":
+                    case "By age group":
                         Log.i("ABA", "start");
                         in = "ABA";
                         index = covidData.findSwedenCasesAndDeathsRegion(countyGroup2[0]);
@@ -334,6 +333,8 @@ public class GalleryFragment extends Fragment{
                         Log.i("ABA", "end");
                         break;
                     case "By one dose, By two doses, By county":
+                    case "By county":
+
                         Log.i("ABC", "start");
                         in = "ABC";
 
@@ -354,6 +355,7 @@ public class GalleryFragment extends Fragment{
                         Log.i("ABC", "end");
                         break;
                     case "By one dose, By two doses, By product":
+                    case "By product":
                         Log.i("BP", "start");
                         in = "BP";
                         i = 0;
@@ -377,14 +379,104 @@ public class GalleryFragment extends Fragment{
                         listView.setAdapter(adapterBP);
                         Log.i("BP", "end");
                         break;
-                    case "By one dose, By age group, By County":
+                    case "By one dose, By age group, By county":
+                        Log.i("OBABC", "start");
+                        in = "OBABC";
 
+                        ArrayList<dispData> listOBABC3 = new ArrayList<>();
+                        length = countyGroup2.length;
+                        for(m = 0; m < 9; m++) {
+                            Log.i("OBABC", "M: " + m);
+
+                            for (i = 0; i < length; i++) {
+                                index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
+                                List<CovidVaccineSweden.AgeGroupReport> listOBABC2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+
+                                listOBABC3.add(new dispData(countyGroup2[i] + "\nAge: " + listOBABC2.get(m).getGroup(),
+                                        String.valueOf(listOBABC2.get(m).getDose1Pfizer() + listOBABC2.get(m).getDose1Moderna() + listOBABC2.get(m).getDose1AstraZeneca()),
+                                        String.valueOf(listOBABC2.get(m).getDose2Pfizer() + listOBABC2.get(m).getDose2Moderna() + listOBABC2.get(m).getDose2AstraZeneca())));
+                            }
+                        }
+                        CustomArrayAdapter adapterOBABC = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listOBABC3);
+                        listView.setAdapter(adapterOBABC);
+                        Log.i("OBABC", "end");
                         break;
                     case "By one dose, By age group, By product":
+                        Log.i("OBABP", "start");
+                        in = "OBABP";
+
+                        index = covidData.findSwedenCasesAndDeathsRegion(countyGroup2[0]);
+                        List<CovidVaccineSweden.AgeGroupReport> listOBABP = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                        ArrayList<dispData> listOBABP3 = new ArrayList<>();
+                        length = countyGroup2.length;
+                        length2 = vacineGroup.length;
+                        for(m = 0; m < 9; m++) {
+                            for (k = 0; k < length2; k++) {
+                                index = covidData.findSwedenVaccineRegion(countyGroup2[0]);
+                                List<CovidVaccineSweden.AgeGroupReport> listOBABP2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                                if (k == 0)
+                                    listOBABP3.add(new dispData( "\nAge: " + listOBABP2.get(m).getGroup() + "\n" + vacineGroup[k],
+                                            String.valueOf(listOBABP2.get(m).getDose1Pfizer()),
+                                            String.valueOf(listOBABP2.get(m).getDose2Pfizer())));
+                                if (k == 1)
+                                    listOBABP3.add(new dispData("\nAge: " + listOBABP2.get(m).getGroup() + "\n" + vacineGroup[k],
+                                            String.valueOf(listOBABP2.get(m).getDose1Moderna()),
+                                            String.valueOf(listOBABP2.get(m).getDose2Moderna())));
+                                if (k == 2)
+                                    listOBABP3.add(new dispData( "\nAge: " + listOBABP2.get(m).getGroup() + "\n" + vacineGroup[k],
+                                            String.valueOf(listOBABP2.get(m).getDose1AstraZeneca()),
+                                            String.valueOf(listOBABP2.get(m).getDose2AstraZeneca())));
+
+                            }
+                        }
+                        CustomArrayAdapter adapterOBABP = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listOBABP3);
+                        listView.setAdapter(adapterOBABP);
+                        Log.i("OBABP", "end");
                         break;
                     case "By one dose, By county, By product":
+                        Log.i("OBCBP", "start");
+                        in = "OBCBP";
+
+                        index = covidData.findSwedenCasesAndDeathsRegion(countyGroup2[0]);
+                        List<CovidVaccineSweden.AgeGroupReport> listOBCBP = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                        ArrayList<dispData> listOBCBP3 = new ArrayList<>();
+                        length = countyGroup2.length;
+                        length2 = vacineGroup.length;
+                        for(k = 0; k < length2; k++)
+                        {
+                            for (i = 0; i < length; i++)
+                            {
+                                index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
+                                List<CovidVaccineSweden.AgeGroupReport> listOBCBP2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                                if(k == 0)
+                                    listOBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k],
+                                            String.valueOf(listOBCBP2.get(9).getDose1Pfizer()),
+                                            String.valueOf(listOBCBP2.get(9).getDose2Pfizer())));
+                                if(k == 1)
+                                    listOBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k],
+                                            String.valueOf(listOBCBP2.get(9).getDose1Moderna()),
+                                            String.valueOf(listOBCBP2.get(9).getDose2Moderna())));
+                                if(k == 2)
+                                    listOBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k],
+                                            String.valueOf(listOBCBP2.get(9).getDose1AstraZeneca()),
+                                            String.valueOf(listOBCBP2.get(9).getDose2AstraZeneca())));
+                            }
+                        }
+                        CustomArrayAdapter adapterOBCBP = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listOBCBP3);
+                        listView.setAdapter(adapterOBCBP);
+                        Log.i("OBCBP", "end");
                         break;
                     case "By one dose, By two doses, By age group, By county":
+                    case "By age group, By county":
                         Log.i("BABC", "start");
                         in = "BABC";
 
@@ -410,6 +502,7 @@ public class GalleryFragment extends Fragment{
                         Log.i("BABC", "end");
                         break;
                     case "By one dose, By two doses, By age group, By product":
+                    case "By age group, By product":
                         Log.i("BABP", "start");
                         in = "BABP";
 
@@ -481,6 +574,7 @@ public class GalleryFragment extends Fragment{
                         Log.i("OBABCBP", "end");
                         break;
                     case "By one dose, By two doses, By county, By product":
+                    case "By county, By product":
                         Log.i("BCBP", "start");
                         in = "BCBP";
 
@@ -517,6 +611,7 @@ public class GalleryFragment extends Fragment{
                         Log.i("BCBP", "end");
                         break;
                     case "By one dose, By two doses, By age group, By county, By product":
+                    case "By age group, By county, By product":
                         Log.i("BABCBP", "start");
                         in = "BABCBP";
 
@@ -553,22 +648,223 @@ public class GalleryFragment extends Fragment{
                         Log.i("BABCBP", "end");
                         break;
                     case "By two doses":
+                        Log.i("TB", "start");
+                        in = "TB";
+                        i = 0;
+                        index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
+                        ArrayList<dispData> listTB3 = new ArrayList<>();
+                        List<CovidVaccineSweden.AgeGroupReport> listTB2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                        listTB3.add(new dispData("Total: ",
+                                String.valueOf(listTB2.get(9).getDose1Pfizer() + listTB2.get(9).getDose1Moderna() + listTB2.get(9).getDose1AstraZeneca()),
+                                String.valueOf(listTB2.get(9).getDose2Pfizer() + listTB2.get(9).getDose2Moderna() + listTB2.get(9).getDose2AstraZeneca())));
+
+
+                        CustomArrayAdapter adapterTB = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listTB3);
+                        listView.setAdapter(adapterTB);
+                        Log.i("TB", "end");
                         break;
                     case "By two doses, By age group":
+                        Log.i("TABA", "start");
+                        in = "TABA";
+                        index = covidData.findSwedenCasesAndDeathsRegion(countyGroup2[0]);
+                        List<CovidVaccineSweden.AgeGroupReport> listTABA = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                        ArrayList<dispData> listTABA3 = new ArrayList<>();
+                        length = ageGroup.length;
+
+                        for (i = 0; i < 9; i++)
+                        {
+                            List<CovidVaccineSweden.AgeGroupReport> listTABA2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                            listTABA3.add(new dispData("Group: " + listTABA2.get(i).getGroup(),
+                                    String.valueOf(listTABA2.get(i).getDose1Pfizer() + listTABA2.get(i).getDose1Moderna() + listTABA2.get(i).getDose1AstraZeneca()),
+                                    String.valueOf(listTABA2.get(i).getDose2Pfizer() + listTABA2.get(i).getDose2Moderna() + listTABA2.get(i).getDose2AstraZeneca())));
+                        }
+                        CustomArrayAdapter adapterTABA = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listTABA3);
+                        listView.setAdapter(adapterTABA);
+                        Log.i("TABA", "end");
                         break;
                     case "By two doses, By county":
+                        Log.i("TABC", "start");
+                        in = "TABC";
+
+                        ArrayList<dispData> listTABC3 = new ArrayList<>();
+                        length = countyGroup2.length;
+
+                        for(i = 0 ; i < length; i++)
+                        {
+                            index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
+                            List<CovidVaccineSweden.AgeGroupReport> listTABC2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                            listTABC3.add(new dispData(countyGroup2[i], String.valueOf(listTABC2.get(9).getDose1()), String.valueOf(listTABC2.get(9).getDose2())));
+                        }
+                        CustomArrayAdapter adapterTABC = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listTABC3);
+                        listView.setAdapter(adapterTABC);
+                        Log.i("TABC", "end");
                         break;
                     case "By two doses, By product":
+                        Log.i("TBP", "start");
+                        in = "TBP";
+                        i = 0;
+                        index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
+                        ArrayList<dispData> listTBP3 = new ArrayList<>();
+                        List<CovidVaccineSweden.AgeGroupReport> listTBP2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                        listTBP3.add(new dispData(vacineGroup[0],
+                                String.valueOf(listTBP2.get(9).getDose1Pfizer()),
+                                String.valueOf(listTBP2.get(9).getDose2Pfizer())));
+                        listTBP3.add(new dispData(vacineGroup[1],
+                                String.valueOf(listTBP2.get(9).getDose1Moderna()),
+                                String.valueOf(listTBP2.get(9).getDose2Moderna())));
+                        listTBP3.add(new dispData(vacineGroup[2],
+                                String.valueOf(listTBP2.get(9).getDose1AstraZeneca()),
+                                String.valueOf(listTBP2.get(9).getDose2AstraZeneca())));
+
+                        CustomArrayAdapter adapterTBP = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listTBP3);
+                        listView.setAdapter(adapterTBP);
+                        Log.i("TBP", "end");
                         break;
                     case "By two doses, By age group, By county":
+                        Log.i("TBABC", "start");
+                        in = "TBABC";
+
+                        ArrayList<dispData> listTBABC3 = new ArrayList<>();
+                        length = countyGroup2.length;
+                        for(m = 0; m < 9; m++) {
+                            Log.i("TBABC", "M: " + m);
+
+                            for (i = 0; i < length; i++) {
+                                index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
+                                List<CovidVaccineSweden.AgeGroupReport> listTBABC2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+
+                                listTBABC3.add(new dispData(countyGroup2[i] + "\nAge: " + listTBABC2.get(m).getGroup(),
+                                        String.valueOf(listTBABC2.get(m).getDose1Pfizer() + listTBABC2.get(m).getDose1Moderna() + listTBABC2.get(m).getDose1AstraZeneca()),
+                                        String.valueOf(listTBABC2.get(m).getDose2Pfizer() + listTBABC2.get(m).getDose2Moderna() + listTBABC2.get(m).getDose2AstraZeneca())));
+                            }
+                        }
+                        CustomArrayAdapter adapterTBABC = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listTBABC3);
+                        listView.setAdapter(adapterTBABC);
+                        Log.i("TBABC", "end");
                         break;
                     case "By two doses, By age group, By product":
+                        Log.i("TBABP", "start");
+                        in = "TBABP";
+
+                        index = covidData.findSwedenCasesAndDeathsRegion(countyGroup2[0]);
+                        List<CovidVaccineSweden.AgeGroupReport> listTBABP = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                        ArrayList<dispData> listTBABP3 = new ArrayList<>();
+                        length = countyGroup2.length;
+                        length2 = vacineGroup.length;
+                        for(m = 0; m < 9; m++) {
+                            for (k = 0; k < length2; k++) {
+                                index = covidData.findSwedenVaccineRegion(countyGroup2[0]);
+                                List<CovidVaccineSweden.AgeGroupReport> listTBABP2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                                if (k == 0)
+                                    listTBABP3.add(new dispData( "\nAge: " + listTBABP2.get(m).getGroup() + "\n" + vacineGroup[k],
+                                            String.valueOf(listTBABP2.get(m).getDose1Pfizer()),
+                                            String.valueOf(listTBABP2.get(m).getDose2Pfizer())));
+                                if (k == 1)
+                                    listTBABP3.add(new dispData("\nAge: " + listTBABP2.get(m).getGroup() + "\n" + vacineGroup[k],
+                                            String.valueOf(listTBABP2.get(m).getDose1Moderna()),
+                                            String.valueOf(listTBABP2.get(m).getDose2Moderna())));
+                                if (k == 2)
+                                    listTBABP3.add(new dispData( "\nAge: " + listTBABP2.get(m).getGroup() + "\n" + vacineGroup[k],
+                                            String.valueOf(listTBABP2.get(m).getDose1AstraZeneca()),
+                                            String.valueOf(listTBABP2.get(m).getDose2AstraZeneca())));
+
+                            }
+                        }
+                        CustomArrayAdapter adapterTBABP = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listTBABP3);
+                        listView.setAdapter(adapterTBABP);
+                        Log.i("TBABP", "end");
                         break;
                     case "By two doses, By county, By product":
+                        Log.i("TBCBP", "start");
+                        in = "TBCBP";
+
+                        index = covidData.findSwedenCasesAndDeathsRegion(countyGroup2[0]);
+                        List<CovidVaccineSweden.AgeGroupReport> listTBCBP = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                        ArrayList<dispData> listTBCBP3 = new ArrayList<>();
+                        length = countyGroup2.length;
+                        length2 = vacineGroup.length;
+                        for(k = 0; k < length2; k++)
+                        {
+                            for (i = 0; i < length; i++)
+                            {
+                                index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
+                                List<CovidVaccineSweden.AgeGroupReport> listTBCBP2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                                if(k == 0)
+                                    listTBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k],
+                                            String.valueOf(listTBCBP2.get(9).getDose1Pfizer()),
+                                            String.valueOf(listTBCBP2.get(9).getDose2Pfizer())));
+                                if(k == 1)
+                                    listTBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k],
+                                            String.valueOf(listTBCBP2.get(9).getDose1Moderna()),
+                                            String.valueOf(listTBCBP2.get(9).getDose2Moderna())));
+                                if(k == 2)
+                                    listTBCBP3.add(new dispData(countyGroup2[i] + "\n" + vacineGroup[k],
+                                            String.valueOf(listTBCBP2.get(9).getDose1AstraZeneca()),
+                                            String.valueOf(listTBCBP2.get(9).getDose2AstraZeneca())));
+                            }
+                        }
+                        CustomArrayAdapter adapterTBCBP = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listTBCBP3);
+                        listView.setAdapter(adapterTBCBP);
+                        Log.i("TBCBP", "end");
                         break;
                     case "By two doses, By age group, By county, By product":
-                        break;
+                        Log.i("TBABCBP", "start");
+                        in = "TBABCBP";
 
+                        index = covidData.findSwedenCasesAndDeathsRegion(countyGroup2[0]);
+                        List<CovidVaccineSweden.AgeGroupReport> listTBABCBP = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                        ArrayList<dispData> listTBABCBP3 = new ArrayList<>();
+                        length = countyGroup2.length;
+                        length2 = vacineGroup.length;
+                        for(m = 0; m < 9; m++) {
+                            for (k = 0; k < length2; k++) {
+                                for (i = 0; i < length; i++) {
+                                    index = covidData.findSwedenVaccineRegion(countyGroup2[i]);
+                                    List<CovidVaccineSweden.AgeGroupReport> listTBABCBP2 = covidData.getSwedenVaccine().get(index).getAgeGroupReports();
+                                    if (k == 0)
+                                        listTBABCBP3.add(new dispData(countyGroup2[i] + "\nAge: " + listTBABCBP2.get(m).getGroup() + "\n" + vacineGroup[k],
+                                                String.valueOf(listTBABCBP2.get(m).getDose1Pfizer()),
+                                                String.valueOf(listTBABCBP2.get(m).getDose2Pfizer())));
+                                    if (k == 1)
+                                        listTBABCBP3.add(new dispData(countyGroup2[i] + "\nAge: " + listTBABCBP2.get(m).getGroup() + "\n" + vacineGroup[k],
+                                                String.valueOf(listTBABCBP2.get(m).getDose1Moderna()),
+                                                String.valueOf(listTBABCBP2.get(m).getDose2Moderna())));
+                                    if (k == 2)
+                                        listTBABCBP3.add(new dispData(countyGroup2[i] + "\nAge: " + listTBABCBP2.get(m).getGroup() + "\n" + vacineGroup[k],
+                                                String.valueOf(listTBABCBP2.get(m).getDose1AstraZeneca()),
+                                                String.valueOf(listTBABCBP2.get(m).getDose2AstraZeneca())));
+                                }
+                            }
+                        }
+                        CustomArrayAdapter adapterTBABCBP = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view3,
+                                listTBABCBP3);
+                        listView.setAdapter(adapterTBABCBP);
+                        Log.i("TBABCBP", "end");
+                        break;
+                    /*
                     case "By age group":
                         break;
                     case "By age group, By county":
@@ -585,6 +881,7 @@ public class GalleryFragment extends Fragment{
 
                     case "By product":
                         break;
+                    */
                 }
                 break;
 

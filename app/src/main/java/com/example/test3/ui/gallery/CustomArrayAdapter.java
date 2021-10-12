@@ -74,10 +74,18 @@ public class CustomArrayAdapter extends ArrayAdapter<dispData> {
             tvCases.setText(cases);
 
         }
-        else if(in2 == "AOBC" || in2 == "OB" || in2 == "OABA" || in2 == "OBABCBP")
+        else if(in2 == "AOBC" || in2 == "OB" || in2 == "OABA" || in2 == "OBABCBP"
+                || in2 == "OBABC" ||in2 == "OBABP" || in2 == "OBCBP")
         {
             tvGroup.setText(group + ":");
             tvCases.setText("First Dose: " + cases);
+
+        }
+        else if(in2 == "TB" || in2 == "TABA" || in2 == "TABC" || in2 == "TBP" || in2 == "TBABC"
+                || in2 == "TBABP" || in2 == "TBCBP" || in2 == "TBABCBP" || in2 == "O" || in2 == "O")
+        {
+            tvGroup.setText(group + ":");
+            tvCases.setText("Second Dose: " + deaths);
 
         }
 
