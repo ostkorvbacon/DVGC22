@@ -39,16 +39,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DataExtractor data = new DataExtractor();
-        Thread downloadCovidDataThread = new Thread(data);
-        downloadCovidDataThread.start();
-        try {
-            downloadCovidDataThread.join();
-            covidData = data.getCovidData();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
 
         //handler.newBooking("Atest@gmail.com","test",new Timestamp(System.currentTimeMillis()));
 
