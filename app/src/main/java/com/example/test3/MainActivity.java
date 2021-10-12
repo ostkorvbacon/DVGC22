@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.test3.DataExtraction.CovidData;
+import com.example.test3.DataExtraction.DataExtractor;
 import com.example.test3.DatabaseHandler.DatabaseHandler;
 import com.example.test3.DatabaseHandler.User;
 import com.example.test3.VaccinePassport.CameraActivity;
@@ -37,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DataExtractor data = new DataExtractor();
+        Thread downloadCovidDataThread = new Thread(data);
+        downloadCovidDataThread.start();
+        try {
+            downloadCovidDataThread.join();
+            covidData = data.getCovidData();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
         //handler.newBooking("Atest@gmail.com","test",new Timestamp(System.currentTimeMillis()));
