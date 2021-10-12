@@ -153,7 +153,7 @@ public class DataExtractor implements Runnable {
                                             week,
                                             year,
                                             (int) row.getCell(3).getNumericCellValue(),
-                                            row.getCell(3).getNumericCellValue()
+                                            row.getCell(4).getNumericCellValue()
                                     );
                                 }
                             }
@@ -165,7 +165,7 @@ public class DataExtractor implements Runnable {
                                     week,
                                     year,
                                     (int) row.getCell(3).getNumericCellValue(),
-                                    row.getCell(3).getNumericCellValue()
+                                    row.getCell(4).getNumericCellValue()
                             );
                             covidData.getSwedenVaccine().add(entry);
                         }
