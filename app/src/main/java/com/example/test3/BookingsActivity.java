@@ -11,7 +11,7 @@ import com.example.test3.DatabaseHandler.Booking;
 import com.example.test3.DatabaseHandler.Clinique;
 import com.example.test3.DatabaseHandler.DatabaseHandler;
 import com.example.test3.DatabaseHandler.User;
-import com.example.test3.databinding.FragmentGalleryBinding;
+import com.example.test3.ui.home.HomeFragment;
 
 
 import java.sql.Timestamp;
@@ -180,6 +180,11 @@ public class BookingsActivity extends AppCompatActivity {
                 }
 
                 handler.newBooking(email,name,date);
+
+                Intent goTodash = new Intent(getApplicationContext(), MainMenuActivity.class);
+                goTodash.putExtra("loggedInUser", user);
+                startActivity(goTodash);
+
 
             }
         });
