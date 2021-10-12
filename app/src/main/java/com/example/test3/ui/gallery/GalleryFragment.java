@@ -888,13 +888,120 @@ public class GalleryFragment extends Fragment{
             case "Cumulative uptake (%)":
                 switch(chosenFilters){
                     case "By week":
+                        Log.i("BW", "start");
+                        in = "BW";
 
+                        List<CovidVaccineSweden.WeeklyReport> listBW;
+                        ArrayList<dispData> listBW2 = new ArrayList<>();
+                        index2 = covidData.findSwedenVaccineRegion(countyGroup3[0]);
+                        listBW = covidData.getSwedenVaccine().get(index2).getWeeklyReports();
+                        w = 52;
+                        y= 2020;
+                        sum = 0;
+                        sumTot = 0;
+                        while(covidData.getSwedenVaccine().get(0).weeklyReportsHasWeek(w, y))
+                        {
+                            index = covidData.getSwedenVaccine().get(0).weeklyReportsFindWeek(w, y);
+
+                            listBW2.add(new dispData( "Year: " + y + "\nWeek: " + w,
+                                    String.format("%.3f", listBW.get(index).getDose1Quota()) + "%",
+                                    String.format("%.3f", listBW.get(index).getDose2Quota()) + "%"
+                            ));
+                            if(w == 53)
+                            {
+                                w = 1;
+                                y = y + 1;
+                            }
+                            else { w = w + 1; }
+                        }
+                        CustomArrayAdapter adapterBW = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view,
+                                listBW2);
+                        listView.setAdapter(adapterBW);
+                        Log.i("BW", "end");
                         break;
                     case "By month":
+                        Log.i("BM", "start");
+                        in = "BM";
 
+                        List<CovidVaccineSweden.WeeklyReport> listBM;
+                        ArrayList<dispData> listBM2 = new ArrayList<>();
+                        index2 = covidData.findSwedenVaccineRegion(countyGroup3[0]);
+                        listBM = covidData.getSwedenVaccine().get(index2).getWeeklyReports();
+                        w = 52;
+                        y= 2020;
+                        m = 12;
+                        while(covidData.getSwedenVaccine().get(0).weeklyReportsHasWeek(w, y))
+                        {
+                            index = covidData.getSwedenVaccine().get(0).weeklyReportsFindWeek(w, y);
+
+
+                            listBM2.add(new dispData( "Year: " + y + "\nMonth: " + m,
+                                    String.format("%.3f", listBM.get(index).getDose1Quota()) + "%",
+                                    String.format("%.3f", listBM.get(index).getDose2Quota()) + "%"
+                            ));
+                            if(w == 53)
+                            {
+                                m = 1;
+                                w = 1;
+                                y = y + 1;
+                            }
+                            else
+                            {
+                                if(w % 4 == 0)
+                                    if(m != 12)
+                                        m = w/4 +1;
+                                w = w + 1;
+                            }
+                        }
+                        CustomArrayAdapter adapterBM = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view,
+                                listBM2);
+                        listView.setAdapter(adapterBM);
+                        Log.i("BM", "end");
                         break;
                     case "By week, By month":
+                        Log.i("BWBM", "start");
+                        in = "BWBM";
 
+                        List<CovidVaccineSweden.WeeklyReport> listBWBM;
+                        ArrayList<dispData> listBWBM2 = new ArrayList<>();
+                        index2 = covidData.findSwedenVaccineRegion(countyGroup3[0]);
+                        listBWBM = covidData.getSwedenVaccine().get(index2).getWeeklyReports();
+                        w = 52;
+                        y= 2020;
+                        m = 12;
+                        while(covidData.getSwedenVaccine().get(0).weeklyReportsHasWeek(w, y))
+                        {
+                            index = covidData.getSwedenVaccine().get(0).weeklyReportsFindWeek(w, y);
+
+
+                            listBWBM2.add(new dispData( "Year: " + y + "\nMonth: " + m + "\nWeek: " + w,
+                                    String.format("%.3f", listBWBM.get(index).getDose1Quota()) + "%",
+                                    String.format("%.3f", listBWBM.get(index).getDose2Quota()) + "%"
+                            ));
+                            if(w == 53)
+                            {
+                                m = 1;
+                                w = 1;
+                                y = y + 1;
+                            }
+                            else
+                            {
+                                if(w % 4 == 0)
+                                    if(m != 12)
+                                        m = w/4 +1;
+                                w = w + 1;
+                            }
+                        }
+                        CustomArrayAdapter adapterBWBM = new CustomArrayAdapter(
+                                getContext(),
+                                R.layout.custom_list_view,
+                                listBWBM2);
+                        listView.setAdapter(adapterBWBM);
+                        Log.i("BWBM", "end");
                         break;
                 }
                 break;
