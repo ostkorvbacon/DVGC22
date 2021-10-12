@@ -35,6 +35,14 @@ public class Clinique {
                 "\nAddress: " + address;
     }
 
+    public String toString2(){
+        return  name +
+                "\nPhone number: " + phoneNr +
+                "\nCity: " + city +
+                "\nAddress: " + address;
+    }
+
+
     public String getName() {
         return name;
     }

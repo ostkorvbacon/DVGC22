@@ -76,6 +76,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 }
                 database.newQuestionnaire(username, answers);
                 Intent goToBookings = new Intent(getApplicationContext(), BookingsActivity.class);
+                goToBookings.putExtra("loggedInUser", user);
                 startActivity(goToBookings);
 
             }

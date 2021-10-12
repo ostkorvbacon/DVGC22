@@ -1,4 +1,16 @@
 <resources>
+
+        <string-array name="planets_array">
+            <item>Mercury</item>
+            <item>Venus</item>
+            <item>Earth</item>
+            <item>Mars</item>
+            <item>Jupiter</item>
+            <item>Saturn</item>
+            <item>Uranus</item>
+            <item>Neptune</item>
+        </string-array>
+
     <string name="app_name">Vaccine Tracker</string>
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -80,6 +92,10 @@
     <string name="user">Email</string>
     <string name="reg">Register</string>
     <string name="back">Back</string>
+
+    <string name="Clinique">Clinique</string>
+    <string name="time">Time of vaccination</string>
+    <string name="createbook">Create Booking</string>
 
     <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>
