@@ -292,11 +292,12 @@ public class DatabaseHandler {
         return null;
     }
 
-    public Booking newBooking(String username, String cliniqueName, Timestamp dateTime){
+    public Booking newBooking(String username, String cliniqueName, Timestamp dateTime, String type){
         LinkedHashMap<String, String> data = new LinkedHashMap<>();
         data.put("Email", username);
         data.put("CliniqueId", Integer.toString(getCliniqueID(cliniqueName)));
         data.put("Date", dateTime.toString());
+        data.put("Type", type);
         String body = constructJsonObject(data);
         String resp = getResponse(domain+"newBooking", "POST", body);
         return getBooking(username);
@@ -310,7 +311,7 @@ public class DatabaseHandler {
         String resp = getResponse(domain+"getUserBookings", "POST", body);
         List<List<String>> output = getJsonArrayValues("bookings", resp);
         for(List<String> innerList : output){
-            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
+            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3)), innerList.get(4)));
         }
         return list;
     }
@@ -320,7 +321,7 @@ public class DatabaseHandler {
         String resp = getResponse(domain+"getBookings", "GET", "");
         List<List<String>> output = getJsonArrayValues("bookings", resp);
         for(List<String> innerList : output){
-            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
+            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3)), innerList.get(4)));
         }
         return list;
     }
@@ -330,7 +331,7 @@ public class DatabaseHandler {
         String resp = getResponse(domain+"getBookingsToday", "POST", "");
         List<List<String>> output = getJsonArrayValues("bookings", resp);
         for(List<String> innerList : output){
-            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
+            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3)), innerList.get(4)));
         }
         return list;
     }
@@ -343,7 +344,7 @@ public class DatabaseHandler {
         String resp = getResponse(domain+"getBookingsToday", "POST", body);
         List<List<String>> output = getJsonArrayValues("bookings", resp);
         for(List<String> innerList : output){
-            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3))));
+            list.add(new Booking(Integer.parseInt(innerList.get(0)),  innerList.get(1), Integer.parseInt(innerList.get(2)), getTimestampFromString(innerList.get(3)), innerList.get(4)));
         }
         return list;
     }
@@ -463,9 +464,11 @@ public class DatabaseHandler {
 
         boolean[] questAns = {true, true, false, true, false};
 
-        Timestamp date = Timestamp.valueOf("2021-09-27 10:30:00.0");
+        Timestamp date = Timestamp.valueOf("2021-09-27 10:30:00");
         String[] dateinfo = date.toString().split(" ")[0].split("-");
         String dateNoTime = dateinfo[0] + "/" + dateinfo[1] + "/" + dateinfo[2];
+
+
 
         // test users
         Log.i("APITest", "testing users...");
@@ -588,12 +591,12 @@ public class DatabaseHandler {
         if(!bookingExists(getBookingID(username))){
             User user = newUser(username, password, name, phone, doB, city, address, role);
             Clinique c = newClinique(cliniqueName, kPhone, kCity, kAddr);
-            Booking b = newBooking(user.getUsername(), c.getName(), date);
-            Booking test = new Booking(b.getId(), user.getUsername(), c.getId(), date);
+            Booking b = newBooking(user.getUsername(), c.getName(), date, "Pfizer");
+            Booking test = new Booking(b.getId(), user.getUsername(), c.getId(), date, "Pfizer");
             if(!(test.toString().equals(b.toString()))){
                 Log.i("APITest", "Create booking does not work correctly!");
-                Log.e("APITest", test.toString());
-                Log.e("APITest", b.toString());
+                Log.e("APITest", test.toString() + "\nTimezone: " + test.getDate().getTimezoneOffset());
+                Log.e("APITest", b.toString() + "\nTimezone: " + b.getDate().getTimezoneOffset());
                 return false;
             }
             if(!b.toString().equals(getBooking(user.getUsername()).toString())){
@@ -624,7 +627,7 @@ public class DatabaseHandler {
         if(!questionnaireExists(username)){
             User user = newUser(username, password, name, phone, doB, city, address, role);
             Clinique c = newClinique(cliniqueName, kPhone, kCity, kAddr);
-            Booking b = newBooking(user.getUsername(), c.getName(), date);
+            Booking b = newBooking(user.getUsername(), c.getName(), date, "Pfizer");
             Questionnaire q = newQuestionnaire(username, questAns);
             Questionnaire test = new Questionnaire(username, questAns);
             if(!(test.toString().equals(q.toString()))){

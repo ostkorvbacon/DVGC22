@@ -82,7 +82,7 @@ public class CovidVaccineSweden {
         return distributedWeekly;
     }
 
-    protected class WeeklyReport{
+    public class WeeklyReport{
         int week;
         int year;
         int dose1;
@@ -130,7 +130,7 @@ public class CovidVaccineSweden {
         }
     }
 
-    protected class AgeGroupReport {
+    public class AgeGroupReport {
         String group;
         int dose1;
         double dose1Quota;
@@ -220,7 +220,7 @@ public class CovidVaccineSweden {
 
     }
 
-    protected class VaccineDistributedWeekly{
+    public class VaccineDistributedWeekly{
         int pfizer;
         int moderna;
         int astraZeneca;

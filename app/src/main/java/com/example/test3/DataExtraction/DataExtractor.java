@@ -72,7 +72,7 @@ public class DataExtractor implements Runnable {
             InputStream is = connection.getInputStream();
             Workbook workbook = new XSSFWorkbook(is);
             // get cases and deaths regional sweden
-            Sheet sheet = workbook.getSheetAt(3); // 3 for cases and deaths by county.
+            Sheet sheet = workbook.getSheetAt(0); // 0 for cases and deaths by county.
 
             for (Row row : sheet) {
                 if(row.getRowNum() != 0) {
@@ -93,13 +93,14 @@ public class DataExtractor implements Runnable {
                         else{
                             covidData.getSwedenCasesAndDeaths().get(regionIndex).addAgeGroupReport(group, cases, deaths);
                         }
-                        Log.i("Read", "Reading cases and deaths sheet 3...");
+                        //Log.i("Read", "Reading cases and deaths sheet 0...");
                         System.gc();
                         //Log.d("Read", "cell 0: " + Double.toString(row.getCell(1).getNumericCellValue()));
                     }
 
                 }
             }
+            /*
             Log.d("Write", "Finished writing to Sweden cases list.");
             Log.d("Read", "Reading first entry from dowmloaded data to see if correct: " + sheet.getRow(1).getCell(4).getNumericCellValue());
             Log.d("Read", "Reading first entry from list to see if correct: \n" +
@@ -107,6 +108,8 @@ public class DataExtractor implements Runnable {
                     covidData.findSwedenCasesAndDeathsRegion("Sverige")
                     ).getAgeGroupReport("Total").getDeaths()
             );
+
+             */
             is.close();
             connection.disconnect();
 
@@ -124,8 +127,8 @@ public class DataExtractor implements Runnable {
             }
             InputStream is = connection.getInputStream();
             Workbook workbook = new XSSFWorkbook(is);
-            // get cases and deaths regional sweden
-            Sheet sheet = workbook.getSheetAt(1); // 1 for weekly reports
+            // get weekly administered
+            Sheet sheet = workbook.getSheetAt(0); // 1 for weekly reports
 
             for (Row row : sheet) {
                 if(row.getRowNum() != 0) {
@@ -150,7 +153,7 @@ public class DataExtractor implements Runnable {
                                             week,
                                             year,
                                             (int) row.getCell(3).getNumericCellValue(),
-                                            row.getCell(3).getNumericCellValue()
+                                            row.getCell(4).getNumericCellValue()
                                     );
                                 }
                             }
@@ -162,19 +165,19 @@ public class DataExtractor implements Runnable {
                                     week,
                                     year,
                                     (int) row.getCell(3).getNumericCellValue(),
-                                    row.getCell(3).getNumericCellValue()
+                                    row.getCell(4).getNumericCellValue()
                             );
                             covidData.getSwedenVaccine().add(entry);
                         }
                         System.gc();
-                        Log.i("Read", "Reading vaccine sheet 1...");
+                        //Log.i("Read", "Reading vaccine sheet 0...");
                     }
 
                 }
             }
 
             // get vaccine age reports
-            sheet = workbook.getSheetAt(2); // 2 for age reports
+            sheet = workbook.getSheetAt(1); // 2 for age reports
             for (Row row : sheet) {
                 if(row.getRowNum() != 0) {
                     if (row.getCell(0) != null && row.getCell(0).getCellType() != Cell.CELL_TYPE_BLANK) {
@@ -207,17 +210,20 @@ public class DataExtractor implements Runnable {
                             }
                         }
                         System.gc();
-                        Log.i("Read", "Reading vaccine sheet 2...");
+                        //Log.i("Read", "Reading vaccine sheet 1...");
                     }
 
                 }
             }
+            /*
             Log.d("Write", "Finished writing to Sweden vaccine list.");
             Log.d("Read", "Reading first entry from downloaded data to see if correct: " + sheet.getRow(1).getCell(2).getNumericCellValue());
             Log.d("Read", "Reading first entry from list to see if correct: \n" +
                     covidData.getSwedenVaccine().get(0).getAgeGroupReports().get(0).getDose1() + " " +
                     covidData.getSwedenVaccine().get(0).getAgeGroupReports().get(0).getDose1AstraZeneca()
                     );
+
+             */
             is.close();
             connection.disconnect();
         } catch (IOException e) {
@@ -272,14 +278,17 @@ public class DataExtractor implements Runnable {
                             }
                         }
                         System.gc();
-                        Log.i("Read", "Reading vaccine distribution sheet 1...");
+                        //Log.i("Read", "Reading vaccine distribution sheet 1...");
                     }
 
                 }
             }
+            /*
             Log.d("Write", "Finished writing to Sweden vaccine list.");
             Log.d("Read", "Reading first entry from downloaded data to see if correct: " + sheet.getRow(4).getCell(3).getNumericCellValue());
             Log.d("Read", "Reading first entry from list to see if correct: \n" + covidData.getSwedenVaccine().get(0).getDistributedWeekly().get(2).getPfizer());
+
+             */
             is.close();
             connection.disconnect();
         } catch (IOException e) {

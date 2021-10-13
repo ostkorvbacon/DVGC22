@@ -12,19 +12,22 @@ public class Booking {
     private int cliniqueID;
     private Timestamp date;
     private int id;
+    private String type;
 
-    public Booking(String username, int cliniqueID, Timestamp date){
+    public Booking(String username, int cliniqueID, Timestamp date, String type){
         id = -1;
         this.username = username;
         this.cliniqueID = cliniqueID;
         this.date = date;
+        this.type = type;
     }
 
-    public Booking(int id, String username, int cliniqueID, Timestamp date){
+    public Booking(int id, String username, int cliniqueID, Timestamp date, String type){
         this.id = id;
         this.username = username;
         this.cliniqueID = cliniqueID;
         this.date = date;
+        this.type = type;
     }
 
     @Override
@@ -32,7 +35,8 @@ public class Booking {
         return "ID: " + id +
                 "\nUsername: " + username +
                 "\nCliniqueID: " + cliniqueID +
-                "\nDate and time: " + date.toString();
+                "\nDate and time: " + date.toString() +
+                "\nType: " + type;
     }
 
     public String getUsername() {
@@ -50,4 +54,6 @@ public class Booking {
     public int getId() {
         return id;
     }
+
+    public String getType(){return type;}
 }
