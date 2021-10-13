@@ -20,6 +20,8 @@
         <activity
             android:name=".BookingsActivity"
             android:exported="true" />
+
+
         <activity
             android:name=".QuestionnaireActivity"
             android:exported="true"
