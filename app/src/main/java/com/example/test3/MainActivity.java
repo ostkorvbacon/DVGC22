@@ -24,16 +24,19 @@ public class MainActivity extends AppCompatActivity {
     public static CovidData covidData = null;
 
     //set to true for insta login
-    public boolean instaLogin = false;
+    public boolean instaLogin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         if(handler.testAPIFunctions()){
             Log.i("API test", "Success!");
         }
+
+         */
 
         DataExtractor data = new DataExtractor();
         Thread downloadCovidDataThread = new Thread(data);
