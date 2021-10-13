@@ -27,6 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="55dp" />
 
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="match_parent"
+        android:layout_height="55dp" />
+
     <Button
         android:id="@+id/createbook1"
         android:layout_width="wrap_content"

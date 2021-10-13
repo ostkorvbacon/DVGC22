@@ -40,6 +40,7 @@ public class BookingsActivity extends AppCompatActivity {
     Timestamp date;
     String name;
     String email;
+    String type;
     LinearLayout relativeLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,11 @@ public class BookingsActivity extends AppCompatActivity {
 
 
         List <Clinique> Cliniques=handler.getCliniques();
+
+        List <String> vaccin=new ArrayList<String>();
+        vaccin.add("Pfizer");
+        vaccin.add("Moderna");
+        vaccin.add("Astra");
 
         for (int i=0;i<Cliniques.size();i++) {
              CliniqueName.add(Cliniques.get(i).getName());
@@ -91,7 +97,6 @@ public class BookingsActivity extends AppCompatActivity {
         user = (User)getUser.getSerializableExtra("loggedInUser");
         email=user.getUsername();
         i=0;
-
 
 
 
@@ -179,13 +184,33 @@ public class BookingsActivity extends AppCompatActivity {
 
                 }
 
-                handler.newBooking(email,name,date);
+                handler.newBooking(email,name,date,type);
 
                 Intent goTodash = new Intent(getApplicationContext(), MainMenuActivity.class);
                 goTodash.putExtra("loggedInUser", user);
                 startActivity(goTodash);
 
 
+            }
+        });
+
+
+
+
+        final Spinner vaccine =(Spinner) findViewById(R.id.spinner3);
+        ArrayAdapter<String> adp3 = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item,vaccin);
+        vaccine.setAdapter(adp3);
+        vaccine.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            type=vaccin.get(i);
+            System.out.println(type);
             }
         });
 
