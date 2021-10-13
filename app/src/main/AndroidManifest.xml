@@ -25,7 +25,7 @@
         <activity
             android:name=".QuestionnaireActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainMenuActivity"/>
         <activity
             android:name=".VaccinePassport.CameraActivity"
             android:exported="true"
