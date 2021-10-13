@@ -23,6 +23,7 @@
         <activity
             android:name=".QuestionnaireActivity"
             android:exported="true"
+            android:label="Questionnaire"
             android:parentActivityName=".MainMenuActivity"/>
         <activity
             android:name=".VaccinePassport.CameraActivity"

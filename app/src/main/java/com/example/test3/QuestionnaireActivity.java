@@ -81,5 +81,22 @@ public class QuestionnaireActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        return getParentActivityIntentImpl();
+    }
+
+    @Override
+    public Intent getParentActivityIntent() {
+        return getParentActivityIntentImpl();
+    }
+
+    private Intent getParentActivityIntentImpl() {
+        Intent i = null;
+        Intent intent = this.getIntent();
+        i = new Intent(this, MainMenuActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        return i;
+    }
 
 }
