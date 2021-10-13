@@ -197,6 +197,7 @@ public class HomeFragment extends Fragment {
                 Booking cancelBooking = database.getBooking(username);
                 database.deleteBookings(username);
                 database.deleteQuestionnaire(username);
+                bookButton.setVisibility(View.VISIBLE);
                 toggleVisibilityBooking(loggedInUser);
             }
         });
