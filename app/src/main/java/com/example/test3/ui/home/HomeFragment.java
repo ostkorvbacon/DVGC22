@@ -196,6 +196,7 @@ public class HomeFragment extends Fragment {
                 String username = loggedInUser.getUsername();
                 Booking cancelBooking = database.getBooking(username);
                 database.deleteBookings(username);
+                database.deleteQuestionnaire(username);
                 toggleVisibilityBooking(loggedInUser);
             }
         });
