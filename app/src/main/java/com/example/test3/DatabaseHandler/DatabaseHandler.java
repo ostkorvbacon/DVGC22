@@ -412,6 +412,13 @@ public class DatabaseHandler {
         String resp = getResponse(domain+"newQuestionnaire", "POST", body);
         List<String> info = getJsonValues(resp);
         if(resp.contains("Success")) {
+            Questionnaire q = getQuestionnaire(username);
+            for(boolean b : q.getQuestionAnswers()){
+                if(b){
+                    return q;
+                }
+            }
+            updateQuestionnaire(username, true);
             return getQuestionnaire(username);
         }
         return null;
