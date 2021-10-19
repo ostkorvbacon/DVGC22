@@ -71,18 +71,20 @@ public class BookingsActivity extends AppCompatActivity {
         List<Booking> BookingsToday=handler.getBookings();
         List <Timestamp> usedtimes=new ArrayList<>();
         Timestamp timestamp = Timestamp.valueOf("2021-09-27 10:30:00");
-        List <Timestamp> freetimes=new ArrayList<>();
-        freetimes.add(timestamp);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(timestamp);
 
+        //freetimes.add(timestamp);
+        Calendar cal = Calendar.getInstance();
+        cal.set(2021, 10, 19);
+        List <Timestamp> freetimes = handler.getFreeTimeSlots(cal);
+        //cal.setTime(timestamp);
+/*
         for (int i=0;i<10;i++){
 
             cal.add(Calendar.MINUTE, 30);
             timestamp = new Timestamp(cal.getTime().getTime());
             freetimes.add(timestamp);
         }
-
+*/
 
 
 
@@ -187,6 +189,7 @@ public class BookingsActivity extends AppCompatActivity {
                 handler.newBooking(email,name,date,type);
 
                 Intent goTodash = new Intent(getApplicationContext(), MainMenuActivity.class);
+                goTodash.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 goTodash.putExtra("loggedInUser", user);
                 startActivity(goTodash);
 

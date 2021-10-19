@@ -47,6 +47,8 @@ import com.example.test3.VaccinePassport.VaccinePassport;
 import com.example.test3.databinding.FragmentHomeBinding;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
@@ -135,6 +137,7 @@ public class HomeFragment extends Fragment {
         //newVaccination(username, date, dose, type, getClinique(b.getCliniqueID()).getName())
         //database.newVaccination(loggedInUser.getUsername(), "2021/9/15", 2, "Pfizer", "test");
         //database.deleteVaccination(v.getId());
+        boolean isTwoWeekSinceVaccionation = false;
         boolean isFullyVaccinated = false;
         for(Vaccination v: database.getUserVaccinations(loggedInUser.getUsername())){
             int dose = v.getDose();
@@ -143,6 +146,7 @@ public class HomeFragment extends Fragment {
                 firstDose.setChecked(true);
                 firstDoseDate.setText(v.getDate());
             }else if(dose == 2){
+                isTwoWeekSinceVaccionation = hasBeenTwoWeeksAfterDose2(v.getDate());
                 isFullyVaccinated = true;
                 secondDose.setChecked(true);
                 secondDoseDate.setText(v.getDate());
@@ -153,11 +157,16 @@ public class HomeFragment extends Fragment {
                 qrCode.setVisibility(View.VISIBLE);
             }
         }
-        if (!isFullyVaccinated){
+        if (!isTwoWeekSinceVaccionation){
             ConstraintLayout.LayoutParams buttonLayout = (ConstraintLayout.LayoutParams) qrScannerButton.getLayoutParams();
             buttonLayout.horizontalBias = 0;
             buttonLayout.setMarginStart(42);
-            buttonLayout.topToBottom = bookButton.getId();
+            if(!isFullyVaccinated) {
+                buttonLayout.topToBottom = bookButton.getId();
+            }
+            else{
+                buttonLayout.topToBottom = secondDose.getId();
+            }
         }
         //checks if user has upcoming vaccination appointment and then displays it in UI
         toggleVisibilityBooking(loggedInUser);
@@ -216,6 +225,21 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private boolean hasBeenTwoWeeksAfterDose2(String date){
+        int noOfDays = 14; //i.e two weeks
+        Calendar calendar = Calendar.getInstance();
+        String[] sepDate = date.split("/");
+        calendar.setTime(new Date(Integer.parseInt(sepDate[0])-1900, Integer.parseInt(sepDate[1])-1, Integer.parseInt(sepDate[2])));
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        Date valid_after = calendar.getTime();
+        if (new Date().after(valid_after)) {
+            return true;
+        }
+
+
+        return false;
     }
 
 
