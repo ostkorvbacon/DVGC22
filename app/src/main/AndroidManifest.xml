@@ -25,17 +25,17 @@
         <activity
             android:name=".QuestionnaireActivity"
             android:exported="true"
-            android:label="Questionnaire"
+            android:label="@string/q"
             android:parentActivityName=".MainMenuActivity"/>
         <activity
             android:name=".VaccinePassport.CameraActivity"
             android:exported="true"
-            android:label="Camera"
+            android:label="@string/camera"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".CreateActivity"
             android:exported="true"
-            android:label="Create"
+            android:label="@string/create2"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SettingsActivity"
