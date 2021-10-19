@@ -189,6 +189,7 @@ public class BookingsActivity extends AppCompatActivity {
                 handler.newBooking(email,name,date,type);
 
                 Intent goTodash = new Intent(getApplicationContext(), MainMenuActivity.class);
+                goTodash.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 goTodash.putExtra("loggedInUser", user);
                 startActivity(goTodash);
 
