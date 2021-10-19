@@ -450,6 +450,54 @@ public class DatabaseHandler {
         return false;
     }
 
+    public void setPfizerQuantity(int age){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "PfizerQuantity");
+        data.put("Value", Integer.toString(age));
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"updateSetting", "POST", body);
+    }
+
+    public int getPfizerQuantity(){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "PfizerQuantity");
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"getSetting", "POST", body);
+        return Integer.parseInt(getJsonValues(resp).get(1));
+    }
+
+    public void setModernaQuantity(int age){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "ModernaQuantity");
+        data.put("Value", Integer.toString(age));
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"updateSetting", "POST", body);
+    }
+
+    public int getModernaQuantity(){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "ModernaQuantity");
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"getSetting", "POST", body);
+        return Integer.parseInt(getJsonValues(resp).get(1));
+    }
+
+    public void setAstraQuantity(int age){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "AstraQuantity");
+        data.put("Value", Integer.toString(age));
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"updateSetting", "POST", body);
+    }
+
+    public int getAstraQuantity(){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("Setting", "AstraQuantity");
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"getSetting", "POST", body);
+        return Integer.parseInt(getJsonValues(resp).get(1));
+    }
+
 
 
     // tests all the api functions to see if they work as intended!
@@ -690,6 +738,39 @@ public class DatabaseHandler {
             return false;
         }
         setMinimumAgeForVaccination(originalValue);
+
+        // test Pfizer quantity
+        clearTestData(username, dateNoTime, cliniqueName);
+        Log.i("APITest", "Pfizer Quantity...");
+        originalValue = getPfizerQuantity();
+        setPfizerQuantity(20);
+        if(getPfizerQuantity() != 20){
+            Log.i("APITest", "setPfizerQuantity does not work correctly");
+            return false;
+        }
+        setPfizerQuantity(originalValue);
+
+        // test Moderna quantity
+        clearTestData(username, dateNoTime, cliniqueName);
+        Log.i("APITest", "Moderna Quantity...");
+        originalValue = getModernaQuantity();
+        setModernaQuantity(20);
+        if(getModernaQuantity() != 20){
+            Log.i("APITest", "setModernaQuantity does not work correctly");
+            return false;
+        }
+        setModernaQuantity(originalValue);
+
+        // test Astra quantity
+        clearTestData(username, dateNoTime, cliniqueName);
+        Log.i("APITest", "Astra Quantity...");
+        originalValue = getAstraQuantity();
+        setAstraQuantity(20);
+        if(getAstraQuantity() != 20){
+            Log.i("APITest", "setAstraQuantity does not work correctly");
+            return false;
+        }
+        setAstraQuantity(originalValue);
 
         // clear the test data from the database
         clearTestData(username, dateNoTime, cliniqueName);
