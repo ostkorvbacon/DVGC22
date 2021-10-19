@@ -174,13 +174,34 @@ public class AdminAppointmentsFragment extends Fragment {
                 User user = handler.getUser(userSelectSpinner.getSelectedItem().toString());
                 List<Vaccination> vacc = new ArrayList<Vaccination>();
                 vacc = handler.getUserVaccinations(user.getUsername());
+                Booking booking = handler.getBooking(user.getUsername());
                 if(vacc.isEmpty()){
-                    handler.doVaccination(user.getUsername(),1,"Moderna");
-                    handler.setModernaQuantity(handler.getModernaQuantity()-1);
+                    if(booking.getType().equals("Pzifer")){
+                        handler.doVaccination(user.getUsername(),1,"Pzifer");
+                        handler.setPfizerQuantity(handler.getPfizerQuantity()-1);
+                    }
+                    if(booking.getType().equals("Moderna")){
+                        handler.doVaccination(user.getUsername(),1,"Moderna");
+                        handler.setModernaQuantity(handler.getModernaQuantity()-1);
+                    }
+                    if(booking.getType().equals("Astra")){
+                        handler.doVaccination(user.getUsername(),1,"Astra");
+                        handler.setModernaQuantity(handler.getModernaQuantity()-1);
+                    }
                 }
                 else{
-                    handler.doVaccination(user.getUsername(),2,"Moderna");
-                    handler.setModernaQuantity(handler.getModernaQuantity()-1);
+                    if(booking.getType().equals("Pzifer")){
+                        handler.doVaccination(user.getUsername(),2,"Pzifer");
+                        handler.setPfizerQuantity(handler.getPfizerQuantity()-1);
+                    }
+                    if(booking.getType().equals("Moderna")){
+                        handler.doVaccination(user.getUsername(),2,"Moderna");
+                        handler.setModernaQuantity(handler.getModernaQuantity()-1);
+                    }
+                    if(booking.getType().equals("Astra")){
+                        handler.doVaccination(user.getUsername(),2,"Astra");
+                        handler.setModernaQuantity(handler.getModernaQuantity()-1);
+                    }
                 }
                 updateUserSpinner(filterSpinner.getSelectedItemPosition());
             }
