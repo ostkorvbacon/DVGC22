@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.test3.DatabaseHandler.DatabaseHandler;
@@ -48,6 +49,89 @@ public class QuestionnaireActivity extends AppCompatActivity {
         CheckBox yesBox[] = {q0, q1, q2, q3, q4};
         CheckBox noBox[] = {q00, q10, q20, q30, q40};
         answers = new boolean[5];
+
+        q0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q00.isChecked() ) {q00.setChecked(false);}
+            }
+        });
+
+        q00.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q0.isChecked() ) {q0.setChecked(false);}
+            }
+        });
+
+        q1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q10.isChecked() ) {q10.setChecked(false);}
+            }
+        });
+
+        q10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q1.isChecked() ) {q1.setChecked(false);}
+            }
+        });
+
+        q2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q20.isChecked() ) {q20.setChecked(false);}
+            }
+        });
+
+        q20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q2.isChecked() ) {q2.setChecked(false);}
+            }
+        });
+
+        q3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q30.isChecked() ) {q30.setChecked(false);}
+            }
+        });
+
+        q30.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q3.isChecked() ) {q3.setChecked(false);}
+            }
+        });
+
+        q4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q40.isChecked() ) {q40.setChecked(false);}
+            }
+        });
+
+        q40.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(q4.isChecked() ) {q4.setChecked(false);}
+            }
+        });
+
+
+
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
