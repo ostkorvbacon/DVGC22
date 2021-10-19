@@ -176,11 +176,11 @@ public class AdminAppointmentsFragment extends Fragment {
                 vacc = handler.getUserVaccinations(user.getUsername());
                 if(vacc.isEmpty()){
                     handler.doVaccination(user.getUsername(),1,"Moderna");
-                    Log.i(user.getUsername(),"Ingen dos");
+                    handler.setModernaQuantity(handler.getModernaQuantity()-1);
                 }
                 else{
                     handler.doVaccination(user.getUsername(),2,"Moderna");
-                    Log.i(user.getUsername(),"En dos");
+                    handler.setModernaQuantity(handler.getModernaQuantity()-1);
                 }
                 updateUserSpinner(filterSpinner.getSelectedItemPosition());
             }
