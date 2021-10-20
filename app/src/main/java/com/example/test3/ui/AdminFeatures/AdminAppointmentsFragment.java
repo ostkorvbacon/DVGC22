@@ -245,7 +245,11 @@ public class AdminAppointmentsFragment extends Fragment {
         }
         if(!adapter.isEmpty()){
             userSelectSpinner.setSelection(0,true);
+            questionaireButton.setEnabled(true);
             updateUser();
+        }
+        else{
+            questionaireButton.setEnabled(false);
         }
     }
 
@@ -256,15 +260,23 @@ public class AdminAppointmentsFragment extends Fragment {
         if(handler.getQuestionnaire(user.getUsername()) != null){
             vaccinateButton.setEnabled(handler.getQuestionnaire(user.getUsername()).isApproved());
             if(handler.getQuestionnaire(user.getUsername()).isApproved()){
-                questionaireStatus.setText("Questionaire status: Approved");
+                questionaireStatus.setText("Approved");
             }
             else{
-                questionaireStatus.setText("Questionaire status: Pending");
+                questionaireStatus.setText("Pending");
             }
         }
         else{
             vaccinateButton.setEnabled(false);
-            questionaireStatus.setText("Questionaire status: Pending");
+            questionaireStatus.setText("Pending");
         }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if(!hidden){
+            updateUser();
+        }
+        super.onHiddenChanged(hidden);
     }
 }
