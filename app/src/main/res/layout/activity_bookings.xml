@@ -27,7 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="55dp" />
 
-    <Spinner
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vaccine brand" />
+
+                                                                                                                                                                             <Spinner
         android:id="@+id/spinner3"
         android:layout_width="match_parent"
         android:layout_height="55dp" />

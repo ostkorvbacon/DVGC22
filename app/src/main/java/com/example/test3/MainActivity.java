@@ -110,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(instaLogin) {
             Intent loginIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
-            User karin = handler.getUser("karin123@gmail.com");
-            loginIntent.putExtra("loggedInUser", karin);
+            User admin = handler.getUser("admin@gmail.com");
+            loginIntent.putExtra("loggedInUser", admin);
             startActivity(loginIntent);
             return;
         }

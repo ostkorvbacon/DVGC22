@@ -48,7 +48,7 @@
 
     <!-- Dashboard -->
     <string-array name="dashboard_stats">
-        <item>-</item>
+        <item></item>
         <item>Total doses distributed</item>
         <item>Total doses administered</item>
         <item>Cumulative uptake (%)</item>
