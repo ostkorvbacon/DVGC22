@@ -1,17 +1,41 @@
 <resources>
 
-        <string-array name="planets_array">
-            <item>Mercury</item>
-            <item>Venus</item>
-            <item>Earth</item>
-            <item>Mars</item>
-            <item>Jupiter</item>
-            <item>Saturn</item>
-            <item>Uranus</item>
-            <item>Neptune</item>
-        </string-array>
+    <string name="q0">Screening Questionnaire</string>
+    <string name="q6">The person wanting to get vaccinated must \nanswer the following questions.</string>
+    <string name="q1">Have you taken any vaccine in the last 7 days?</string>
+    <string name="q2">Are you pregnant?</string>
+    <string name="q3">Do you have an increased tendency to bleed due to \nillness or medicine?</string>
+    <string name="q4">Do you have allergies that have caused a strong enough of a reaction to need hospital care?</string>
+    <string name="q5">Have you ever had a strong reaction after a vaccination and needed hospital care?</string>
+    <string name="q7">Submit</string>
+    <string name="city">City</string>
+    <string name="street">Street</string>
+    <string name="cat">Category</string>
+    <string name="filter">Filters:</string>
+    <string name="acc">Account details</string>
+    <string name="fname">First name</string>
 
+    <string name="pover">Personal Overview</string>
+    <string name="date">Date</string>
+    <string name="vaccination">vaccination</string>
+    <string name="fdose">First dose</string>
+    <string name="sdose">Second dose</string>
+    <string name="admin_tools">Admin tools</string>
     <string name="app_name">Vaccine Tracker</string>
+    <string name="upp">Upcoming vaccination appointment</string>
+    <string name="qpend">Questionaire status: Pending</string>
+    <string name="q">Questionaire</string>
+    <string name="vaccinate">Vaccinate</string>
+    <string name="deny">Deny</string>
+    <string name="accept">Accept</string>
+    <string name="schedule">Schedule age group eligible for vaccination</string>
+    <string name="schedule2">Current eligible age group: </string>
+    <string name="apply">Apply </string>
+
+    <string name="book">Book appointment</string>
+    <string name="scann">Vaccine passport QR code</string>
+    <string name="dob2">Date of birth</string>
+
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -22,10 +46,49 @@
     <string name="EmailText">Email</string>
     <string name="PasswordText">Password</string>
 
+    <string name="camera">Camera</string>
+    <string name="vacc">Vaccinations</string>
+
+    <string name="reply">Reply</string>
+    <string name="replyall">Reply to all</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="address2">Address</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_dashboard">Dashboard</string>
     <string name="menu_faq">FAQ</string>
+    <string name="faq">Frequently asked questions</string>
+    <string name="faq1">Q: How is the vaccination performed?</string>
+    <string name="faq2">You will be given the vaccine witch a syringe in the upper arm. You will remain on site for 15 minutes after vaccination. This is to ensure that you are feeling fine.</string>
+    <string name="faq3">Q: Can I choose the type of vaccine?</string>
+    <string name="faq4">No, you can not choose the type of vaccine. The type is determined by for example:
+                \n\n - How many doses of different types the region receives\n    and when they arrive.
+                \n - If you are allergic to a vaccine.
+                \n\nAll vaccines used in Sweden are approved for people over 12 years. </string>
+    <string name="faq5">Q: Can I get the vaccine if I am sick?</string>
+    <string name="faq6">No, you should not get a vaccination if you have an ongoing infection eith fever or covid-19 symptoms.
+        The same applies for dose 2 </string>
+    <string name="faq7">Q: Should I get the vaccine if I have had covid-19?</string>
+    <string name="faq8">Yes you are recomended to get the vaccine even if you have had covid-19. The duration of the protection from an infection is
+        unknown, thus you should get the vaccine.</string>
+    <string name="faq9">Q: When is vaccination not recommended?</string>
+    <string name="faq10">If you previously had a severe allergic reaction that required hospital care, can consult i doctor before vaccination.
+        This also applies to reactions after vaccination.</string>
+    <string name="faq11">Q: What should I do if I get any problems after a vaccination?</string>
+    <string name="faq12">"You can report suspected side effects of the vaccine to Läkemedelsverket.
+            \nAll suspected side effects are compiled and any connection to the vaccine is investigated.</string>
+    <string name="faq13">Q: What are the common side effects?</string>
+
+    <string name="faq14">The pinprick may be sore, you could feel tired or get a headache after the vaccination.
+        Feeling cold, nauseous, feverish or having joint pain is also possible.
+        The side effects mostly start within the first 24 hours of the vaccination and ends within 48 hours.
+         </string>
+    <string name="faq15">Q: Can I get two different m-rna vaccines and is the  effect the same?</string>
+    <string name="faq16">Pfizer-BioNTechs vaccine Comirnaty and the Moderna vaccine Spikevax  are so called mRNA-vaccine, thus they have several similarities.
+        A combination gives the same protection as two doses with the same.</string>
+
     <string name="menu_admin_schedule">Scheduling</string>
     <string name="menu_admin_appointments">Appointments</string>
     <string name="menu_admin_stats">Statistics</string>
@@ -84,9 +147,10 @@
 
     <string name="profiletxt">Profile</string>
     <string name="create">Register</string>
+    <string name="create2">Create</string>
     <string name="name"></string>
     <string name="pass">Password</string>
-    <string name="nr">Mobile Number</string>
+    <string name="nr">F Number</string>
     <string name="dob">YY/MM/DD</string>
     <string name="address">County, street name </string>
     <string name="user">Email</string>
@@ -95,6 +159,7 @@
 
     <string name="Clinique">Clinique</string>
     <string name="time">Time of vaccination</string>
+    <string name="time2">Time</string>
     <string name="createbook">Create Booking</string>
 
     <string name="title_activity_login2">LoginActivity2</string>

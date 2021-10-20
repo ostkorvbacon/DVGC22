@@ -100,43 +100,12 @@ public class AdminStatsFragment extends Fragment {
         vaccineText = view.findViewById(R.id.vaccine_storage_text);
 
         usersText.setText("Current registered users:\n" + String.valueOf(handler.getUserList().size()));
-        CovidVaccineSweden vacc = new CovidVaccineSweden();
+
         int pzifer=0,moderna=0,astraZeneca=0, total=0;
-        for (CovidVaccineSweden.VaccineDistributedWeekly weekly:vacc.getDistributedWeekly()) {
-            pzifer += weekly.getPfizer();
-            moderna += weekly.getModerna();
-            astraZeneca += weekly.getAstraZeneca();
-        }
-        List<CovidVaccineSweden> vaccinData = new ArrayList<CovidVaccineSweden>();
-        vaccinData = covidData.getSwedenVaccine();
-        CovidVaccineSweden vaccData = vaccinData.get(0);
-            for (CovidVaccineSweden.VaccineDistributedWeekly weekly: vaccData.getDistributedWeekly()) {
-                pzifer += weekly.getPfizer();
-                Log.i("Pzifer in " + vaccData.getRegion(),String.valueOf(weekly.getPfizer()));
-                moderna += weekly.getModerna();
-                Log.i("moderna in " + vaccData.getRegion(),String.valueOf(weekly.getModerna()));
-                astraZeneca += weekly.getAstraZeneca();
-                Log.i("Astra in " + vaccData.getRegion(),String.valueOf(weekly.getAstraZeneca()));
-            }
-            for (CovidVaccineSweden.AgeGroupReport report : vaccData.getAgeGroupReports()) {
-                pzifer -= report.getDose1Pfizer();
-                //pzifer -= report.getDose2Pfizer();
 
-                moderna -= report.getDose1Moderna();
-                //moderna -= report.getDose2Moderna();
-
-                astraZeneca -= report.getDose1AstraZeneca();
-                //astraZeneca -= report.getDose2AstraZeneca();
-            }
-        if(pzifer<0){
-            pzifer *= -1;
-        }
-        if(moderna<0){
-            moderna *= -1;
-        }
-        if(astraZeneca<0){
-            astraZeneca *= -1;
-        }
+        pzifer = handler.getPfizerQuantity();
+        moderna = handler.getModernaQuantity();
+        astraZeneca = handler.getAstraQuantity();
 
 
 

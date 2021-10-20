@@ -25,7 +25,7 @@
             android:icon="@drawable/ic_faq"
             android:title="@string/menu_faq" />
 
-        <item android:title="Admin tools"
+        <item android:title="@string/admin_tools"
             android:id="@+id/admin_tools">
             <menu>
                 <group android:checkableBehavior="single">

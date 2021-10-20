@@ -1,0 +1,192 @@
+<resources>
+
+    <string name="q0">Frågor inför vaccination</string>
+    <string name="q1">Har du tagit något vaccin de senaste 7 dagarna?</string>
+    <string name="q2">Är du gravid?</string>
+    <string name="q3">Har du en ökad tendens att blöda p.g.a. sjukdom eller medicin</string>
+    <string name="q4">Har du allergier som har gett en stark nog reaktion att du behövt sjukhusvård?</string>
+    <string name="q5">Har du någonsin fått en stark reaktion efter en vaccinering att du behövt sjukhusvård?</string>
+    <string name="q6">Personen som vill bli vaccinerad måste \nsvara på följande frågor.</string>
+    <string name="q7">Lämna in</string>
+
+    <string name="reply">Svara</string>
+    <string name="replyall">Svara alla</string>
+
+    <string name="camera">Kamera</string>
+
+    <string name="vacc">Vaccinationer</string>
+    <string name="time2">Tid</string>
+    <string name="create2">Skapa</string>
+
+    <string name="yes">Ja</string>
+    <string name="no">Nej</string>
+    <string name="address2">Adress</string>
+
+
+    <string name="pover">Personlig översikt</string>
+    <string name="date">Datum</string>
+    <string name="vaccination">Vaccination</string>
+    <string name="fdose">Första dosen</string>
+    <string name="sdose">Andra dosen</string>
+    <string name="upp">Kommande vaccinationer</string>
+    <string name="book">Boka vaccination</string>
+    <string name="scann">Vaccinpass eller QR kod</string>
+    <string name="dob2">Födelsedatum</string>
+    <string name="qpend">Frågeformulär status: Pågående</string>
+    <string name="q">Frågeformulär</string>
+    <string name="vaccinate">Vaccinera</string>
+    <string name="deny">Neka</string>
+    <string name="accept">Acceptera</string>
+    <string name="schedule">Schemalägg åldersgrupp behörig\n för vaccination</string>
+    <string name="schedule2">Nuvarande behörigage åldersgrupp: </string>
+    <string name="apply">Tilllämpa </string>
+    <string name="city">Stad</string>
+    <string name="street">Gata</string>
+    <string name="cat">Kategori</string>
+    <string name="filter">Filter:</string>
+    <string name="acc">Kontodetaljer</string>
+    <string name="fname">Förnamn</string>
+    <string name="faq">Vanliga Frågor</string>
+
+    <string name="faq1">Q: Hur går vaccinationen till?</string>
+    <string name="faq2">Du får vaccinet med en spruta i överarmen. Du får stanna kvar i 15 minuter efter att du har fått sprutan. Det är för att se att du mår bra.</string>
+    <string name="faq3">Q: Kan jag välja vaccin?</string>
+    <string name="faq4">Nej, du kan inte välja vaccin. Här är sådant som \npåverkar vilket vaccin du får:
+                \n\n - Hur många doser regionerna får av de olika vaccinen \n    och när de kommer.
+                \n - Om du är allergisk mot något ämne som finns i ett \n    särskilt vaccin.
+                \n\nAlla vaccin som används i Sverige är godkända för personer från 12 år. </string>
+    <string name="faq5">Q: Kan jag vaccinera mig om jag är sjuk?</string>
+    <string name="faq6">Nej, du ska inte vaccinera dig om du har en pågående infektion med feber eller symtom på covid-19.
+        Samma sak gäller om du blir sjuk inför dos två. Ta inte dos två förrän du är helt frisk och
+        inte har några symtom på infektion, exempelvis feber.</string>
+    <string name="faq7">Q: Ska jag vaccinera mig även om jag har haft covid-19?</string>
+    <string name="faq8">Ja, du rekommenderas att vaccinera dig även om du har haft covid-19. Man vet
+        inte säkert hur länge skyddet mot sjukdomen finns kvar efter att du har varit sjuk i covid-19.
+        Därför behöver du vaccinera dig.</string>
+    <string name="faq9">Q:När rekommenderas inte vaccination?</string>
+    <string name="faq10">Du som tidigare har fått en allvarlig allergisk reaktion som gjorde att du fick vård på
+        en akutmottagning eller behövde läggas in på sjukhus, kan rådgöra med en läkare
+        innan vaccinationen. Detsamma gäller om du fått en sådan kraftig reaktion efter en vaccination.</string>
+    <string name="faq11">Q: Vad ska jag göra om jag får några problem efter jag vaccinerat mig?</string>
+    <string name="faq12">"Du kan rapportera in misstänkta biverkningar av vaccinet till Läkemedelsverket.
+        De har i uppdrag att följa och övervaka effekten av läkemedel, inklusive vacciner.
+            \nÄven vårdpersonal ska rapportera in misstänkta biverkningar av vaccinet.
+            \nAlla misstänkta biverkningar sammanställs och utreds för att se om de har något samband med vaccinet.</string>
+    <string name="faq13">Q: Vad är de vanliga biverkningarna?</string>
+    <string name="faq14">Du kan bli öm på stickstället i armen, känna dig trött och få huvudvärk efter att du har vaccinerat dig.
+        Du kan också känna dig frusen, må illa, få feber eller ont i lederna och musklerna.
+            \n\nDet kallas för biverkningar och är vanligt hos barn och vuxna som har fått vaccin mot covid-19.
+            \n\nBesvären kommer oftast inom det första dygnet efter vaccinationen. De brukar gå över inom ett till två dygn. </string>
+    <string name="faq15">Q: Kan jag ta två olika mRNA-vaccin i mina två doser - ger det en lika bra effekt som att få samma vaccin?</string>
+    <string name="faq16">Pfizer-BioNTechs vaccin Comirnaty och Modernas vaccin Spikevax är så kallade mRNA-vaccin, och har därmed flera likheter.
+        En kombination av Comirnaty och Spikevax ger ett lika bra immunsvar som när båda doserna ges med samma vaccin.</string>
+
+    <string name="admin_tools">Administratörsverktyg</string>
+    <string name="app_name">Vaccinspårning</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Användarnamn</string>
+
+    <string name="nav_header_desc">Navigationsrubrik</string>
+    <string name="action_settings">Inställningar</string>
+    <string name="EmailText">Email</string>
+    <string name="PasswordText">Lösenord</string>
+
+
+    <string name="menu_home">Hem</string>
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_faq">Vanliga Frågor</string>
+    <string name="menu_admin_schedule">Schemaläggning</string>
+    <string name="menu_admin_appointments">Bokad tid</string>
+    <string name="menu_admin_stats">Statistik</string>
+    <string name="title_activity_settings">Inställningar</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Personliga uppgifter</string>
+    <string name="sync_header">Sekretess inställningar</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Namn</string>
+    <string name="reply_title">Plats</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Pushnotiser</string>
+    <string name="attachment_title">Säg till när vaccination är tillgänglig i mitt område</string>
+    <string name="attachment_summary_on">Skickar pushnotis när vaccination är tillgänglig
+    </string>
+    <string name="attachment_summary_off">Visa bara tillgängliga vaccinationstider</string>
+
+    <!-- Dashboard -->
+    <string-array name="dashboard_stats">
+        <item>-</item>
+        <item>Totala mängden doser distribuerade </item>
+        <item>Totala mängden doser givna</item>
+        <item>Samalagt upptag (%)</item>
+        <item>Totala antalet sjukdomsfall och dödsfall</item>
+    </string-array>
+
+    <string-array name="not_chosen">
+        <item></item>
+    </string-array>
+
+    <string-array name="filter_total_dist">
+        <item>Efter län</item>
+        <item>Efter vaccin</item>
+    </string-array>
+
+    <string-array name="filter_total_admin">
+        <item>Efter en dos</item>
+        <item>Efter två dos</item>
+        <item>Efter åldersgrupp</item>
+        <item>Efter län</item>
+        <item>Efter vaccin</item>
+    </string-array>
+
+    <string-array name="filter_cumulative_uptake">
+        <item>Efter vecka</item>
+        <item>Efter månad</item>
+    </string-array>
+
+    <string-array name="filter_cases_deaths">
+        <item>Efter län</item>
+        <item>Efter åldersgrupp</item>
+    </string-array>
+
+    <string name="profiletxt">Profil</string>
+    <string name="create">Registrera</string>
+    <string name="name"></string>
+    <string name="pass">Lösenord</string>
+    <string name="nr">Mobilnummer</string>
+    <string name="dob">ÅÅ/MM/DD</string>
+    <string name="address">Län, Gatuadress </string>
+    <string name="user">Email</string>
+    <string name="reg">Registrera</string>
+    <string name="back">Tillbaka</string>
+
+    <string name="Clinique">Klinik</string>
+    <string name="time">Vaccinationstid</string>
+    <string name="createbook">Skapa bokning</string>
+
+    <string name="title_activity_login2">LoginActivity2</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Lösenord</string>
+    <string name="action_sign_in">Logga in eller registrera dig</string>
+    <string name="action_sign_in_short">Logga in</string>
+    <string name="welcome">"Välkommen !"</string>
+    <string name="invalid_username">Otillåtet användarnamn</string>
+    <string name="invalid_password">Lösenordet måste vara >5 tecken</string>
+    <string name="login_failed">"Inloggning misslyckades"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="QR_code_scanner_button">Scanna digitalt pass</string>
+    <string name="QR_code_scanner_button_desc">Startar QR kod läsaren.</string>
+    <string name="Camera_permission_denied">Åntomst till kameran nekades.</string>
+    <string name="QR_code_scanner_name">Namn</string>
+    <string name="QR_code_scanner_date">Datum för andra dos</string>
+    <string name="QR_code_scanner_type">Vaccintyp</string>
+    <string name="camera_permission_rationale_label">Åtkomst till kamera</string>
+    <string name="camera_permission_rationale_text">Kameran kommer användas för att läsa digitala pass i form av QR koder. Ingen annan data från kameran sparas.</string>
+
+</resources>

@@ -33,7 +33,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
-            android:text="Name"
+            android:text="@string/signature_title"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            android:text="Password"
+            android:text="@string/pass"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            android:text="Phone number"
+            android:text="@string/nr"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -125,7 +125,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            android:text="Date of birth"
+            android:text="@string/dob2"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -149,7 +149,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
-            android:text="City"
+            android:text="@string/city"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -172,7 +172,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            android:text="Street"
+            android:text="@string/street"
             android:textSize="18dp"
             android:textStyle="bold" />
 
