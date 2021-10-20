@@ -152,14 +152,15 @@ public class AdminAppointmentsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     updateUser();
+                    questionaireButton.setEnabled(true);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                questionaireButton.setEnabled(false);
             }
         });
-
+        questionaireButton.setEnabled(false);
         questionaireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -225,10 +226,10 @@ public class AdminAppointmentsFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 userSelectSpinner.setEnabled(!adapter.isEmpty());
-                if(adapter.isEmpty()){
+                /*if(adapter.isEmpty()){
                     nameText.setText("name");
                     ageText.setText("Date of birth");
-                }
+                }*/
                 break;
             case 1:
                 for (Booking b: handler.getBookings()) {
@@ -236,10 +237,10 @@ public class AdminAppointmentsFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 userSelectSpinner.setEnabled(!adapter.isEmpty());
-                if(adapter.isEmpty()){
+                /*if(adapter.isEmpty()){
                     nameText.setText("Name");
                     ageText.setText("Date of birth");
-                }
+                }*/
                 break;
 
         }
@@ -256,15 +257,15 @@ public class AdminAppointmentsFragment extends Fragment {
         if(handler.getQuestionnaire(user.getUsername()) != null){
             vaccinateButton.setEnabled(handler.getQuestionnaire(user.getUsername()).isApproved());
             if(handler.getQuestionnaire(user.getUsername()).isApproved()){
-                questionaireStatus.setText("Questionaire status: Approved");
+                questionaireStatus.setText("Approved");
             }
             else{
-                questionaireStatus.setText("Questionaire status: Pending");
+                questionaireStatus.setText("Pending");
             }
         }
         else{
             vaccinateButton.setEnabled(false);
-            questionaireStatus.setText("Questionaire status: Pending");
+            questionaireStatus.setText("Pending");
         }
     }
 }
