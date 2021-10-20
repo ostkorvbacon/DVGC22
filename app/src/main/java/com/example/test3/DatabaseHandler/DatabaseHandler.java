@@ -533,6 +533,78 @@ public class DatabaseHandler {
         return freeTimes;
     }
 
+    public List<AgeGroupSchedule> getAgeGroupSchedules(){
+        List<AgeGroupSchedule> list = new ArrayList<AgeGroupSchedule>();
+        String resp = getResponse(domain+"getAgeGroupSchedules", "GET", "");
+        List<List<String>> output = getJsonArrayValues("AgeGroupSchedules", resp);
+        for(List<String> innerList : output){
+            // int ID, int minAge, int maxAge, String date
+            list.add(new AgeGroupSchedule(Integer.parseInt(innerList.get(0)),  Integer.parseInt(innerList.get(1)), Integer.parseInt(innerList.get(2)), innerList.get(3).replace("-","/")));
+        }
+        return list;
+    }
+
+    public AgeGroupSchedule getAgeGroupSchedule(int minAge, int maxAge){
+        for (AgeGroupSchedule ag : getAgeGroupSchedules()){
+            if (ag.getMinAge() == minAge && ag.getMaxAge() == maxAge){
+                return ag;
+            }
+        }
+        return null;
+    }
+
+    public AgeGroupSchedule getAgeGroupSchedule(int ID){
+        for (AgeGroupSchedule ag : getAgeGroupSchedules()){
+            if (ag.getId() == ID){
+                return ag;
+            }
+        }
+        return null;
+    }
+
+    public AgeGroupSchedule newAgeGroupSchedule(int minAge, int maxAge, String date){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("minAge", Integer.toString(minAge));
+        data.put("maxAge", Integer.toString(maxAge));
+        data.put("date", date);
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"newAgeGroupSchedule", "POST", body);
+        List<String> info = getJsonValues(resp);
+        if(resp.contains("Success")) {
+            return getAgeGroupSchedule(minAge, maxAge);
+        }
+        return null;
+    }
+
+    public void deleteAgeGroupSchedule(int ID){
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+        data.put("id", Integer.toString(ID));
+        String body = constructJsonObject(data);
+        String resp = getResponse(domain+"deleteAgeGroupSchedule", "POST", body);
+    }
+
+    public boolean isUserEligibleForBookingVaccination(String username){
+        if(getAgeGroupScheduleForUser(username) == null){
+            return false;
+        }
+        if(isTodayAfter(getAgeGroupScheduleForUser(username).getDate())){
+            return true;
+        }
+        return false;
+    }
+
+    public AgeGroupSchedule getAgeGroupScheduleForUser(String username){
+        User user = getUser(username);
+        int yearBorn = Integer.parseInt(user.getDateOfBirth().split("/")[0]);
+        int age = Calendar.getInstance().get(Calendar.YEAR) - yearBorn;
+        for (AgeGroupSchedule ag : getAgeGroupSchedules()){
+            if(ag.isAgeBetween(age)){
+                return ag;
+            }
+        }
+        return null;
+    }
+
 
 
     // tests all the api functions to see if they work as intended!
@@ -759,25 +831,54 @@ public class DatabaseHandler {
 
         // test minimum age for vaccination
         clearTestData(username, dateNoTime, cliniqueName);
-        Log.i("APITest", "testing minimum age for vaccination...");
-        int originalValue = getMinimumAgeForVaccination();
-        setMinimumAgeForVaccination(20);
-        if(getMinimumAgeForVaccination() != 20){
-            Log.i("APITest", "setMinimumAgeForVaccination does not work correctly");
-            return false;
+        if(getAgeGroupSchedule(20,30) != null){
+            deleteAgeGroupSchedule(getAgeGroupSchedule(20,30).getId());
         }
+        Log.i("APITest", "testing ageGroupSchedules...");
         User user = newUser(username, password, name, phone, doB, city, address, role);
-        isQualifiedForBooking(username);
-        if(!isQualifiedForBooking(username)){
-            Log.i("APITest", "isQualifiedForBooking does not work correctly");
+        if(getAgeGroupScheduleForUser(username) != null){
+            if(isUserEligibleForBookingVaccination(username)){
+                Log.i("APITest", "isUserEligibleForBookingVaccination before schedule exists does not work correctly");
+                return false;
+            }
+        }
+        AgeGroupSchedule ag = newAgeGroupSchedule(20, 30, "2021/10/15");
+        AgeGroupSchedule test = new AgeGroupSchedule(ag.getId(), 20, 30, "2021/10/15");
+        if(!test.toString().equals(ag.toString())){
+            Log.i("APITest", "newAgeGroupSchedule does not work correctly");
             return false;
         }
-        setMinimumAgeForVaccination(originalValue);
+        if(getAgeGroupSchedule(ag.getId()) == null){
+            Log.i("APITest", "getAgeGroupSchedule does not work correctly");
+            return false;
+        }
+        if(!isUserEligibleForBookingVaccination(username)){
+            Log.i("APITest", "isUserEligibleForBookingVaccination right age and date does not work correctly");
+            return false;
+        }
+        deleteAgeGroupSchedule(ag.getId());
+        if(getAgeGroupSchedule(ag.getId()) != null){
+            Log.i("APITest", "getAgeGroupSchedule does not work correctly");
+            return false;
+        }
+        ag = newAgeGroupSchedule(20, 30, "2022/10/15");
+        if(isUserEligibleForBookingVaccination(username)){
+            Log.i("APITest", "isUserEligibleForBookingVaccination before date does not work correctly");
+            return false;
+        }
+        deleteAgeGroupSchedule(ag.getId());
+        ag = newAgeGroupSchedule(50, 60, "2021/10/15");
+        if(isUserEligibleForBookingVaccination(username)){
+            Log.i("APITest", "isUserEligibleForBookingVaccination too young age does not work correctly");
+            return false;
+        }
+        deleteAgeGroupSchedule(ag.getId());
+        clearTestData(username, dateNoTime, cliniqueName);
 
         // test Pfizer quantity
         clearTestData(username, dateNoTime, cliniqueName);
         Log.i("APITest", "Pfizer Quantity...");
-        originalValue = getPfizerQuantity();
+        int originalValue = getPfizerQuantity();
         setPfizerQuantity(20);
         if(getPfizerQuantity() != 20){
             Log.i("APITest", "setPfizerQuantity does not work correctly");
@@ -832,6 +933,17 @@ public class DatabaseHandler {
         if(cliniqueExists(cliniqueName)){
             deleteClinique(cliniqueName);
         }
+    }
+
+    private boolean isTodayAfter(String date){
+        Calendar calendar = Calendar.getInstance();
+        String[] sepDate = date.split("/");
+        calendar.setTime(new Date(Integer.parseInt(sepDate[0])-1900, Integer.parseInt(sepDate[1])-1, Integer.parseInt(sepDate[2])));
+        Date valid_after = calendar.getTime();
+        if (new Date().after(valid_after)) {
+            return true;
+        }
+        return false;
     }
 
     private String convertToQuestAns(boolean[] qList){
