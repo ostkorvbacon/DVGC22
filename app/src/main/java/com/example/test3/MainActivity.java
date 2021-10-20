@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         if(handler.testAPIFunctions()){
             Log.i("API test", "Success!");
         }
- */
+*/
 
 
 
