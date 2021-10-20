@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Frequently asked questions"
+            android:text="@string/faq"
             android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +33,7 @@
 
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="Q: Vad ska jag göra om jag får några problem efter jag vaccinerat mig?"
+            android:text="@string/faq11"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,9 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-            android:text="Du kan rapportera in misstänkta biverkningar av vaccinet till Läkemedelsverket. De har i uppdrag att följa och övervaka effekten av läkemedel, inklusive vacciner.
-            \nÄven vårdpersonal ska rapportera in misstänkta biverkningar av vaccinet.
-            \nAlla misstänkta biverkningar sammanställs och utreds för att se om de har något samband med vaccinet."
+            android:text="@string/faq12"
             app:layout_constraintStart_toEndOf="@+id/a6"
             app:layout_constraintTop_toBottomOf="@+id/q5" />
 
@@ -111,7 +109,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="16dp"
-            android:text="Q: Kan jag ta två olika mRNA-vaccin i mina två doser - ger det en lika bra effekt som att få samma vaccin?"
+            android:text="@string/faq15"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-            android:text="Pfizer-BioNTechs vaccin Comirnaty och Modernas vaccin Spikevax är så kallade mRNA-vaccin, och har därmed flera likheter. En kombination av Comirnaty och Spikevax ger ett lika bra immunsvar som när båda doserna ges med samma vaccin."
+            android:text="@string/faq16"
             app:layout_constraintStart_toEndOf="@+id/a7"
             app:layout_constraintTop_toBottomOf="@+id/q6" />
 
@@ -136,7 +134,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="Q:När rekommenderas inte vaccination?"
+            android:text="@string/faq9"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +149,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="Q: Vad ska jag göra om jag får några problem efter jag vaccinerat mig?"
+            android:text="@string/faq13"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -165,9 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-            android:text="Du kan bli öm på stickstället i armen, känna dig trött och få huvudvärk efter att du har vaccinerat dig. Du kan också känna dig frusen, må illa, få feber eller ont i lederna och musklerna.
-            \n\nDet kallas för biverkningar och är vanligt hos barn och vuxna som har fått vaccin mot covid-19.
-            \n\nBesvären kommer oftast inom det första dygnet efter vaccinationen. De brukar gå över inom ett till två dygn. "
+            android:text="@string/faq14"
             app:layout_constraintStart_toEndOf="@+id/a5"
             app:layout_constraintTop_toBottomOf="@+id/q8" />
 
@@ -178,7 +174,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
-            android:text="Du som tidigare har fått en allvarlig allergisk reaktion som gjorde att du fick vård på en akutmottagning eller behövde läggas in på sjukhus, kan rådgöra med en läkare innan vaccinationen. Detsamma gäller om du fått en sådan kraftig reaktion efter en vaccination."
+            android:text="@string/faq10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/a8"
             app:layout_constraintTop_toBottomOf="@+id/q7" />
@@ -190,7 +186,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="Q: Kan jag välja vaccin?"
+            android:text="@string/faq3"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -206,7 +202,7 @@
 
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="Q: Kan jag vaccinera mig om jag är sjuk?"
+            android:text="@string/faq5"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -221,10 +217,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
-            android:text="Nej, du kan inte välja vaccin. Här är sådant som \npåverkar vilket vaccin du får:
-                \n\n - Hur många doser regionerna får av de olika vaccinen \n    och när de kommer.
-                \n - Om du är allergisk mot något ämne som finns i ett \n    särskilt vaccin.
-                \n\nAlla vaccin som används i Sverige är godkända för personer från 12 år. "
+            android:text="@string/faq4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/a4"
@@ -250,7 +243,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
-            android:text="Nej, du ska inte vaccinera dig om du har en pågående infektion med feber eller symtom på covid-19. Samma sak gäller om du blir sjuk inför dos två. Ta inte dos två förrän du är helt frisk och inte har några symtom på infektion, exempelvis feber."
+            android:text="@string/faq6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/a3"
@@ -273,12 +266,14 @@
             android:id="@+id/textView13"
             android:layout_width="356dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
-            android:text="Ja, du rekommenderas att vaccinera dig även om du har haft covid-19. Man vet inte säkert hur länge skyddet mot sjukdomen finns kvar efter att du har varit sjuk i covid-19. Därför behöver du vaccinera dig."
+            android:text="@string/faq8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.333"
             app:layout_constraintStart_toEndOf="@+id/a2"
+            app:layout_constraintStart_toStartOf="@+id/a1"
             app:layout_constraintTop_toBottomOf="@+id/q2" />
 
         <TextView
@@ -288,7 +283,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="Q: Hur går vaccinationen till?"
+            android:text="@string/faq1"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -303,7 +298,7 @@
             android:layout_width="356dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Du får vaccinet med en spruta i överarmen. Du får stanna kvar i 15 minuter efter att du har fått sprutan. Det är för att se att du mår bra."
+            android:text="@string/faq2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.333"
             app:layout_constraintStart_toEndOf="@+id/a2"
@@ -326,23 +321,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/q1"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:id="@+id/a1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:text="A:"
-                android:textSize="16dp"
-                android:textStyle="bold"
+        <TextView
+            android:id="@+id/a1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="A:"
+            android:textSize="16dp"
+            android:textStyle="bold"
 
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/q2"
-                app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/q2"
+            app:layout_constraintVertical_bias="0.002" />
 
         <TextView
             android:id="@+id/q2"
@@ -352,7 +347,7 @@
 
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="Q: Ska jag vaccinera mig även om jag har haft covid-19?"
+            android:text="@string/faq7"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
