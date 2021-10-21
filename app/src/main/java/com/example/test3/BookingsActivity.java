@@ -48,15 +48,8 @@ public class BookingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bookings);
         relativeLayout = findViewById(R.id.booking);
 
-
-
-
         List <String> CliniqueName= new ArrayList<String>();
-
-
-
         List <Clinique> Cliniques=handler.getCliniques();
-
         List <String> vaccin=new ArrayList<String>();
         vaccin.add("Pfizer");
         vaccin.add("Moderna");
@@ -66,7 +59,6 @@ public class BookingsActivity extends AppCompatActivity {
              CliniqueName.add(Cliniques.get(i).getName());
 
         }
-
 
         List<Booking> BookingsToday=handler.getBookings();
         List <Timestamp> usedtimes=new ArrayList<>();
@@ -84,8 +76,8 @@ public class BookingsActivity extends AppCompatActivity {
             timestamp = new Timestamp(cal.getTime().getTime());
             freetimes.add(timestamp);
         }
-*/
 
+*/
 
 
         final Spinner  schedule =(Spinner) findViewById(R.id.spinner2);
@@ -93,17 +85,10 @@ public class BookingsActivity extends AppCompatActivity {
         schedule.setAdapter(adp2);
         schedule.setVisibility(View.INVISIBLE);
 
-
-
         Intent getUser = this.getIntent();
         user = (User)getUser.getSerializableExtra("loggedInUser");
         email=user.getUsername();
         i=0;
-
-
-
-
-
 
         final Spinner booking =(Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> adp = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item,CliniqueName);
@@ -123,14 +108,10 @@ public class BookingsActivity extends AppCompatActivity {
 
                     }
                 for (int i3=0;i3<BookingsToday.size();i3++){
-
                     if(BookingsToday.get(i3).getCliniqueID()==Cid){
                         usedtimes.add(BookingsToday.get(i3).getDate());
-
                     }
                 }
-
-
                 for (int i3=0;i3<usedtimes.size();i3++){
                     for (int j=0;j<freetimes.size();j++){
 
@@ -139,36 +120,20 @@ public class BookingsActivity extends AppCompatActivity {
                         }
                     }
                 }
-
-
-
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
-
-
         ///Schedule spinner
-
-
-
         schedule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
              date= (Timestamp) adapterView.getItemAtPosition(i);
-
-
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
@@ -185,20 +150,14 @@ public class BookingsActivity extends AppCompatActivity {
                     }
 
                 }
-
                 handler.newBooking(email,name,date,type);
 
                 Intent goTodash = new Intent(getApplicationContext(), MainMenuActivity.class);
                 goTodash.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 goTodash.putExtra("loggedInUser", user);
                 startActivity(goTodash);
-
-
             }
         });
-
-
-
 
         final Spinner vaccine =(Spinner) findViewById(R.id.spinner3);
         ArrayAdapter<String> adp3 = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item,vaccin);
@@ -207,19 +166,12 @@ public class BookingsActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
-
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             type=vaccin.get(i);
             System.out.println(type);
             }
         });
-
-
     }
-
-
-
 }
