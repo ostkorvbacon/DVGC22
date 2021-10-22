@@ -15,6 +15,7 @@ import com.example.test3.ui.home.HomeFragment;
 
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -42,11 +43,14 @@ public class BookingsActivity extends AppCompatActivity {
     String email;
     String type;
     LinearLayout relativeLayout;
+    Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings);
         relativeLayout = findViewById(R.id.booking);
+        button=findViewById(R.id.createbook1);
+        button.setClickable(false);
 
         List <String> CliniqueName= new ArrayList<String>();
         List <Clinique> Cliniques=handler.getCliniques();
@@ -62,26 +66,21 @@ public class BookingsActivity extends AppCompatActivity {
 
         List<Booking> BookingsToday=handler.getBookings();
         List <Timestamp> usedtimes=new ArrayList<>();
-        Timestamp timestamp = Timestamp.valueOf("2021-09-27 10:30:00");
 
-        //freetimes.add(timestamp);
         Calendar cal = Calendar.getInstance();
-        cal.set(2021, 10, 19);
+        cal.set(2021, 10, 19); // set from date picker
         List <Timestamp> freetimes = handler.getFreeTimeSlots(cal);
-        //cal.setTime(timestamp);
-/*
-        for (int i=0;i<10;i++){
+        List <String> timeSlots = new ArrayList<String>();
 
-            cal.add(Calendar.MINUTE, 30);
-            timestamp = new Timestamp(cal.getTime().getTime());
-            freetimes.add(timestamp);
+        SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
+        int i = 0;
+        for(Timestamp ts : freetimes){
+            timeSlots.add(sdfTime.format(ts));
+            i++;
         }
 
-*/
-
-
         final Spinner  schedule =(Spinner) findViewById(R.id.spinner2);
-        ArrayAdapter<Timestamp> adp2 = new ArrayAdapter<Timestamp> (this,android.R.layout.simple_spinner_dropdown_item,freetimes);
+        ArrayAdapter<String> adp2 = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item,timeSlots);
         schedule.setAdapter(adp2);
         schedule.setVisibility(View.INVISIBLE);
 
@@ -96,8 +95,6 @@ public class BookingsActivity extends AppCompatActivity {
         booking.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-
                     for (int i2=0;i2<Cliniques.size();i2++) {
                         if (adapterView.getItemAtPosition(i).toString()==Cliniques.get(i2).getName()){
 
@@ -105,21 +102,7 @@ public class BookingsActivity extends AppCompatActivity {
                             schedule.setVisibility(View.VISIBLE);
                             break;
                         }
-
                     }
-                for (int i3=0;i3<BookingsToday.size();i3++){
-                    if(BookingsToday.get(i3).getCliniqueID()==Cid){
-                        usedtimes.add(BookingsToday.get(i3).getDate());
-                    }
-                }
-                for (int i3=0;i3<usedtimes.size();i3++){
-                    for (int j=0;j<freetimes.size();j++){
-
-                        if(usedtimes.get(i)==freetimes.get(j)){
-                            freetimes.remove(j);
-                        }
-                    }
-                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -130,14 +113,22 @@ public class BookingsActivity extends AppCompatActivity {
         schedule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-             date= (Timestamp) adapterView.getItemAtPosition(i);
+                button.setClickable(true);
+                String selectedTime = (String)adapterView.getItemAtPosition(i);
+                for(Timestamp ts : freetimes){
+                    if(ts.getHours() == Integer.parseInt(selectedTime.split(":")[0]) &&
+                            ts.getMinutes() == Integer.parseInt(selectedTime.split(":")[1])){
+                        date = ts;
+                    }
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                button.setClickable(false);
             }
         });
 
-        Button button=findViewById(R.id.createbook1);
+
         System.out.println(button);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +139,6 @@ public class BookingsActivity extends AppCompatActivity {
 
                         name=Cliniques.get(i).getName();
                     }
-
                 }
                 handler.newBooking(email,name,date,type);
 
