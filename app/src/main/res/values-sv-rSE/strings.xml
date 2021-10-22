@@ -169,6 +169,10 @@
     <string name="Clinique">Klinik</string>
     <string name="time">Vaccinationstid</string>
     <string name="createbook">Skapa bokning</string>
+    <string name="booking_date_label">Datum</string>
+    <string name="booking_date_text_hint">Välj ett datum</string>
+    <string name="booking_not_all_items_selected">Alla fält måste vara ifyllda!</string>
+    <string name="booking_date_not_valid">Det valda datumet måste vara minst 14 dagar efter att du blev vaccinerad med dos 1!</string>
 
     <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>

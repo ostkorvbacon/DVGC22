@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private final int PERMISSION_REQUEST_CAMERA = 1;
 
     //set to true for insta login
-    public boolean instaLogin = true;
+    public boolean instaLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +51,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        /*
-        DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
-        if(handler.testAPIFunctions()){
-            Log.i("APITest", "Api test succeeded!");
-        }
-        else{
-            Log.i("APITest", "Api test failed!");
-        }*/
 
         Button loginButton = findViewById(R.id.login_button);
         Button createButton = findViewById(R.id.create_button);
