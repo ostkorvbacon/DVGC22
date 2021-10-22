@@ -1,17 +1,14 @@
 package com.example.test3;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import com.example.test3.DatabaseHandler.Booking;
 import com.example.test3.DatabaseHandler.Clinique;
 import com.example.test3.DatabaseHandler.DatabaseHandler;
 import com.example.test3.DatabaseHandler.User;
-import com.example.test3.ui.home.HomeFragment;
 
 
 import java.sql.Timestamp;
@@ -19,16 +16,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,45 +42,90 @@ public class BookingsActivity extends AppCompatActivity {
     String type;
     LinearLayout relativeLayout;
     Button button;
+    TextView chosenDate;
+    DatePickerDialog picker;
+    int chosenDay;
+    int chosenMonth;
+    int chosenYear;
+    Spinner  schedule;
+    List <Timestamp> freeTimes;
+    boolean isCliniqueSelected;
+    boolean isDateSelected;
+    boolean isTimeSelected;
+    boolean isTypeSelected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings);
         relativeLayout = findViewById(R.id.booking);
         button=findViewById(R.id.createbook1);
-        button.setClickable(false);
+        chosenDate = findViewById(R.id.booking_date_text);
+        chosenDate.setInputType(InputType.TYPE_NULL);
+        schedule =(Spinner) findViewById(R.id.spinner2);
+
+        isCliniqueSelected = false;
+        isDateSelected = false;
+        isTimeSelected = false;
+        isTypeSelected = false;
 
         List <String> CliniqueName= new ArrayList<String>();
         List <Clinique> Cliniques=handler.getCliniques();
         List <String> vaccin=new ArrayList<String>();
-        vaccin.add("Pfizer");
-        vaccin.add("Moderna");
-        vaccin.add("Astra");
+        if(handler.getPfizerQuantity() > 0){
+            vaccin.add("Pfizer");
+        }
+        if(handler.getModernaQuantity() > 0){
+            vaccin.add("Moderna");
+        }
+        if(handler.getAstraQuantity() > 0){
+            vaccin.add("Astra");
+        }
 
         for (int i=0;i<Cliniques.size();i++) {
              CliniqueName.add(Cliniques.get(i).getName());
-
         }
 
-        List<Booking> BookingsToday=handler.getBookings();
-        List <Timestamp> usedtimes=new ArrayList<>();
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(2021, 10, 19); // set from date picker
-        List <Timestamp> freetimes = handler.getFreeTimeSlots(cal);
-        List <String> timeSlots = new ArrayList<String>();
+        chosenDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // date picker dialog
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                picker = new DatePickerDialog(BookingsActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                chosenDay = dayOfMonth;
+                                chosenMonth = (monthOfYear + 1);
+                                chosenYear = year;
+                                chosenDate.setText(chosenYear + "/" + chosenMonth + "/" + chosenDay);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
 
-        SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
-        int i = 0;
-        for(Timestamp ts : freetimes){
-            timeSlots.add(sdfTime.format(ts));
-            i++;
-        }
+        chosenDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        final Spinner  schedule =(Spinner) findViewById(R.id.spinner2);
-        ArrayAdapter<String> adp2 = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item,timeSlots);
-        schedule.setAdapter(adp2);
-        schedule.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                isDateSelected = true;
+                // update time slot list
+                updateFreeTimes(chosenYear, chosenMonth, chosenDay);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         Intent getUser = this.getIntent();
         user = (User)getUser.getSerializableExtra("loggedInUser");
@@ -95,17 +138,19 @@ public class BookingsActivity extends AppCompatActivity {
         booking.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    for (int i2=0;i2<Cliniques.size();i2++) {
-                        if (adapterView.getItemAtPosition(i).toString()==Cliniques.get(i2).getName()){
+                isCliniqueSelected = true;
+                for (int i2=0;i2<Cliniques.size();i2++) {
+                    if (adapterView.getItemAtPosition(i).toString()==Cliniques.get(i2).getName()){
 
-                            Cid=Cliniques.get(i2).getId();
-                            schedule.setVisibility(View.VISIBLE);
-                            break;
-                        }
+                        Cid=Cliniques.get(i2).getId();
+                        schedule.setVisibility(View.VISIBLE);
+                        break;
                     }
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                isCliniqueSelected = false;
             }
         });
 
@@ -113,9 +158,9 @@ public class BookingsActivity extends AppCompatActivity {
         schedule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                button.setClickable(true);
+                isTimeSelected = true;
                 String selectedTime = (String)adapterView.getItemAtPosition(i);
-                for(Timestamp ts : freetimes){
+                for(Timestamp ts : freeTimes){
                     if(ts.getHours() == Integer.parseInt(selectedTime.split(":")[0]) &&
                             ts.getMinutes() == Integer.parseInt(selectedTime.split(":")[1])){
                         date = ts;
@@ -124,28 +169,31 @@ public class BookingsActivity extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                button.setClickable(false);
+                isTimeSelected = false;
             }
         });
-
-
-        System.out.println(button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i=0;i<Cliniques.size();i++) {
-                    if (Cid==Cliniques.get(i).getId()) {
+                if(isCliniqueSelected && isDateSelected && isTimeSelected && isTypeSelected) {
+                    for (int i = 0; i < Cliniques.size(); i++) {
+                        if (Cid == Cliniques.get(i).getId()) {
 
-                        name=Cliniques.get(i).getName();
+                            name = Cliniques.get(i).getName();
+                        }
                     }
-                }
-                handler.newBooking(email,name,date,type);
+                    handler.newBooking(email, name, date, type);
 
-                Intent goTodash = new Intent(getApplicationContext(), MainMenuActivity.class);
-                goTodash.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                goTodash.putExtra("loggedInUser", user);
-                startActivity(goTodash);
+                    Intent goTodash = new Intent(getApplicationContext(), MainMenuActivity.class);
+                    goTodash.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    goTodash.putExtra("loggedInUser", user);
+                    startActivity(goTodash);
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),R.string.booking_not_all_items_selected,Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
 
@@ -156,12 +204,33 @@ public class BookingsActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                isTypeSelected = false;
             }
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            type=vaccin.get(i);
-            System.out.println(type);
+                type=vaccin.get(i);
+                isTypeSelected = true;
             }
         });
+    }
+
+    private void updateFreeTimes(int year, int month, int day){
+        Log.i("Booking", "Updating time slot list...");
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        freeTimes = handler.getFreeTimeSlots(cal);
+        List <String> timeSlots = new ArrayList<String>();
+
+        SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
+        int i = 0;
+        for(Timestamp ts : freeTimes){
+            timeSlots.add(sdfTime.format(ts));
+            i++;
+        }
+
+        ArrayAdapter<String> adp2 = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item,timeSlots);
+        schedule.setAdapter(adp2);
+        schedule.setVisibility(View.VISIBLE);
     }
 }
