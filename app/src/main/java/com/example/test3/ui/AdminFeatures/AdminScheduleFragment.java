@@ -1,11 +1,15 @@
 package com.example.test3.ui.AdminFeatures;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +17,21 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.test3.BookingsActivity;
 import com.example.test3.DatabaseHandler.AgeGroupSchedule;
 import com.example.test3.DatabaseHandler.DatabaseHandler;
+import com.example.test3.DatabaseHandler.Vaccination;
 import com.example.test3.MainActivity;
 import com.example.test3.MainMenuActivity;
 import com.example.test3.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +49,9 @@ public class AdminScheduleFragment extends Fragment {
 
     private DatabaseHandler database = new DatabaseHandler("http://83.254.68.246:3003/");
 
-    private TextView current_age_group;
+    private TextView ageLabel;
+    private TextView dateLabel;
+    private TextView noSchedules;
     private Button addButton;
     private EditText minAge;
     private EditText maxAge;
@@ -56,14 +66,14 @@ public class AdminScheduleFragment extends Fragment {
     private EditText date2;
     private EditText date3;
     private EditText date4;
-
     private ImageButton cancel0;
     private ImageButton cancel1;
     private ImageButton cancel2;
     private ImageButton cancel3;
     private ImageButton cancel4;
     private List<AgeGroupSchedule> schedules;
-    //private ImageButton[] cancelButtons;
+    DatePickerDialog picker;
+    int chosenDay, chosenMonth, chosenYear;
 
     public AdminScheduleFragment() {
         // Required empty public constructor
@@ -105,6 +115,10 @@ public class AdminScheduleFragment extends Fragment {
         minAge = root.findViewById(R.id.min_age);
         maxAge = root.findViewById(R.id.max_age);
         scheduleDate = root.findViewById(R.id.schedule_date);
+        scheduleDate.setInputType(InputType.TYPE_NULL);
+        ageLabel = root.findViewById(R.id.upcoming_age_label);
+        dateLabel = root.findViewById(R.id.upcoming_date_label);
+        noSchedules = root.findViewById(R.id.no_schedules);
         age0 = root.findViewById(R.id.age0);
         age1 = root.findViewById(R.id.age1);
         age2 = root.findViewById(R.id.age2);
@@ -126,15 +140,44 @@ public class AdminScheduleFragment extends Fragment {
         EditText[] dateFields = {date0, date1, date2, date3, date4};
 
         updateSchedules(ageFields, dateFields, cancelButtons);
+
+        scheduleDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // date picker dialog
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                picker = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                chosenDay = dayOfMonth;
+                                chosenMonth = (monthOfYear + 1);
+                                chosenYear = year;
+                                scheduleDate.setText(chosenYear + "/" + chosenMonth + "/" + chosenDay);
+                            }
+                        }, year, month, day);
+                Calendar cal = Calendar.getInstance();
+                picker.getDatePicker().setMinDate(cal.getTimeInMillis());
+                picker.show();
+            }
+        });
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int minimumAge = Integer.valueOf(minAge.getText().toString());
-                int maximumAge = Integer.valueOf(maxAge.getText().toString());
-                String date = scheduleDate.getText().toString();
+                if(minAge.getText() != null &&
+                        maxAge.getText() != null &&
+                        scheduleDate.getText() != null) {
+                    int minimumAge = Integer.valueOf(minAge.getText().toString());
+                    int maximumAge = Integer.valueOf(maxAge.getText().toString());
+                    String date = scheduleDate.getText().toString();
 
-                database.newAgeGroupSchedule(minimumAge, maximumAge, date);
-                updateSchedules(ageFields, dateFields, cancelButtons);
+                    database.newAgeGroupSchedule(minimumAge, maximumAge, date);
+                    updateSchedules(ageFields, dateFields, cancelButtons);
+                }
                 //closes keyboard and focus on edittext
                 if (getActivity() == null) return;
                 if (getActivity().getCurrentFocus() == null) return;
@@ -149,9 +192,6 @@ public class AdminScheduleFragment extends Fragment {
             public void onClick(View view) {
                 database.deleteAgeGroupSchedule(schedules.get(0).getId());
                 updateSchedules(ageFields, dateFields, cancelButtons);
-                /*if(schedules.size() == 0){
-                    cancel0.setVisibility(View.INVISIBLE);
-                }*/
             }
         });
         cancel1.setOnClickListener(new View.OnClickListener() {
@@ -159,9 +199,6 @@ public class AdminScheduleFragment extends Fragment {
             public void onClick(View view) {
                 database.deleteAgeGroupSchedule(schedules.get(1).getId());
                 updateSchedules(ageFields, dateFields, cancelButtons);
-                if(schedules.size() == 0){
-                    cancel0.setVisibility(View.INVISIBLE);
-                }
             }
         });
         cancel2.setOnClickListener(new View.OnClickListener() {
@@ -169,9 +206,6 @@ public class AdminScheduleFragment extends Fragment {
             public void onClick(View view) {
                 database.deleteAgeGroupSchedule(schedules.get(2).getId());
                 updateSchedules(ageFields, dateFields, cancelButtons);
-                if(schedules.size() == 1){
-                    cancel0.setVisibility(View.INVISIBLE);
-                }
             }
         });
         cancel3.setOnClickListener(new View.OnClickListener() {
@@ -179,9 +213,6 @@ public class AdminScheduleFragment extends Fragment {
             public void onClick(View view) {
                 database.deleteAgeGroupSchedule(schedules.get(3).getId());
                 updateSchedules(ageFields, dateFields, cancelButtons);
-                if(schedules.size() == 2){
-                    cancel0.setVisibility(View.INVISIBLE);
-                }
             }
         });
         cancel4.setOnClickListener(new View.OnClickListener() {
@@ -189,36 +220,41 @@ public class AdminScheduleFragment extends Fragment {
             public void onClick(View view) {
                 database.deleteAgeGroupSchedule(schedules.get(4).getId());
                 updateSchedules(ageFields, dateFields, cancelButtons);
-                if(schedules.size() <= 3){
-                    cancel0.setVisibility(View.INVISIBLE);
-                }
             }
         });
         return root;
     }
     private void updateSchedules(EditText[] ageFields, EditText[] dateFields, ImageButton[] cancelButtons){
         schedules = database.getAgeGroupSchedules();
+        for (int k = 0; k < 5; k++) {
+            ageFields[k].setVisibility(View.INVISIBLE);
+            dateFields[k].setVisibility(View.INVISIBLE);
+            if (schedules.size() <= k) {
+                cancelButtons[k].setVisibility(View.INVISIBLE);
+            } else {
+                cancelButtons[k].setVisibility(View.VISIBLE);
+            }
+        }
         int i = 0;
-        if(schedules != null && schedules.size() != 6){
-            for(int k = 0; k < 5; k++){
-                ageFields[k].setVisibility(View.INVISIBLE);
-                dateFields[k].setVisibility(View.INVISIBLE);
-                if(schedules.size() <= k){
-                    cancelButtons[k].setVisibility(View.INVISIBLE);
-                }else{
-                    cancelButtons[k].setVisibility(View.VISIBLE);
+        if(!schedules.isEmpty()){
+            Log.i("VIS", schedules.toString());
+            noSchedules.setVisibility(View.GONE);
+            if(schedules.size() != 6){
+                for (AgeGroupSchedule schedule : schedules) {
+                    ageFields[i].setText(schedule.getMinAge() + " - " + schedule.getMaxAge());
+                    dateFields[i].setText(schedule.getDate());
+                    ageFields[i].setVisibility(View.VISIBLE);
+                    dateFields[i].setVisibility(View.VISIBLE);
+                    i++;
+                    if (i >= 5) {
+                        break;
+                    }
                 }
             }
-            for(AgeGroupSchedule schedule: schedules){
-                ageFields[i].setText(schedule.getMinAge() + "-" + schedule.getMaxAge());
-                dateFields[i].setText(schedule.getDate());
-                ageFields[i].setVisibility(View.VISIBLE);
-                dateFields[i].setVisibility(View.VISIBLE);
-                i++;
-                if(i >= 5){
-                    break;
-                }
-            }
+        }else{
+            ageLabel.setVisibility(View.GONE);
+            dateLabel.setVisibility(View.GONE);
+            noSchedules.setVisibility(View.VISIBLE);
         }
     }
 }

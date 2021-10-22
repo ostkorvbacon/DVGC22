@@ -34,7 +34,7 @@
     <string name="schedule3">Date</string>
     <string name="schedule4">Age group elegibility schedules</string>
     <string name="add">Add </string>
-
+    <string name="noSchedules">No added schedules</string>
     <string name="book">Book appointment</string>
     <string name="scann">Vaccine passport QR code</string>
     <string name="dob2">Date of birth</string>

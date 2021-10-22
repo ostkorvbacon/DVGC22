@@ -100,13 +100,16 @@ public class BookingsActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                chosenDay = dayOfMonth;
-                                chosenMonth = (monthOfYear + 1);
-                                chosenYear = year;
-                                chosenDate.setText(chosenYear + "/" + chosenMonth + "/" + chosenDay);
+                                if(handler.isUserEligibleForBookingVaccination(user.getUsername())) {
+                                    chosenDay = dayOfMonth;
+                                    chosenMonth = (monthOfYear + 1);
+                                    chosenYear = year;
+                                    chosenDate.setText(chosenYear + "/" + chosenMonth + "/" + chosenDay);
+                                }else{
+                                    Toast toast = Toast.makeText(getApplicationContext(),"Your age group is not eligible for vaccination at this date.",Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
                             }
-
-
                         }, year, month, day);
                 Calendar cal = Calendar.getInstance();
                 for(Vaccination vac : handler.getUserVaccinations(user.getUsername())){
@@ -132,6 +135,7 @@ public class BookingsActivity extends AppCompatActivity {
                 isDateSelected = true;
                 // update time slot list
                 updateFreeTimes(chosenYear, chosenMonth, chosenDay);
+
             }
 
             @Override
@@ -204,8 +208,13 @@ public class BookingsActivity extends AppCompatActivity {
                     startActivity(goTodash);
                 }
                 else{
-                    Toast toast = Toast.makeText(getApplicationContext(),R.string.booking_not_all_items_selected,Toast.LENGTH_LONG);
-                    toast.show();
+                    if(handler.isUserEligibleForBookingVaccination(user.getUsername())) {
+                        Toast toast = Toast.makeText(getApplicationContext(),R.string.booking_not_all_items_selected,Toast.LENGTH_LONG);
+                        toast.show();
+                    }else{
+                        Toast toast = Toast.makeText(getApplicationContext(),"Your age group is not eligible for vaccination at this date.",Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
             }
         });

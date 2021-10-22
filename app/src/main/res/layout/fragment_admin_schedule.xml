@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="@string/schedule2"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -100,13 +100,15 @@
 
         <TextView
             android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="374dp"
+            android:layout_height="45dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/schedule"
             android:textSize="20dp"
             android:textStyle="bold"
+            android:textColor="#4F4F4F"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -119,16 +121,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:text="@string/schedule4"
             android:textSize="20dp"
             android:textStyle="bold"
+            android:textColor="#4F4F4F"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.328" />
+            app:layout_constraintTop_toBottomOf="@+id/apply_admin_settings"
+            app:layout_constraintVertical_bias="0.122" />
 
         <Button
             android:id="@+id/apply_admin_settings"
@@ -145,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="104dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="@string/schedule3"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -172,6 +174,7 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="date"
+            android:focusable="false"
             app:layout_constraintStart_toEndOf="@+id/max_age"
             app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
@@ -330,6 +333,18 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/date0"
             app:layout_constraintTop_toBottomOf="@+id/upcoming_date_label" />
+
+        <TextView
+            android:id="@+id/no_schedules"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/noSchedules"
+            android:textStyle="italic"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView50" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

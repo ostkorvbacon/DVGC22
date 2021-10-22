@@ -68,8 +68,10 @@ public class HomeFragment extends Fragment {
     TextView dateLabel;
     TextView timeLabel;
     TextView bookTitle;
+    TextView cliniqueLabel;
     EditText appointDate;
     EditText appointTime;
+    EditText appointClinique;
     ImageButton cancelButton;
     Button bookButton;
     Button qrScannerButton;
@@ -85,6 +87,8 @@ public class HomeFragment extends Fragment {
         appointTime = root.findViewById(R.id.appointment_time);
         cancelButton = root.findViewById(R.id.cancel_button);
         bookButton = root.findViewById(R.id.book_button);
+        cliniqueLabel = root.findViewById(R.id.appointment_clinique_label);
+        appointClinique = root.findViewById(R.id.appointment_clinique);
         //QR related
         qrCode = root.findViewById(R.id.imageView);
         txtView = root.findViewById(R.id.textView15);
@@ -103,20 +107,26 @@ public class HomeFragment extends Fragment {
             appointDate.setVisibility(View.VISIBLE);
             appointTime.setVisibility(View.VISIBLE);
             cancelButton.setVisibility(View.VISIBLE);
+            appointClinique.setVisibility(View.VISIBLE);
+            cliniqueLabel.setVisibility(View.VISIBLE);
             bookButton.setVisibility(View.GONE);
             String booking = database.getBooking(loggedInUser.getUsername()).getDate().toString();
             SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
             String[] bookingDetails = booking.split("\\s");
             String strippedTime = sdfTime.format(database.getBooking(loggedInUser.getUsername()).getDate());
+            int cliniqueID = database.getBooking(loggedInUser.getUsername()).getCliniqueID();
             String bookingDate = bookingDetails[0];
             appointDate.setText(bookingDate);
             appointTime.setText(strippedTime);
+            appointClinique.setText(database.getClinique(cliniqueID).getName());
         }else{
             dateLabel.setVisibility(View.GONE);
             timeLabel.setVisibility(View.GONE);
             appointDate.setVisibility(View.GONE);
             appointTime.setVisibility(View.GONE);
             cancelButton.setVisibility(View.GONE);
+            appointClinique.setVisibility(View.GONE);
+            cliniqueLabel.setVisibility(View.GONE);
         }
     }
 

@@ -103,6 +103,7 @@
     <string name="menu_admin_appointments">Bokad tid</string>
     <string name="menu_admin_stats">Statistik</string>
     <string name="title_activity_settings">Inställningar</string>
+    <string name="noSchedules">Inga tillagda scheman</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Personliga uppgifter</string>
