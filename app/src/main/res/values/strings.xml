@@ -164,6 +164,7 @@
     <string name="booking_date_label">Date</string>
     <string name="booking_date_text_hint">Choose a date</string>
     <string name="booking_not_all_items_selected">All fields needs to be filled!</string>
+    <string name="booking_date_not_valid">The selected date must be at least 14 days after you were vaccinated with dose 1!</string>
 
     <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>

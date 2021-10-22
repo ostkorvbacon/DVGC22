@@ -9,12 +9,14 @@ import android.os.Bundle;
 import com.example.test3.DatabaseHandler.Clinique;
 import com.example.test3.DatabaseHandler.DatabaseHandler;
 import com.example.test3.DatabaseHandler.User;
+import com.example.test3.DatabaseHandler.Vaccination;
 
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.text.Editable;
@@ -103,7 +105,18 @@ public class BookingsActivity extends AppCompatActivity {
                                 chosenYear = year;
                                 chosenDate.setText(chosenYear + "/" + chosenMonth + "/" + chosenDay);
                             }
+
+
                         }, year, month, day);
+                Calendar cal = Calendar.getInstance();
+                for(Vaccination vac : handler.getUserVaccinations(user.getUsername())){
+                    if (vac.getDose() == 1){
+                        if(getMinDate(vac.getDate()).after(cal)) {
+                            cal = getMinDate(vac.getDate());
+                        }
+                    }
+                }
+                picker.getDatePicker().setMinDate(cal.getTimeInMillis());
                 picker.show();
             }
         });
@@ -232,5 +245,14 @@ public class BookingsActivity extends AppCompatActivity {
         ArrayAdapter<String> adp2 = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item,timeSlots);
         schedule.setAdapter(adp2);
         schedule.setVisibility(View.VISIBLE);
+    }
+
+    private Calendar getMinDate(String dateOfDose1){
+        int noOfDays = 14; //i.e two weeks
+        Calendar calendar = Calendar.getInstance();
+        String[] sepDate = dateOfDose1.split("/");
+        calendar.setTime(new Date(Integer.parseInt(sepDate[0])-1900, Integer.parseInt(sepDate[1])-1, Integer.parseInt(sepDate[2])));
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        return calendar;
     }
 }

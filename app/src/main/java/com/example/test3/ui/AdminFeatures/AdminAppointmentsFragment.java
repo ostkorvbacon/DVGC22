@@ -182,8 +182,9 @@ public class AdminAppointmentsFragment extends Fragment {
                 vacc = handler.getUserVaccinations(user.getUsername());
                 Booking booking = handler.getBooking(user.getUsername());
                 if(vacc.isEmpty()){
-                    if(booking.getType().equals("Pzifer")){
-                        handler.doVaccination(user.getUsername(),1,"Pzifer");
+                    if(booking.getType().equals("Pfizer")){
+                        Log.i("Vac", "Doing vaccination...");
+                        handler.doVaccination(user.getUsername(),1,"Pfizer");
                         handler.setPfizerQuantity(handler.getPfizerQuantity()-1);
                     }
                     if(booking.getType().equals("Moderna")){
@@ -196,8 +197,8 @@ public class AdminAppointmentsFragment extends Fragment {
                     }
                 }
                 else{
-                    if(booking.getType().equals("Pzifer")){
-                        handler.doVaccination(user.getUsername(),2,"Pzifer");
+                    if(booking.getType().equals("Pfizer")){
+                        handler.doVaccination(user.getUsername(),2,"Pfizer");
                         handler.setPfizerQuantity(handler.getPfizerQuantity()-1);
                     }
                     if(booking.getType().equals("Moderna")){

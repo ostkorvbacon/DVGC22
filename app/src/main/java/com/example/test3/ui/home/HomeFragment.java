@@ -47,6 +47,7 @@ import com.example.test3.VaccinePassport.VaccinePassport;
 import com.example.test3.databinding.FragmentHomeBinding;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -104,11 +105,12 @@ public class HomeFragment extends Fragment {
             cancelButton.setVisibility(View.VISIBLE);
             bookButton.setVisibility(View.GONE);
             String booking = database.getBooking(loggedInUser.getUsername()).getDate().toString();
+            SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
             String[] bookingDetails = booking.split("\\s");
-            String[] strippedTime = bookingDetails[1].split(":00.0");
+            String strippedTime = sdfTime.format(database.getBooking(loggedInUser.getUsername()).getDate());
             String bookingDate = bookingDetails[0];
             appointDate.setText(bookingDate);
-            appointTime.setText(strippedTime[0]);
+            appointTime.setText(strippedTime);
         }else{
             dateLabel.setVisibility(View.GONE);
             timeLabel.setVisibility(View.GONE);
