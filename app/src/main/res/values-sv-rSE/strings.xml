@@ -38,8 +38,10 @@
     <string name="deny">Neka</string>
     <string name="accept">Acceptera</string>
     <string name="schedule">Schemalägg åldersgrupp behörig\n för vaccination</string>
-    <string name="schedule2">Nuvarande behörigage åldersgrupp: </string>
-    <string name="apply">Tilllämpa </string>
+    <string name="schedule2">Åldersgrupp </string>
+    <string name="schedule3">Datum </string>
+    <string name="schedule4">Vaccinationsschema för åldersgrupper</string>
+    <string name="add">Lägg till </string>
     <string name="city">Stad</string>
     <string name="street">Gata</string>
     <string name="cat">Kategori</string>
