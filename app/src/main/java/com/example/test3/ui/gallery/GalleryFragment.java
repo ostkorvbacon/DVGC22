@@ -33,6 +33,7 @@ import com.example.test3.R;
 import com.example.test3.databinding.FragmentGalleryBinding;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
@@ -1140,7 +1141,7 @@ public class GalleryFragment extends Fragment{
         optionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dashboardOptions.setAdapter(optionsAdapter);
 
-/*
+
         Log.i("Graf", "start");
 
         String[] countyGroup4 = { "Sverige", "Blekinge", "Dalarna", "Gotland",
@@ -1150,19 +1151,18 @@ public class GalleryFragment extends Fragment{
                 "Östergötland"};
 
         CovidData covidData = MainActivity.covidData;
-        LineGraphSeries<DataPoint> series = null;
-        LineGraphSeries<DataPoint> series2 = null;
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
+        LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>();
 
-        int sum, sumTot, w, y, index, index2, length, i;
+        int sum, sumTot, w, y, y1, y2, index, index2, length, i;
 
         GraphView graph = (GraphView) root.findViewById(R.id.graph);
         graph.setVisibility(View.VISIBLE);
-
         graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setYAxisBoundsManual(true);
+
         graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(10);
-
-
+        graph.getViewport().setMaxY(100);
 
         List<CovidVaccineSweden.WeeklyReport> listBW;
         ArrayList<dispData> listBW2 = new ArrayList<>();
@@ -1173,20 +1173,33 @@ public class GalleryFragment extends Fragment{
         sum = 0;
         sumTot = 0;
         i = 0;
+
+
         while(covidData.getSwedenVaccine().get(0).weeklyReportsHasWeek(w, y))
+        {
             i = i +1;
+            if(w == 53)
+            {
+                w = 1;
+                y = y + 1;
+            }
+            else { w = w + 1; }
+        }
         length = i;
+        graph.getViewport().setMaxX(length);
+
         w = 52;
         y= 2020;
         i = 0;
+
         while(covidData.getSwedenVaccine().get(0).weeklyReportsHasWeek(w, y))
         {
 
             index = covidData.getSwedenVaccine().get(0).weeklyReportsFindWeek(w, y);
-
-            series.appendData(new DataPoint(i, listBW.get(index).getDose1Quota()*100), true, length*2);
-            series2.appendData(new DataPoint(i, listBW.get(index).getDose2Quota()*100), true, length*2);
-
+            y1 = (int) (listBW.get(index).getDose1Quota()*100);
+            y2 = (int) (listBW.get(index).getDose2Quota()*100);
+            series.appendData(new DataPoint(i, y1), true, length);
+            series2.appendData(new DataPoint(i, y2), true, length);
 
             i ++;
             if(w == 53)
@@ -1197,12 +1210,19 @@ public class GalleryFragment extends Fragment{
             else { w = w + 1; }
         }
 
-
-
         graph.addSeries(series);
         series.setColor(Color.BLUE);
+        series.setTitle("One Dose");
+
+        graph.addSeries(series2);
+        series2.setColor(Color.GREEN);
+        series2.setTitle("Two Doses");
+
+
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         Log.i("Graf", "end");
-*/
+
 
         dashboardOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -1210,25 +1230,25 @@ public class GalleryFragment extends Fragment{
                 chosenStat = adapterView.getItemAtPosition(i).toString();
                 switch(chosenStat){
                     case "Total doses distributed":
-                        //graph.setVisibility(View.INVISIBLE);
+                        graph.setVisibility(View.INVISIBLE);
 
                         filterArray = getResources().getStringArray(R.array.filter_total_dist);
                         selectedFilters = new boolean[filterArray.length];
                         break;
                     case "Total doses administered":
-                        //graph.setVisibility(View.INVISIBLE);
+                        graph.setVisibility(View.INVISIBLE);
 
                         filterArray = getResources().getStringArray(R.array.filter_total_admin);
                         selectedFilters = new boolean[filterArray.length];
                         break;
                     case "Cumulative uptake (%)":
-                        //graph.setVisibility(View.INVISIBLE);
+                        graph.setVisibility(View.INVISIBLE);
 
                         filterArray = getResources().getStringArray(R.array.filter_cumulative_uptake);
                         selectedFilters = new boolean[filterArray.length];
                         break;
                     case "Total cases and deaths":
-                        //graph.setVisibility(View.INVISIBLE);
+                        graph.setVisibility(View.INVISIBLE);
 
                         filterArray = getResources().getStringArray(R.array.filter_cases_deaths);
                         selectedFilters = new boolean[filterArray.length];
