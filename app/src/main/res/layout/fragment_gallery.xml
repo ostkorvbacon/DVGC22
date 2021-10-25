@@ -9,10 +9,12 @@
     <Spinner
         android:id="@+id/dashboard_options"
         style="@android:style/Widget.Holo.Light.Spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:padding="8dp"
+        android:padding="4dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:textAlignment="viewStart"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,7 +45,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/back"
-        android:padding="4dp"
+        android:padding="8dp"
         android:textAlignment="viewStart"
         android:visibility="invisible"
         app:layout_constrainedWidth="true"
@@ -82,14 +84,30 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="550dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/filter_legend"
-        />
+        app:layout_constraintTop_toTopOf="@+id/filter_legend" />
 
+    <ImageView
+        android:id="@+id/category_icon"
+        android:layout_width="53dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_icon_filter_foreground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cat_text" />
+
+    <ImageView
+        android:id="@+id/filter_icon"
+        android:layout_width="34dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_icon_filter_filter_foreground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_legend" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -107,8 +107,6 @@ public class AdminStatsFragment extends Fragment {
         moderna = handler.getModernaQuantity();
         astraZeneca = handler.getAstraQuantity();
 
-
-
         vaccineText.setText("Available Vaccines\n\n" + "Pzifer: " + NumberFormat.getIntegerInstance().format(pzifer) + "\nModerna: " + NumberFormat.getIntegerInstance().format(moderna) + "\nAstra Zeneca: " + NumberFormat.getIntegerInstance().format(astraZeneca) + "\n");
 
         // Inflate the layout for this fragment

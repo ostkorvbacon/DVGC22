@@ -7,9 +7,7 @@
     tools:context=".ui.home.HomeFragment">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
@@ -24,6 +22,7 @@
             android:text="@string/pover"
             android:textSize="24dp"
             android:textStyle="bold"
+            android:textColor="#4F4F4F"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -123,6 +122,7 @@
             android:text="@string/upp"
             android:textSize="18dp"
             android:textStyle="bold"
+            android:textColor="#4F4F4F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -150,9 +150,8 @@
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:hint="@string/date"
             android:inputType="none"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.066"
             app:layout_constraintStart_toStartOf="parent"
@@ -168,7 +167,6 @@
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:hint="@string/time2"
             android:inputType="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.024"
@@ -180,12 +178,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="152dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/time2"
-            android:visibility="gone"
-
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/appointment_time"
             app:layout_constraintStart_toEndOf="@+id/appointment_date_label"
-            app:layout_constraintTop_toBottomOf="@+id/appointment_title" />
+            app:layout_constraintTop_toBottomOf="@+id/appointment_clinique" />
 
         <Button
             android:id="@+id/book_button"
@@ -194,6 +193,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/book"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appointment_date" />
 
@@ -205,6 +205,7 @@
             android:text="@string/scann"
             android:textSize="18dp"
             android:textStyle="bold"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/book_button"
@@ -216,6 +217,7 @@
             android:layout_width="216dp"
             android:layout_height="198dp"
             android:src="@drawable/ic_qr_detailed"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -227,6 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/QR_code_scanner_button"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -235,13 +238,15 @@
         <ImageButton
             android:id="@+id/cancel_button"
             android:layout_width="51dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="68dp"
-            android:src="@drawable/ic_cancel"
-            android:visibility="gone"
-
+            android:layout_height="49dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="156dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/white"
+            android:src="@android:drawable/ic_delete"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/appointment_time"
             app:layout_constraintTop_toBottomOf="@+id/second_dose_date" />
 
@@ -252,6 +257,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="60dp"
             android:text="@string/signature_title"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -260,11 +266,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/date"
-            android:visibility="gone"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appointment_clinique" />
+
+        <TextView
+            android:id="@+id/appointment_clinique_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/Clinique"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appointment_title" />
+
+        <EditText
+            android:id="@+id/appointment_clinique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appointment_clinique_label" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
