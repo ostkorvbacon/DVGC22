@@ -36,7 +36,6 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.series.Series;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,9 +82,6 @@ public class GalleryFragment extends Fragment{
                 "Norrbotten", "Skåne", "Stockholm", "Södermanland", "Uppsala", "Värmland",
                 "Västerbotten", "Västernorrland", "Västmanland", "Västra Götaland", "Örebro",
                 "Östergötland"};
-
-
-
         switch(chosenStat){
             case "Total doses distributed":
                 switch(chosenFilters){
@@ -125,6 +121,7 @@ public class GalleryFragment extends Fragment{
                                 listDBC2);
                         listView.setAdapter(adapterDBC);
                         Log.i("DBC", "end");
+                        Log.i("DBC", "--");
                         break;
                     case "By product":
                         Log.i("DBP", "start");
@@ -162,6 +159,7 @@ public class GalleryFragment extends Fragment{
                                 listDBP2);
                         listView.setAdapter(adapterDBP);
                         Log.i("DBP", "end");
+                        Log.i("DBP", "--");
                         break;
                     case "By county, By product":
                         Log.i("DBCBP", "start");
@@ -199,6 +197,7 @@ public class GalleryFragment extends Fragment{
                                 listDBCBP2);
                         listView.setAdapter(adapterDBCBP);
                         Log.i("DBC", "end");
+                        Log.i("DBC", "--");
                         break;
                 }
                 break;
@@ -1134,96 +1133,25 @@ public class GalleryFragment extends Fragment{
         optionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dashboardOptions.setAdapter(optionsAdapter);
 
-/*
-        Log.i("Graf", "start");
-
-        String[] countyGroup4 = { "Sverige", "Blekinge", "Dalarna", "Gotland",
-                "Gävleborg", "Halland", "Jämtland", "Jönköping", "Kalmar", "Kronoberg",
-                "Norrbotten", "Skåne", "Stockholm", "Södermanland", "Uppsala", "Värmland",
-                "Västerbotten", "Västernorrland", "Västmanland", "Västra Götaland", "Örebro",
-                "Östergötland"};
-
-        CovidData covidData = MainActivity.covidData;
-        LineGraphSeries<DataPoint> series = null;
-        LineGraphSeries<DataPoint> series2 = null;
-
-        int sum, sumTot, w, y, index, index2, length, i;
-
-        GraphView graph = (GraphView) root.findViewById(R.id.graph);
-        graph.setVisibility(View.VISIBLE);
-
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(10);
-
-
-
-        List<CovidVaccineSweden.WeeklyReport> listBW;
-        ArrayList<dispData> listBW2 = new ArrayList<>();
-        index2 = covidData.findSwedenVaccineRegion(countyGroup4[0]);
-        listBW = covidData.getSwedenVaccine().get(index2).getWeeklyReports();
-        w = 52;
-        y= 2020;
-        sum = 0;
-        sumTot = 0;
-        i = 0;
-        while(covidData.getSwedenVaccine().get(0).weeklyReportsHasWeek(w, y))
-            i = i +1;
-        length = i;
-        w = 52;
-        y= 2020;
-        i = 0;
-        while(covidData.getSwedenVaccine().get(0).weeklyReportsHasWeek(w, y))
-        {
-
-            index = covidData.getSwedenVaccine().get(0).weeklyReportsFindWeek(w, y);
-
-            series.appendData(new DataPoint(i, listBW.get(index).getDose1Quota()*100), true, length*2);
-            series2.appendData(new DataPoint(i, listBW.get(index).getDose2Quota()*100), true, length*2);
-
-
-            i ++;
-            if(w == 53)
-            {
-                w = 1;
-                y = y + 1;
-            }
-            else { w = w + 1; }
-        }
-
-
-
-        graph.addSeries(series);
-        series.setColor(Color.BLUE);
-        Log.i("Graf", "end");
-*/
-
         dashboardOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 chosenStat = adapterView.getItemAtPosition(i).toString();
+
                 switch(chosenStat){
                     case "Total doses distributed":
-                        //graph.setVisibility(View.INVISIBLE);
-
                         filterArray = getResources().getStringArray(R.array.filter_total_dist);
                         selectedFilters = new boolean[filterArray.length];
                         break;
                     case "Total doses administered":
-                        //graph.setVisibility(View.INVISIBLE);
-
                         filterArray = getResources().getStringArray(R.array.filter_total_admin);
                         selectedFilters = new boolean[filterArray.length];
                         break;
                     case "Cumulative uptake (%)":
-                        //graph.setVisibility(View.INVISIBLE);
-
                         filterArray = getResources().getStringArray(R.array.filter_cumulative_uptake);
                         selectedFilters = new boolean[filterArray.length];
                         break;
                     case "Total cases and deaths":
-                        //graph.setVisibility(View.INVISIBLE);
-
                         filterArray = getResources().getStringArray(R.array.filter_cases_deaths);
                         selectedFilters = new boolean[filterArray.length];
                         break;
