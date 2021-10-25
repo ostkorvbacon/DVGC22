@@ -73,11 +73,22 @@
         android:layout_width="match_parent"
         android:layout_height="550dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/filter_legend"
+        app:layout_constraintTop_toTopOf="@+id/filter_legend" />
+
+    <TextView
+        android:id="@+id/graph_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/graph_label"
+        android:textStyle="bold"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="@+id/graph"
+        app:layout_constraintTop_toTopOf="@+id/filter_icon"
         />
 
     <ListView
