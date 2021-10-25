@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -53,6 +54,7 @@ public class GalleryFragment extends Fragment{
     String[] filterArray;
     String chosenStat;
     Context mContext;
+    ImageView categoryIcon, filterIcon;
 
 
 
@@ -1113,6 +1115,8 @@ public class GalleryFragment extends Fragment{
                     filter.setText(chosenFilters.toString());
                 }
                 determineDataRepresentation(chosenFilters.toString());
+                filterIcon.setVisibility(View.INVISIBLE);
+                filter.setVisibility(View.VISIBLE);
             }
         });
         builder.show();
@@ -1125,6 +1129,8 @@ public class GalleryFragment extends Fragment{
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        filterIcon = root.findViewById(R.id.filter_icon);
+        categoryIcon = root.findViewById(R.id.category_icon);
 
         filter = root.findViewById(R.id.filter_text);
         final Spinner dashboardOptions = root.findViewById(R.id.dashboard_options);
@@ -1155,19 +1161,20 @@ public class GalleryFragment extends Fragment{
                         filterArray = getResources().getStringArray(R.array.filter_cases_deaths);
                         selectedFilters = new boolean[filterArray.length];
                         break;
-                    case "-":
+                    case "":
                         filter.setVisibility(View.INVISIBLE);
-                        ((TextView)root.findViewById(R.id.filter_legend)).setVisibility(View.INVISIBLE);
+                        filterIcon.setVisibility(View.VISIBLE);
+                        categoryIcon.setVisibility(View.VISIBLE);
                         break;
                 }
-                if(!chosenStat.equals("-")){
-                    ((TextView)root.findViewById(R.id.filter_legend)).setVisibility(View.VISIBLE);
-                    filter.setVisibility(View.VISIBLE);
+                if(!chosenStat.equals("")){
+                    categoryIcon.setVisibility(View.INVISIBLE);
                     filterList.clear();
                     filterList.add(0);
                     selectedFilters[0] = true;
                     filter_dialog();
                 }
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
