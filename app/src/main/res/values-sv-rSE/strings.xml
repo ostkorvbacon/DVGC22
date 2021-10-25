@@ -38,10 +38,8 @@
     <string name="deny">Neka</string>
     <string name="accept">Acceptera</string>
     <string name="schedule">Schemalägg åldersgrupp behörig\n för vaccination</string>
-    <string name="schedule2">Åldersgrupp </string>
-    <string name="schedule3">Datum </string>
-    <string name="schedule4">Vaccinationsschema för åldersgrupper</string>
-    <string name="add">Lägg till </string>
+    <string name="schedule2">Nuvarande behörigage åldersgrupp: </string>
+    <string name="apply">Tilllämpa </string>
     <string name="city">Stad</string>
     <string name="street">Gata</string>
     <string name="cat">Kategori</string>
@@ -103,7 +101,6 @@
     <string name="menu_admin_appointments">Bokad tid</string>
     <string name="menu_admin_stats">Statistik</string>
     <string name="title_activity_settings">Inställningar</string>
-    <string name="noSchedules">Inga tillagda scheman</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Personliga uppgifter</string>
@@ -170,10 +167,6 @@
     <string name="Clinique">Klinik</string>
     <string name="time">Vaccinationstid</string>
     <string name="createbook">Skapa bokning</string>
-    <string name="booking_date_label">Datum</string>
-    <string name="booking_date_text_hint">Välj ett datum</string>
-    <string name="booking_not_all_items_selected">Alla fält måste vara ifyllda!</string>
-    <string name="booking_date_not_valid">Det valda datumet måste vara minst 14 dagar efter att du blev vaccinerad med dos 1!</string>
 
     <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>

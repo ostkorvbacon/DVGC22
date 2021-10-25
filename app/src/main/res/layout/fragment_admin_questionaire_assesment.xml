@@ -161,7 +161,6 @@
             android:text="@string/q0"
             android:textSize="24dp"
             android:textStyle="bold"
-            android:textColor="#4F4F4F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

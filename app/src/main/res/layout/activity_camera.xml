@@ -25,18 +25,19 @@
         android:layout_marginBottom="10dp"/>
 
 
+
     <TextView
         android:id="@+id/QR_scanner_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/scanner_view"
+        android:layout_marginEnd="15dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="@string/QR_code_scanner_name"
-        android:textColor="#4F4F4F"
+        android:textStyle="bold"
         android:textSize="23sp"
-        android:textStyle="bold" />
+        android:text="@string/QR_code_scanner_name"
+        android:textColor="#4F4F4F"/>
 
     <TextView
         android:id="@+id/QR_scanner_name"
@@ -49,18 +50,19 @@
         android:textSize="20sp"/>
 
 
+
     <TextView
         android:id="@+id/QR_scanner_date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/QR_scanner_name"
+        android:layout_marginEnd="15dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="@string/QR_code_scanner_date"
-        android:textColor="#4F4F4F"
+        android:textStyle="bold"
         android:textSize="23sp"
-        android:textStyle="bold" />
+        android:text="@string/QR_code_scanner_date"
+        android:textColor="#4F4F4F"/>
 
     <TextView
         android:id="@+id/QR_scanner_date"
@@ -78,13 +80,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/QR_scanner_date"
+        android:layout_marginEnd="15dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="@string/QR_code_scanner_type"
-        android:textColor="#4F4F4F"
+        android:textStyle="bold"
         android:textSize="23sp"
-        android:textStyle="bold" />
+        android:text="@string/QR_code_scanner_type"
+        android:textColor="#4F4F4F"/>
 
     <TextView
         android:id="@+id/QR_scanner_type"

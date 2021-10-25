@@ -19,7 +19,6 @@
             android:layout_marginTop="11dp"
             android:text="Email"
             android:textSize="16dp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
@@ -41,7 +40,6 @@
             android:layout_marginTop="8dp"
             android:text="@string/pass"
             android:textSize="16dp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_email" />
 
@@ -64,7 +62,6 @@
             android:layout_marginTop="16dp"
             android:text="@string/fname"
             android:textSize="16dp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +77,6 @@
             android:text="@string/messages_header"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:textColor="#4F4F4F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
@@ -93,7 +89,6 @@
             android:inputType="textPersonName"
             android:text="@string/acc"
             android:textSize="18dp"
-            android:textColor="#4F4F4F"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -129,7 +124,6 @@
             android:text="@string/address2"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:textColor="#4F4F4F"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_phone" />
 
@@ -141,7 +135,6 @@
             android:layout_marginTop="8dp"
             android:text="@string/nr"
             android:textSize="16dp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_dob" />
 
@@ -153,7 +146,6 @@
             android:layout_marginTop="16dp"
             android:text="@string/street"
             android:textSize="16dp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -177,7 +169,6 @@
             android:layout_marginStart="16dp"
             android:text="@string/dob2"
             android:textSize="16dp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
 
@@ -220,7 +211,6 @@
             android:layout_marginTop="8dp"
             android:text="@string/city"
             android:textSize="16dp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_addr" />
 

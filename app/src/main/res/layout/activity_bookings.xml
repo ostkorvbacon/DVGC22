@@ -6,70 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".BookingsActivity"
     android:id="@+id/booking"
-    android:padding="15dp"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        android:textColor="#4F4F4F"
         android:text="@string/Clinique">
     </TextView>
-
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:textSize="15sp"
         android:layout_height="55dp" />
     <TextView
-        android:id="@+id/booking_date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        android:textColor="#4F4F4F"
-        android:text="@string/booking_date_label"
-        android:layout_marginBottom="10dp"/>
-    <EditText
-        android:id="@+id/booking_date_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:textSize="15sp"
-        android:layout_marginBottom="10dp"
-        android:focusable="false"
-        android:hint="@string/booking_date_text_hint" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        android:textColor="#4F4F4F"
         android:text="@string/time">
     </TextView>
-
     <Spinner
         android:id="@+id/spinner2"
         android:layout_width="match_parent"
-        android:textSize="15sp"
         android:layout_height="55dp" />
-
-    <TextView
-        android:id="@+id/textView30"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        android:textColor="#4F4F4F"
-        android:text="Vaccine brand" />
-
 
     <Spinner
         android:id="@+id/spinner3"
         android:layout_width="match_parent"
-        android:textSize="15sp"
         android:layout_height="55dp" />
 
     <Button

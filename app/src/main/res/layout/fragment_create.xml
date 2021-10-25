@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/create"
-            android:textColor="#4F4F4F"
+
             android:textStyle="bold"
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"

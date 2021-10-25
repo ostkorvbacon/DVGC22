@@ -32,7 +32,6 @@
             android:scaleY="2"
             android:text="@string/action_sign_in_short"
             android:textStyle="bold"
-            android:textColor="#4F4F4F"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 

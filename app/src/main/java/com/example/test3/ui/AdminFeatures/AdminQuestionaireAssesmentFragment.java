@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,11 +118,10 @@ public class AdminQuestionaireAssesmentFragment extends Fragment {
         callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                //AdminAppointmentsFragment fragment = new AdminAppointmentsFragment().newInstance(viewModel.getFilterPos(),viewModel.getUserPos(), true);
-                FragmentManager fm = getParentFragmentManager();
+                AdminAppointmentsFragment fragment = new AdminAppointmentsFragment();
+                FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.remove(fm.findFragmentByTag("questionaire_admin"));
-                ft.show(fm.getPrimaryNavigationFragment());
+                ft.replace(container.getId(), fragment);
                 ft.addToBackStack(this.getClass().getName());
                 ft.commit();
                 callback.remove();

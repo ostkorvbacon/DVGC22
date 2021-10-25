@@ -44,12 +44,10 @@ public class AdminAppointmentsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_PARAM3 = "param3";
 
     // TODO: Rename and change types of parameters
-    private int mParam1;
-    private int mParam2;
-    private boolean mParam3;
+    private String mParam1;
+    private String mParam2;
 
 
     private ArrayAdapter<String> adapter;
@@ -80,12 +78,11 @@ public class AdminAppointmentsFragment extends Fragment {
      * @return A new instance of fragment AdminAppointmentsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AdminAppointmentsFragment newInstance(int param1, int param2, boolean param3) {
+    public static AdminAppointmentsFragment newInstance(String param1, String param2) {
         AdminAppointmentsFragment fragment = new AdminAppointmentsFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, param1);
-        args.putInt(ARG_PARAM2, param2);
-        args.putBoolean(ARG_PARAM3, param3);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -94,9 +91,8 @@ public class AdminAppointmentsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_PARAM1);
-            mParam2 = getArguments().getInt(ARG_PARAM2);
-            mParam3 = getArguments().getBoolean(ARG_PARAM3);
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
 
@@ -105,7 +101,6 @@ public class AdminAppointmentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentAdminAppointmentsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         viewModel = new ViewModelProvider(requireActivity()).get(AdminAppointmentsViewModel.class);
@@ -151,25 +146,23 @@ public class AdminAppointmentsFragment extends Fragment {
         userSelectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    updateUser();
-                    questionaireButton.setEnabled(true);
+                updateUser();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                questionaireButton.setEnabled(false);
+
             }
         });
-        questionaireButton.setEnabled(false);
+
         questionaireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 viewModel.setCurrentUser(user);
                 AdminQuestionaireAssesmentFragment fragment = new AdminQuestionaireAssesmentFragment();
-                FragmentManager fm = getParentFragmentManager();
+                FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.add(container.getId(), fragment,"questionaire_admin");
-                ft.hide(fm.getPrimaryNavigationFragment());
+                ft.replace(container.getId(), fragment);
                 ft.addToBackStack(this.getClass().getName());
                 ft.commit();
             }
@@ -181,35 +174,13 @@ public class AdminAppointmentsFragment extends Fragment {
                 User user = handler.getUser(userSelectSpinner.getSelectedItem().toString());
                 List<Vaccination> vacc = new ArrayList<Vaccination>();
                 vacc = handler.getUserVaccinations(user.getUsername());
-                Booking booking = handler.getBooking(user.getUsername());
                 if(vacc.isEmpty()){
-                    if(booking.getType().equals("Pfizer")){
-                        Log.i("Vac", "Doing vaccination...");
-                        handler.doVaccination(user.getUsername(),1,"Pfizer");
-                        handler.setPfizerQuantity(handler.getPfizerQuantity()-1);
-                    }
-                    if(booking.getType().equals("Moderna")){
-                        handler.doVaccination(user.getUsername(),1,"Moderna");
-                        handler.setModernaQuantity(handler.getModernaQuantity()-1);
-                    }
-                    if(booking.getType().equals("Astra")){
-                        handler.doVaccination(user.getUsername(),1,"Astra");
-                        handler.setModernaQuantity(handler.getModernaQuantity()-1);
-                    }
+                    handler.doVaccination(user.getUsername(),1,"Moderna");
+                    handler.setModernaQuantity(handler.getModernaQuantity()-1);
                 }
                 else{
-                    if(booking.getType().equals("Pfizer")){
-                        handler.doVaccination(user.getUsername(),2,"Pfizer");
-                        handler.setPfizerQuantity(handler.getPfizerQuantity()-1);
-                    }
-                    if(booking.getType().equals("Moderna")){
-                        handler.doVaccination(user.getUsername(),2,"Moderna");
-                        handler.setModernaQuantity(handler.getModernaQuantity()-1);
-                    }
-                    if(booking.getType().equals("Astra")){
-                        handler.doVaccination(user.getUsername(),2,"Astra");
-                        handler.setModernaQuantity(handler.getModernaQuantity()-1);
-                    }
+                    handler.doVaccination(user.getUsername(),2,"Moderna");
+                    handler.setModernaQuantity(handler.getModernaQuantity()-1);
                 }
                 updateUserSpinner(filterSpinner.getSelectedItemPosition());
             }
@@ -227,10 +198,10 @@ public class AdminAppointmentsFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 userSelectSpinner.setEnabled(!adapter.isEmpty());
-                /*if(adapter.isEmpty()){
+                if(adapter.isEmpty()){
                     nameText.setText("name");
                     ageText.setText("Date of birth");
-                }*/
+                }
                 break;
             case 1:
                 for (Booking b: handler.getBookings()) {
@@ -238,20 +209,16 @@ public class AdminAppointmentsFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 userSelectSpinner.setEnabled(!adapter.isEmpty());
-                /*if(adapter.isEmpty()){
+                if(adapter.isEmpty()){
                     nameText.setText("Name");
                     ageText.setText("Date of birth");
-                }*/
+                }
                 break;
 
         }
         if(!adapter.isEmpty()){
             userSelectSpinner.setSelection(0,true);
-            questionaireButton.setEnabled(true);
             updateUser();
-        }
-        else{
-            questionaireButton.setEnabled(false);
         }
     }
 
@@ -262,24 +229,15 @@ public class AdminAppointmentsFragment extends Fragment {
         if(handler.getQuestionnaire(user.getUsername()) != null){
             vaccinateButton.setEnabled(handler.getQuestionnaire(user.getUsername()).isApproved());
             if(handler.getQuestionnaire(user.getUsername()).isApproved()){
-                questionaireStatus.setText("Approved");
+                questionaireStatus.setText("Questionaire status: Approved");
             }
             else{
-                questionaireStatus.setText("Pending");
+                questionaireStatus.setText("Questionaire status: Pending");
             }
         }
         else{
             vaccinateButton.setEnabled(false);
-            questionaireStatus.setText("Pending");
-
+            questionaireStatus.setText("Questionaire status: Pending");
         }
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if(!hidden){
-            updateUser();
-        }
-        super.onHiddenChanged(hidden);
     }
 }

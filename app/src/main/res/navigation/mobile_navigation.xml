@@ -31,7 +31,6 @@
 
     <fragment
         android:id="@+id/nav_admin_appointments"
-        android:tag="admin_appointments"
         android:name="com.example.test3.ui.AdminFeatures.AdminAppointmentsFragment"
         android:label="@string/menu_admin_appointments"
         tools:layout="@layout/fragment_admin_appointments" />

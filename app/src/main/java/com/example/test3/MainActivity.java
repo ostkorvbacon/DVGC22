@@ -41,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
         if(handler.testAPIFunctions()){
             Log.i("API test", "Success!");
         }
-*/
+ */
+
+
+
         DataExtractor data = new DataExtractor();
         Thread downloadCovidDataThread = new Thread(data);
         downloadCovidDataThread.start();
@@ -51,6 +54,16 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
+        /*
+        DatabaseHandler handler = new DatabaseHandler("http://83.254.68.246:3003/");
+        if(handler.testAPIFunctions()){
+            Log.i("APITest", "Api test succeeded!");
+        }
+        else{
+            Log.i("APITest", "Api test failed!");
+        }*/
 
         Button loginButton = findViewById(R.id.login_button);
         Button createButton = findViewById(R.id.create_button);
@@ -87,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         //QR scanner button listener
         scanPassport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,14 +108,16 @@ public class MainActivity extends AppCompatActivity {
                 requestCamera();
             }
         });
+
         if(instaLogin) {
             Intent loginIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
-            User admin = handler.getUser("admin@gmail.com");
-            loginIntent.putExtra("loggedInUser", admin);
+            User karin = handler.getUser("karin123@gmail.com");
+            loginIntent.putExtra("loggedInUser", karin);
             startActivity(loginIntent);
             return;
         }
     }
+
     public void requestCamera() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             Intent cameraIntent = new Intent(getApplicationContext(), CameraActivity.class);
