@@ -12,6 +12,7 @@
     <string name="street">Street</string>
     <string name="cat">Category</string>
     <string name="filter">Filters:</string>
+    <string name="graph_label">Percentage vaccinated in Sweden:</string>
     <string name="acc">Account details</string>
     <string name="fname">First name</string>
 

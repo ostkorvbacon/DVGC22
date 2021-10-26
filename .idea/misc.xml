@@ -3,32 +3,54 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Emil Hising Bertils/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_bookings.xml" value="0.17844202898550723" />
+        <entry key="..\:/Users/Emil Hising Bertils/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_camera.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/Emil Hising Bertils/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_login2.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/Emil Hising Bertils/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_create.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_bookings.xml" value="0.2755208333333333" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_camera.xml" value="0.3500905797101449" />
         <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_login2.xml" value="0.2826086956521739" />
-        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_main.xml" value="0.23278985507246377" />
-        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_main_menu.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_main.xml" value="0.2427536231884058" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_main_menu.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_questionnaire.xml" value="0.3500905797101449" />
         <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/activity_schedule.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/app_bar_main_menu.xml" value="0.284375" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/content_main_menu.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/custom_list_view.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/custom_list_view2.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/custom_list_view3.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_admin_appointments.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_admin_questionaire_assesment.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_admin_schedule.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_admin_stats.xml" value="0.3500905797101449" />
         <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_create.xml" value="0.27807971014492755" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_gallery.xml" value="0.3500905797101449" />
         <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_home.xml" value="0.2826086956521739" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_profile.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/fragment_slideshow.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/nav_header_main_menu.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/popup_camera_permission_rationale.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/layout/settings_activity.xml" value="0.3500905797101449" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/menu/activity_main_menu_drawer.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/menu/main_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3671875" />
+        <entry key="..\:/Users/Erik/Documents/GitHub/DVGC22/app/src/main/res/xml/root_preferences.xml" value="0.3451086956521739" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/activity_main.xml" value="0.15286080273270708" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/content_main_menu.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/custom_list_view.xml" value="0.31929347826086957" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/custom_list_view3.xml" value="0.4041666666666667" />
-        <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_gallery.xml" value="0.31929347826086957" />
+        <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_gallery.xml" value="0.4" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_home.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_slideshow.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/Olle/AndroidStudioProjects/DVGC22/app/src/main/res/layout/nav_header_main_menu.xml" value="0.14739583333333334" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3671875" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/drawable/back.xml" value="0.29739583333333336" />
-        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/drawable/ic_icon_filter_foreground.xml" value="0.3182291666666667" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3671875" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/drawable/ic_menu_camera.xml" value="0.3671875" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.3671875" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.3671875" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/drawable/side_nav_bar.xml" value="0.3671875" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/activity_bookings.xml" value="0.30052083333333335" />
-        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/activity_camera.xml" value="0.2734375" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/activity_login2.xml" value="0.3182291666666667" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/activity_main_menu.xml" value="0.36666666666666664" />
@@ -36,12 +58,11 @@
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/activity_questionnaire.xml" value="0.33" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/app_bar_main_menu.xml" value="0.3288409703504043" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/content_main_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_admin_appointments.xml" value="0.33" />
+        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_admin_appointments.xml" value="0.28802083333333334" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_admin_questionaire_assesment.xml" value="0.28802083333333334" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_admin_schedule.xml" value="0.33" />
-        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_admin_stats.xml" value="0.31197916666666664" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_create.xml" value="0.25052083333333336" />
-        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_gallery.xml" value="0.2601880877742947" />
+        <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_gallery.xml" value="0.327718223583461" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_profile.xml" value="0.28020833333333334" />
         <entry key="..\:/Users/Schick/AndroidStudioProjects/DVGC22/app/src/main/res/layout/fragment_slideshow.xml" value="0.33" />
