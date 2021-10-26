@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.test3.DataExtraction.CovidCasesSweden;
@@ -40,8 +41,10 @@ public class AdminStatsFragment extends Fragment {
     private DataExtractor extractor;
     private CovidData covidData;
 
-    private TextView usersText;
-    private TextView vaccineText;
+    private EditText nrUsers;
+    private EditText pfizer;
+    private EditText moderna;
+    private EditText astra;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -95,21 +98,18 @@ public class AdminStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAdminStatsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        nrUsers = view.findViewById(R.id.nr_of_users);
+        pfizer = view.findViewById(R.id.nr_of_pfizer);
+        moderna = view.findViewById(R.id.nr_of_moderna);
+        astra = view.findViewById(R.id.nr_of_astra);
 
-        usersText = view.findViewById(R.id.number_of_users_text);
-        vaccineText = view.findViewById(R.id.vaccine_storage_text);
+        nrUsers.setText(String.valueOf(handler.getUserList().size()));
 
-        usersText.setText("Current registered users:\n" + String.valueOf(handler.getUserList().size()));
+        pfizer.setText(String.valueOf(handler.getPfizerQuantity()));
+        moderna.setText(String.valueOf(handler.getModernaQuantity()));
+        astra.setText(String.valueOf(handler.getAstraQuantity()));
 
-        int pzifer=0,moderna=0,astraZeneca=0, total=0;
-
-        pzifer = handler.getPfizerQuantity();
-        moderna = handler.getModernaQuantity();
-        astraZeneca = handler.getAstraQuantity();
-
-        vaccineText.setText("Available Vaccines\n\n" + "Pzifer: " + NumberFormat.getIntegerInstance().format(pzifer) + "\nModerna: " + NumberFormat.getIntegerInstance().format(moderna) + "\nAstra Zeneca: " + NumberFormat.getIntegerInstance().format(astraZeneca) + "\n");
-
-        // Inflate the layout for this fragment
+        //Inflate the layout for this fragment
         return view;
     }
 }
