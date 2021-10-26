@@ -81,8 +81,6 @@ public class VaccinePassport{
         if (new Date().after(valid_after)) {
             return true;
         }
-
-
         return false;
     }
 }

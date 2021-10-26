@@ -12,6 +12,7 @@
     <string name="street">Street</string>
     <string name="cat">Category</string>
     <string name="filter">Filters:</string>
+    <string name="graph_label">Percentage vaccinated in Sweden:</string>
     <string name="acc">Account details</string>
     <string name="fname">First name</string>
 
@@ -28,10 +29,13 @@
     <string name="vaccinate">Vaccinate</string>
     <string name="deny">Deny</string>
     <string name="accept">Accept</string>
-    <string name="schedule">Schedule age group eligible for vaccination</string>
-    <string name="schedule2">Current eligible age group: </string>
-    <string name="apply">Apply </string>
 
+    <string name="schedule">Schedule age group eligible for vaccination</string>
+    <string name="schedule2">Age group </string>
+    <string name="schedule3">Date</string>
+    <string name="schedule4">Age group elegibility schedules</string>
+    <string name="add">Add </string>
+    <string name="noSchedules">No added schedules</string>
     <string name="book">Book appointment</string>
     <string name="scann">Vaccine passport QR code</string>
     <string name="dob2">Date of birth</string>
@@ -50,7 +54,7 @@
     <string name="vacc">Vaccinations</string>
 
     <string name="reply">Reply</string>
-    <string name="replyall">Reply to all</string>
+    <string name="replyall">pho to all</string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -111,7 +115,7 @@
 
     <!-- Dashboard -->
     <string-array name="dashboard_stats">
-        <item>-</item>
+        <item></item>
         <item>Total doses distributed</item>
         <item>Total doses administered</item>
         <item>Cumulative uptake (%)</item>
@@ -150,17 +154,23 @@
     <string name="create2">Create</string>
     <string name="name"></string>
     <string name="pass">Password</string>
-    <string name="nr">F Number</string>
+    <string name="nr">Phone Number</string>
     <string name="dob">YY/MM/DD</string>
     <string name="address">County, street name </string>
     <string name="user">Email</string>
     <string name="reg">Register</string>
     <string name="back">Back</string>
 
+    <string name="seconddose">You can now book a second dose</string>
+
     <string name="Clinique">Clinique</string>
     <string name="time">Time of vaccination</string>
     <string name="time2">Time</string>
     <string name="createbook">Create Booking</string>
+    <string name="booking_date_label">Date</string>
+    <string name="booking_date_text_hint">Choose a date</string>
+    <string name="booking_not_all_items_selected">All fields needs to be filled!</string>
+    <string name="booking_date_not_valid">The selected date must be at least 14 days after you were vaccinated with dose 1!</string>
 
     <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>
