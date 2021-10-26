@@ -12,6 +12,7 @@
     <string name="street">Street</string>
     <string name="cat">Category</string>
     <string name="filter">Filters:</string>
+    <string name="graph_label">Percentage vaccinated in Sweden:</string>
     <string name="acc">Account details</string>
     <string name="fname">First name</string>
 
@@ -159,6 +160,8 @@
     <string name="user">Email</string>
     <string name="reg">Register</string>
     <string name="back">Back</string>
+
+    <string name="seconddose">You can now book a second dose</string>
 
     <string name="Clinique">Clinique</string>
     <string name="time">Time of vaccination</string>

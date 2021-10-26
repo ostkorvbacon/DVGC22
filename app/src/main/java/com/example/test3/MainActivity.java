@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private final int PERMISSION_REQUEST_CAMERA = 1;
 
     //set to true for insta login
-    public boolean instaLogin = true;
+    public boolean instaLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

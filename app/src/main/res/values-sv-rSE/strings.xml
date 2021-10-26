@@ -46,6 +46,7 @@
     <string name="street">Gata</string>
     <string name="cat">Kategori</string>
     <string name="filter">Filter:</string>
+    <string name="graph_label">Procent vaccinerade i Sverige:</string>
     <string name="acc">Kontodetaljer</string>
     <string name="fname">Förnamn</string>
     <string name="faq">Vanliga Frågor</string>
@@ -155,6 +156,8 @@
         <item>Efter län</item>
         <item>Efter åldersgrupp</item>
     </string-array>
+
+    <string name="seconddose">Du kan nu boka en andra dos </string>
 
     <string name="profiletxt">Profil</string>
     <string name="create">Registrera</string>
