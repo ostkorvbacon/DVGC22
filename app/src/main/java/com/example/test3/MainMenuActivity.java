@@ -127,23 +127,9 @@ public class MainMenuActivity extends AppCompatActivity {
         handler.newBooking(loggedInUser.getUsername(), "test",new Timestamp(date2.getTime()));*/
         for(Vaccination v : handler.getUserVaccinations(loggedInUser.getUsername())){
             if(v.getDose() == 1 && handler.getBooking(loggedInUser.getUsername()) == null){
-                /*SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-                Log.i("Date",v.getDate());
-                try {
-                    Date date = formatter.parse(v.getDate());
-                    cal.setTime(date);
-                    cal.add(Calendar.DATE,14);
-                    Calendar calNow = Calendar.getInstance();
-                    calNow.getTime();
-                    if(cal.before(calNow)){
-                        vacNotification();
-                    }
-                } catch (ParseException e) {
-                    Log.i("Failed parse date","pff");
+                if(handler.isUserEligibleForBookingVaccination(loggedInUser.getUsername())) {
+                    vacNotification();
                 }
-
-                 */
-                vacNotification();
 
             }
         }
