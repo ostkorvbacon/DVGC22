@@ -156,6 +156,8 @@
         <item>Efter åldersgrupp</item>
     </string-array>
 
+    <string name="seconddose">Du kan nu boka en andra dos </string>
+
     <string name="profiletxt">Profil</string>
     <string name="create">Registrera</string>
     <string name="name"></string>

@@ -40,6 +40,7 @@ import com.example.test3.DatabaseHandler.User;
 
 
 import com.example.test3.DatabaseHandler.Vaccination;
+import com.example.test3.DialogActivity;
 import com.example.test3.QuestionnaireActivity;
 import com.example.test3.R;
 import com.example.test3.VaccinePassport.CameraActivity;
@@ -143,7 +144,16 @@ public class HomeFragment extends Fragment {
         Intent intent = this.getActivity().getIntent();
         User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
 
+        DialogActivity test=new DialogActivity();
+
+
+        if (database.getUserVaccinations(loggedInUser.getName()).size()==1 && database.getBooking(loggedInUser.getName())==null){
+
+            test.show(getActivity().getSupportFragmentManager(),"dialog" );
+
+        }
         personalName.setText(loggedInUser.getName());
+        //User currentuser=database.getUser()
 
         //database.newBooking(loggedInUser.getUsername(), "test", Timestamp.valueOf("2021-9-15 10:30:00.0"));
         //newVaccination(username, date, dose, type, getClinique(b.getCliniqueID()).getName())

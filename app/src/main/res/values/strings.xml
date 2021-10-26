@@ -160,6 +160,8 @@
     <string name="reg">Register</string>
     <string name="back">Back</string>
 
+    <string name="seconddose">You can now book a second dose</string>
+
     <string name="Clinique">Clinique</string>
     <string name="time">Time of vaccination</string>
     <string name="time2">Time</string>
