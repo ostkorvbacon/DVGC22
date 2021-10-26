@@ -43,6 +43,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainMenuBinding binding;
+    User loggedInUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //Hide/Show admin part side menu
         Intent intent = this.getIntent();
-        User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
+        loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
 
         if(loggedInUser.getRole().equals("Doctor")){
             Menu navMenu = navigationView.getMenu();
@@ -82,7 +83,7 @@ public class MainMenuActivity extends AppCompatActivity {
         }
         //Hide/Show admin part side menu
 
-        //checkIfTimeForSecondDose();
+        checkIfTimeForSecondDose();
 
     }
 
@@ -126,7 +127,7 @@ public class MainMenuActivity extends AppCompatActivity {
         handler.newBooking(loggedInUser.getUsername(), "test",new Timestamp(date2.getTime()));*/
         for(Vaccination v : handler.getUserVaccinations(loggedInUser.getUsername())){
             if(v.getDose() == 1 && handler.getBooking(loggedInUser.getUsername()) == null){
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+                /*SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
                 Log.i("Date",v.getDate());
                 try {
                     Date date = formatter.parse(v.getDate());
@@ -141,6 +142,9 @@ public class MainMenuActivity extends AppCompatActivity {
                     Log.i("Failed parse date","pff");
                 }
 
+                 */
+                vacNotification();
+
             }
         }
     }
@@ -154,7 +158,9 @@ public class MainMenuActivity extends AppCompatActivity {
         builder.setPositiveButton("Till boknngar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //ToDo: Open booking page when implemented.
+                Intent questionnaire = new Intent(getApplicationContext(), QuestionnaireActivity.class);
+                questionnaire.putExtra("loggedInUser", loggedInUser);
+                startActivity(questionnaire);
             }
         });
         builder.setNegativeButton("Senare", new DialogInterface.OnClickListener() {
