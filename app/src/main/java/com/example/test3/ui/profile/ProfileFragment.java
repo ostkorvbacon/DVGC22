@@ -36,9 +36,7 @@ public class ProfileFragment extends Fragment {
         Intent intent = this.getActivity().getIntent();
         User user = (User)intent.getSerializableExtra("loggedInUser");
 
-        Button editDetails = root.findViewById(R.id.profile_ok_button);
         EditText email = root.findViewById(R.id.profile_email);
-        EditText pass = root.findViewById(R.id.editTextTextPassword2);
         EditText name = root.findViewById(R.id.editTextTextPersonName3);
         EditText dob = root.findViewById(R.id.profile_dob);
         EditText phone = root.findViewById(R.id.profile_phone);
@@ -52,23 +50,6 @@ public class ProfileFragment extends Fragment {
         phone.setText(user.getPhoneNr());
         city.setText(user.getCity());
         addr.setText(user.getAddress());
-
-        editDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //commented out as deleting then adding newUser -> lost user vacc info
-                //no editprofile api method
-                /*database.deleteUser(user.getUsername());
-                database.newUser(email.getText().toString(),
-                        pass.getText().toString(),
-                        name.getText().toString(),
-                        phone.getText().toString(),
-                        dob.getText().toString(),
-                        city.getText().toString(),
-                        addr.getText().toString(),
-                        user.getRole());*/
-            }
-        });
 
         return root;
     }
