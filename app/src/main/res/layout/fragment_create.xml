@@ -19,7 +19,7 @@
             android:textColor="#4F4F4F"
             android:textStyle="bold"
             android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginLeft="64dp"
             android:layout_marginTop="16dp"
             android:scaleX="2"
             android:scaleY="2"
@@ -191,10 +191,9 @@
             android:id="@+id/create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="250dp"
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="270dp"
-            android:text="@string/reg">
-        </Button>
+            android:text="@string/reg"></Button>
 
     </LinearLayout>
 

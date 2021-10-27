@@ -27,15 +27,15 @@
             android:id="@+id/vaccinate_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="@string/vaccinate"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.764"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/questionaire_button"
             app:layout_constraintTop_toBottomOf="@+id/questionaire_status_text"
-            app:layout_constraintVertical_bias="0.046" />
+            app:layout_constraintVertical_bias="0.034" />
 
         <Spinner
             android:id="@+id/user_select_spinner"
