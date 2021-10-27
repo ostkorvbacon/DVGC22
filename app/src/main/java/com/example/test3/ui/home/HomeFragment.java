@@ -102,6 +102,9 @@ public class HomeFragment extends Fragment {
     }
 
     public void toggleVisibilityBooking(User loggedInUser){
+        if(!database.isUserEligibleForBookingVaccination(loggedInUser.getUsername())){
+            bookButton.setVisibility(View.GONE);
+        }
         if(database.bookingExists(database.getBookingID(loggedInUser.getUsername()))){
             dateLabel.setVisibility(View.VISIBLE);
             timeLabel.setVisibility(View.VISIBLE);
