@@ -1263,6 +1263,7 @@ public class GalleryFragment extends Fragment{
                         filter.setVisibility(View.INVISIBLE);
                         filterIcon.setVisibility(View.VISIBLE);
                         categoryIcon.setVisibility(View.VISIBLE);
+                        ((TextView)root.findViewById(R.id.x_axis)).setVisibility(View.VISIBLE);
                         break;
                 }
                 if(!chosenStat.equals("")){
@@ -1271,6 +1272,7 @@ public class GalleryFragment extends Fragment{
                     filterList.add(0);
                     selectedFilters[0] = true;
                     filter_dialog();
+                    ((TextView)root.findViewById(R.id.x_axis)).setVisibility(View.INVISIBLE);
                 }
 
             }

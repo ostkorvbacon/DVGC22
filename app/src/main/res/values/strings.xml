@@ -56,6 +56,8 @@
     <string name="camera">Camera</string>
     <string name="vacc">Vaccinations</string>
 
+    <string name="x_axis">Week</string>
+
     <string name="reply">Reply</string>
     <string name="replyall">pho to all</string>
 
