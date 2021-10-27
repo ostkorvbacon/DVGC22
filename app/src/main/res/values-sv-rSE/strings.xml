@@ -152,6 +152,8 @@
         <item>Efter månad</item>
     </string-array>
 
+    <string name="qstatus">Status för frågeformulär</string>
+
     <string-array name="filter_cases_deaths">
         <item>Efter län</item>
         <item>Efter åldersgrupp</item>

@@ -145,9 +145,13 @@ public class HomeFragment extends Fragment {
         User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
 
         DialogActivity test=new DialogActivity();
+        System.out.println("Hej");
+        System.out.println(loggedInUser);
+        System.out.println(database.getUserVaccinations(loggedInUser.getUsername()).size());
+        System.out.println(database.getBooking(loggedInUser.getUsername()));
+        System.out.println("Hejdå");
 
-
-        if (database.getUserVaccinations(loggedInUser.getName()).size()==1 && database.getBooking(loggedInUser.getName())==null){
+        if (database.getUserVaccinations(loggedInUser.getUsername()).size()==1 && database.getBooking(loggedInUser.getUsername())==null){
 
             test.show(getActivity().getSupportFragmentManager(),"dialog" );
 

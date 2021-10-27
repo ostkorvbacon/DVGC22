@@ -16,6 +16,9 @@
     <string name="acc">Account details</string>
     <string name="fname">First name</string>
 
+    <string name="qstatus">Questionnaire status</string>
+
+
     <string name="pover">Personal Overview</string>
     <string name="date">Date</string>
     <string name="vaccination">vaccination</string>
