@@ -122,15 +122,22 @@ public class MainMenuActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         Intent intent = this.getIntent();
         User loggedInUser = (User)intent.getSerializableExtra("loggedInUser");
+        boolean hasSecondDose = false;
+        boolean timeForSecondDose = false;
         /*Date date2 = new Date();
         date2.getTime();
         handler.newBooking(loggedInUser.getUsername(), "test",new Timestamp(date2.getTime()));*/
         for(Vaccination v : handler.getUserVaccinations(loggedInUser.getUsername())){
             if(v.getDose() == 1 && handler.getBooking(loggedInUser.getUsername()) == null){
-                if(handler.isUserEligibleForBookingVaccination(loggedInUser.getUsername())) {
-                    vacNotification();
-                }
-
+                timeForSecondDose = true;
+            }
+            if(v.getDose() == 2){
+                hasSecondDose = true;
+            }
+        }
+        if(timeForSecondDose && !hasSecondDose) {
+            if (handler.isUserEligibleForBookingVaccination(loggedInUser.getUsername())) {
+                vacNotification();
             }
         }
     }

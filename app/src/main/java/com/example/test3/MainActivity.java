@@ -30,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
     private final int PERMISSION_REQUEST_CAMERA = 1;
 
     //set to true for insta login
-    public boolean instaLogin = false;
+    public boolean instaLogin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
 /*
         if(handler.testAPIFunctions()){
             Log.i("API test", "Success!");

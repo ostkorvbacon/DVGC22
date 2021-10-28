@@ -106,6 +106,8 @@
     <string name="title_activity_settings">Inställningar</string>
     <string name="noSchedules">Inga tillagda scheman</string>
 
+    <string name="x_axis">Vecka</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Personliga uppgifter</string>
     <string name="sync_header">Sekretess inställningar</string>
