@@ -129,8 +129,8 @@ public class AdminAppointmentsFragment extends Fragment {
         userSelectSpinner.setAdapter(adapter);
 
         List<String> filter = new ArrayList<String>();
-        filter.add("Today");
-        filter.add("All");
+        filter.add(getString(R.string.today));
+        filter.add(getString(R.string.all));
         ArrayAdapter<String> filterAdapter = new ArrayAdapter<String>(
                 this.getContext(), android.R.layout.simple_spinner_item, filter);
         filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -262,15 +262,15 @@ public class AdminAppointmentsFragment extends Fragment {
         if(handler.getQuestionnaire(user.getUsername()) != null){
             vaccinateButton.setEnabled(handler.getQuestionnaire(user.getUsername()).isApproved());
             if(handler.getQuestionnaire(user.getUsername()).isApproved()){
-                questionaireStatus.setText("Approved");
+                questionaireStatus.setText(getString(R.string.approved));
             }
             else{
-                questionaireStatus.setText("Pending");
+                questionaireStatus.setText(getString(R.string.pending));
             }
         }
         else{
             vaccinateButton.setEnabled(false);
-            questionaireStatus.setText("Pending");
+            questionaireStatus.setText(getString(R.string.pending));
 
         }
     }

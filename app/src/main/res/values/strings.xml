@@ -18,6 +18,14 @@
 
     <string name="qstatus">Questionnaire status</string>
 
+    <string name="current">Current registered users</string>
+    <string name="avacc">Available vaccines</string>
+    <string name="brand">Available vaccines</string>
+
+    <string name="pending">Pending</string>
+    <string name="approved">Approved</string>
+    <string name="all">All</string>
+    <string name="today">Today</string>
 
     <string name="pover">Personal Overview</string>
     <string name="date">Date</string>

@@ -63,7 +63,7 @@
         android:textStyle="bold"
         android:textSize="17sp"
         android:textColor="#4F4F4F"
-        android:text="Vaccine brand" />
+        android:text="@string/brand" />
 
 
     <Spinner

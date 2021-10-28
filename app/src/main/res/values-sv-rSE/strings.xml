@@ -161,6 +161,14 @@
 
     <string name="seconddose">Du kan nu boka en andra dos </string>
 
+    <string name="current">Antal registerade användare</string>
+    <string name="avacc">Tillgängliga vaccin</string>
+    <string name="brand">Tilgängliga vaccin</string>
+    <string name="pending">Pågående</string>
+    <string name="approved">Godkänd</string>
+    <string name="all">Alla</string>
+    <string name="today">Idag</string>
+
     <string name="profiletxt">Profil</string>
     <string name="create">Registrera</string>
     <string name="name"></string>
