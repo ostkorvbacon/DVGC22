@@ -145,10 +145,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void vacNotification(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Du kan nu boka din andra vaccination! Vill du vidare till bokningar eller boka senare");
+        builder.setMessage(getString(R.string.Dose_2_notification));
 
 
-        builder.setPositiveButton("Till boknngar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.Dose_2_notification_now), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent questionnaire = new Intent(getApplicationContext(), QuestionnaireActivity.class);
@@ -156,7 +156,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(questionnaire);
             }
         });
-        builder.setNegativeButton("Senare", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.Dose_2_notification_later), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
             }

@@ -212,4 +212,8 @@
     <string name="camera_permission_rationale_label">Åtkomst till kamera</string>
     <string name="camera_permission_rationale_text">Kameran kommer användas för att läsa digitala pass i form av QR koder. Ingen annan data från kameran sparas.</string>
 
+    <string name="Dose_2_notification">Du kan nu boka din andra vaccination! Vill du vidare till bokningar eller boka senare</string>
+    <string name="Dose_2_notification_now">Booka nu</string>
+    <string name="Dose_2_notification_later">Booka senare</string>
+
 </resources>

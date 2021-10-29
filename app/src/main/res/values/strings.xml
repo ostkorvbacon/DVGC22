@@ -207,4 +207,8 @@
     <string name="camera_permission_rationale_label">Camera Permission</string>
     <string name="camera_permission_rationale_text">The camera will be used to scan digital passports in the form of QR codes. No other information is stored from the camera.</string>
 
+    <string name="Dose_2_notification">You can now book a date for your second vaccination! Do you want to do it now or later?</string>
+    <string name="Dose_2_notification_now">Book now</string>
+    <string name="Dose_2_notification_later">Book later</string>
+
 </resources>
