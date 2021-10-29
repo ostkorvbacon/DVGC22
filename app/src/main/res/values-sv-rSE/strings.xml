@@ -189,6 +189,7 @@
     <string name="booking_date_text_hint">Välj ett datum</string>
     <string name="booking_not_all_items_selected">Alla fält måste vara ifyllda!</string>
     <string name="booking_date_not_valid">Det valda datumet måste vara minst 14 dagar efter att du blev vaccinerad med dos 1!</string>
+    <string name="booking_type_of_vaccine_not_in_storage">Lagret av sprutor är för tillfället tomt, försök boka igen när det har fyllts på!</string>
 
     <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>

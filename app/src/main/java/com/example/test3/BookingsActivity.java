@@ -65,6 +65,9 @@ public class BookingsActivity extends AppCompatActivity {
         chosenDate.setInputType(InputType.TYPE_NULL);
         schedule =(Spinner) findViewById(R.id.spinner2);
 
+        Intent getUser = this.getIntent();
+        user = (User)getUser.getSerializableExtra("loggedInUser");
+
         isCliniqueSelected = false;
         isDateSelected = false;
         isTimeSelected = false;
@@ -73,14 +76,39 @@ public class BookingsActivity extends AppCompatActivity {
         List <String> CliniqueName= new ArrayList<String>();
         List <Clinique> Cliniques=handler.getCliniques();
         List <String> vaccin=new ArrayList<String>();
-        if(handler.getPfizerQuantity() > 0){
-            vaccin.add("Pfizer");
+
+        boolean isUserVaccinated = false;
+        if(handler.getUserVaccinations(user.getUsername()) != null){
+            for(Vaccination v : handler.getUserVaccinations(user.getUsername())){
+                if(v.getDose() == 1){
+                    isUserVaccinated = true;
+                    if(v.getType().equals("Pfizer") && handler.getPfizerQuantity() > 0){
+                        vaccin.add(v.getType());
+                    }
+                    else if (v.getType().equals("Moderna") && handler.getModernaQuantity() > 0){
+                        vaccin.add(v.getType());
+                    }
+                    else if (v.getType().equals("Astra") && handler.getAstraQuantity() > 0){
+                        vaccin.add(v.getType());
+                    }
+                    else{
+                        button.setEnabled(false);
+                        Toast toast = Toast.makeText(getApplicationContext(),R.string.booking_type_of_vaccine_not_in_storage,Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+            }
         }
-        if(handler.getModernaQuantity() > 0){
-            vaccin.add("Moderna");
-        }
-        if(handler.getAstraQuantity() > 0){
-            vaccin.add("Astra");
+        if(!isUserVaccinated) {
+            if (handler.getPfizerQuantity() > 0) {
+                vaccin.add("Pfizer");
+            }
+            if (handler.getModernaQuantity() > 0) {
+                vaccin.add("Moderna");
+            }
+            if (handler.getAstraQuantity() > 0) {
+                vaccin.add("Astra");
+            }
         }
 
         for (int i=0;i<Cliniques.size();i++) {
@@ -144,8 +172,7 @@ public class BookingsActivity extends AppCompatActivity {
             }
         });
 
-        Intent getUser = this.getIntent();
-        user = (User)getUser.getSerializableExtra("loggedInUser");
+
         email=user.getUsername();
         i=0;
 
